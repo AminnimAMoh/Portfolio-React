@@ -22,7 +22,7 @@ const useStyle = makeStyles((theme) => ({
   iconButtons: {
     width: mytheme.radius,
     height: mytheme.radius,
-    position: "relative",
+    position: "absolute",
     backgroundSize: "contain",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
