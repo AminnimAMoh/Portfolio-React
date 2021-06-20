@@ -1,16 +1,15 @@
 import { makeStyles } from "@material-ui/core/styles";
-// import { createMuiTheme } from '@material-ui/core/styles';
 
 const mytheme = {
-  radius: 62,
+  radius: 82,
 };
+
 const useStyle = makeStyles((theme) => ({
   root: {
     position: "relative",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: "auto",
     height: "100%",
     "& >img": {
       width: "20%",
@@ -27,7 +26,8 @@ const useStyle = makeStyles((theme) => ({
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     borderRadius: "50%",
-    "&::before": {
+    cursor: "pointer",
+    "&::after": {
       content: '""',
       display: "block",
       position: "absolute",
@@ -42,7 +42,7 @@ const useStyle = makeStyles((theme) => ({
       background:
         "linear-gradient(155deg, rgba(122,145,147,1) 0%, rgba(6,22,33,1) 100%)",
     },
-    "&::after": {
+    "&::before": {
       content: '""',
       display: "block",
       position: "absolute",
@@ -50,7 +50,7 @@ const useStyle = makeStyles((theme) => ({
       right: 0,
       bottom: 0,
       left: "-1px",
-      zIndex: -1,
+      zIndex: -2,
       height: mytheme.radius,
       width: mytheme.radius,
       borderRadius: "inherit",
