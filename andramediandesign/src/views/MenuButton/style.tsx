@@ -12,7 +12,7 @@ const useStyle = makeStyles((theme) => ({
     alignItems: "center",
     height: "100%",
     "& >img": {
-      width: "20%",
+      width: "50%",
     },
   },
   powerButton:{
