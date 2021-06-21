@@ -1,8 +1,6 @@
 import React from 'react'
-import MenuButton from './views/MenuButton'
-import ContentContainer from './views/ContentContainer'
 import { makeStyles } from "@material-ui/core/styles";
-
+import Container from '../../ContentContainer'
 // const mytheme = {
 //   radius: 82,
 // };
@@ -22,16 +20,15 @@ interface Props {
 
 }
 
-function App({ }: Props): React.ReactElement {
+function UX({ }: Props): React.ReactElement {
   console.clear();
   const classes = useStyle()
   return (
-    <div className={classes.root}>
-      <MenuButton />
-      <ContentContainer />
-    </div>
+    <Container>
+        <h1 className={classes.root}>Hello</h1>
+    </Container>
   )
 }
 
-export default App
+export default UX
 

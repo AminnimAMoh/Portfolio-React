@@ -3,6 +3,7 @@ import data from "./data";
 import useStyle from "./style";
 import { Props } from "./types";
 import useMeasure from 'react-use-measure'
+import { useSelector } from "react-redux";
 
 const calPos = (index: number, length: number, size: number, state: boolean) => {
   const inc=state ? 1.5 : 2.5;
@@ -14,12 +15,18 @@ const calPos = (index: number, length: number, size: number, state: boolean) => 
 };
 function MenuButton({}: Props): React.ReactElement {
   const classes = useStyle();
+  const buttonState=useSelector(state=>state)
   const [buttonMesures, {width}]= useMeasure();
   const [powerState, setPowerState]=useState<boolean>(true)
   const buttonSizing=width;
 
   const handlePowerClick=()=>{
     setPowerState(()=>!powerState)
+  }
+
+  const handleClick=()=>{
+    console.log(buttonState);
+    
   }
   
   return (
@@ -44,6 +51,7 @@ function MenuButton({}: Props): React.ReactElement {
               style={{
                 backgroundImage: `url(${img})`,
               }}
+              onClick={handleClick}
             ></div>
           </div>
         );

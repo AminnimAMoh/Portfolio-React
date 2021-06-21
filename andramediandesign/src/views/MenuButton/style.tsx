@@ -14,6 +14,7 @@ const useStyle = makeStyles((theme) => ({
     "& >img": {
       width: "50%",
     },
+    transition: 'transform 1s ease-in'
   },
   powerButton:{
     cursor: 'pointer',

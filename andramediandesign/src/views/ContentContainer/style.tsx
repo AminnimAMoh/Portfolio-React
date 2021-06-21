@@ -6,12 +6,14 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyle = makeStyles((theme) => ({
 root:{
-    width: '100%',
+    width: '0',
     height: '100%',
-    backgroundImage:'url(images/Containers/Content_Frame/Page-Frame-shadow.png)',
+    backgroundImage:'url(images/Containers/Content_Frame/Page-Frame-Light-Shadow.png)',
     backgroundSize: "contain",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
+    transition: 'width 1s ease-in-out',
+    padding: theme.spacing(12,6)
 }
 }));
 
