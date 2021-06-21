@@ -15,11 +15,16 @@ const useStyle = makeStyles((theme) => ({
       width: "20%",
     },
   },
+  powerButton:{
+    cursor: 'pointer',
+    zIndex: 2,
+  },
   menuButtons: {
     position: "absolute",
   },
   buttonContainers:{
-    position: 'absolute'
+    position: 'absolute',
+    transition: 'transform 1s ease-in-out'
   },
   iconButtons: {
     width: mytheme.radius,
