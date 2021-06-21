@@ -18,10 +18,13 @@ const useStyle = makeStyles((theme) => ({
   menuButtons: {
     position: "absolute",
   },
+  buttonContainers:{
+    position: 'absolute'
+  },
   iconButtons: {
     width: mytheme.radius,
     height: mytheme.radius,
-    position: "absolute",
+    position: "relative",
     backgroundSize: "contain",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
