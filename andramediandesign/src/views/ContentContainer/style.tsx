@@ -5,7 +5,14 @@ import { makeStyles } from "@material-ui/core/styles";
 // };
 
 const useStyle = makeStyles((theme) => ({
-root:{}
+root:{
+    width: '100%',
+    height: '100%',
+    backgroundImage:'url(images/Containers/Content_Frame/Page-Frame-shadow.png)',
+    backgroundSize: "contain",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+}
 }));
 
 export default useStyle
