@@ -1,6 +1,5 @@
 import React from 'react'
 import { makeStyles } from "@material-ui/core/styles";
-import Container from '../../ContentContainer'
 // const mytheme = {
 //   radius: 82,
 // };
@@ -24,9 +23,9 @@ function UX({ }: Props): React.ReactElement {
   console.clear();
   const classes = useStyle()
   return (
-    <Container>
-        <h1 className={classes.root}>Hello</h1>
-    </Container>
+    <div>
+        <h1 className={classes.root} style={{color: 'white'}}>Hello from UI Component</h1>
+    </div>
   )
 }
 

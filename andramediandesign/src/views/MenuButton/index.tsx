@@ -3,7 +3,9 @@ import data from "./data";
 import useStyle from "./style";
 import { Props } from "./types";
 import useMeasure from 'react-use-measure'
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "src/store";
+import {containerStateToggle} from '../../redux/slices/buttonActionSlice'
 
 const calPos = (index: number, length: number, size: number, state: boolean) => {
   const inc=state ? 1.5 : 2.5;
@@ -15,7 +17,7 @@ const calPos = (index: number, length: number, size: number, state: boolean) => 
 };
 function MenuButton({}: Props): React.ReactElement {
   const classes = useStyle();
-  const buttonState=useSelector(state=>state)
+  const dispatch: AppDispatch=useDispatch();
   const [buttonMesures, {width}]= useMeasure();
   const [powerState, setPowerState]=useState<boolean>(true)
   const buttonSizing=width;
@@ -24,9 +26,9 @@ function MenuButton({}: Props): React.ReactElement {
     setPowerState(()=>!powerState)
   }
 
-  const handleClick=()=>{
-    console.log(buttonState);
-    
+  const handleClick=(e: React.MouseEvent<HTMLDivElement>)=>{
+    const payload=e.currentTarget.id;
+    dispatch(containerStateToggle(payload))
   }
   
   return (
@@ -47,11 +49,12 @@ function MenuButton({}: Props): React.ReactElement {
           style={{transform: `translate(${x}px, ${y}px)`,}}
           >
             <div
+            id={name}
               className={classes.iconButtons}
               style={{
                 backgroundImage: `url(${img})`,
               }}
-              onClick={handleClick}
+              onClick={(e)=>handleClick(e)}
             ></div>
           </div>
         );

@@ -1,15 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState={
-    containerState: false
+      containerState: false,
+      buttonTrigered: '',
+      renderPage: ''
 }
 
 const buttonActionSlice=createSlice({
     name: 'buttonAction',
     initialState,
     reducers:{
-        containerStateToggle(state, action){
-
+        containerStateToggle(state: any, action: PayloadAction<string>){
+            return{
+                ...state,
+                containerState: !state.containerState,
+                buttonTrigered: action.payload,
+                renderPage: action.payload
+            }
         }
     }
 })
