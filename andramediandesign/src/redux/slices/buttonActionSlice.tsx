@@ -13,7 +13,7 @@ const buttonActionSlice=createSlice({
         containerStateToggle(state: any, action: PayloadAction<string>){
             return{
                 ...state,
-                containerState: !state.containerState,
+                containerState: true,
                 buttonTrigered: action.payload,
                 renderPage: action.payload
             }
