@@ -13,7 +13,8 @@ root:{
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     transition: 'width 1s ease-in-out',
-    padding: theme.spacing(12,6)
+    padding: theme.spacing(12,6),
+    overflowY: 'auto'
 }
 }));
 
