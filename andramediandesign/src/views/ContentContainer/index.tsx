@@ -5,14 +5,18 @@ import { RootState } from 'src/store'
 import UX from '../Pages/UX'
 
 interface Props {
-  state: string | null
+
 }
 
-const RenderObject({state}: Props): React.ReactElement{
-  switch(state){
-    case '':
+function RenderObject(state: any): React.ReactElement {
+  console.log(state);
+  
+  switch(state.state){
+    case 'UX':
+      return <UX/>
       break;
-      default: return <UX/>
+      default: 
+      return  <h1>{state.state}</h1>
       break;
   }
   return <div></div>
