@@ -8,13 +8,19 @@ const useStyle = makeStyles((theme) => ({
 root:{
     width: '0',
     height: '100%',
+    opacity: 0,
     backgroundImage:'url(images/Containers/Content_Frame/Page-Frame-Light-Shadow.png)',
-    backgroundSize: "contain",
-    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundPositionX: "right",
     backgroundRepeat: "no-repeat",
-    transition: 'width 1s ease-in-out',
+    transitionProperty: 'width, opacity',
+    transitionDuration: '1s',
+    transitionTimingFunction: 'ease-in-out',
+    overflowX:'hidden',
     padding: theme.spacing(12,6),
     overflowY: 'auto',
+    direction: 'rtl',
+    minWidth: '900px'
 }
 }));
 

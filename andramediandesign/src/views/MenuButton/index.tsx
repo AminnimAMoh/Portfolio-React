@@ -1,9 +1,10 @@
 import React, {useState} from "react";
+import { RootState } from 'src/store'
 import data from "./data";
 import useStyle from "./style";
 import { Props } from "./types";
 import useMeasure from 'react-use-measure'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "src/store";
 import {containerStateToggle} from '../../redux/slices/buttonActionSlice'
 
@@ -18,12 +19,13 @@ const calPos = (index: number, length: number, size: number, state: boolean) => 
 function MenuButton({}: Props): React.ReactElement {
   const classes = useStyle();
   const dispatch: AppDispatch=useDispatch();
+  const buttonsActive: boolean=useSelector((state: RootState) =>state.buttonAction.containerState)
   const [buttonMesures, {width}]= useMeasure();
   const [powerState, setPowerState]=useState<boolean>(true)
   const buttonSizing=width;
 
   const handlePowerClick=()=>{
-    setPowerState(()=>!powerState)
+    buttonsActive ? dispatch(containerStateToggle('PowerButton'))  : setPowerState(()=>!powerState);
   }
 
   const handleClick=(e: React.MouseEvent<HTMLDivElement>)=>{
@@ -52,6 +54,8 @@ function MenuButton({}: Props): React.ReactElement {
             id={name}
               className={classes.iconButtons}
               style={{
+                width: buttonSizing/4,
+                height: buttonSizing/4,
                 backgroundImage: `url(${img})`,
               }}
               onClick={(e)=>handleClick(e)}

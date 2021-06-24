@@ -16,6 +16,9 @@ const useStyle = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     transition: "transform 1s ease-in",
+    marginLeft: 0,
+    marginRight: 'auto',
+    direction: 'ltr',
     "@media (min-width: 1920px)": {
       width: "60%",
     },

@@ -29,7 +29,7 @@ const renderObject: string=useSelector((state: RootState) =>state.buttonAction.r
   return (
     <div 
     className={classes.root}
-    style={buttonState ? {width: '100%'} : {}}
+    style={buttonState ? {width: '100%', opacity: '1'} : {}}
     >
       <RenderObject state={renderObject} />
     </div>
