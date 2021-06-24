@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 const mytheme = {
-  radius: 82,
+  radius: 112,
 };
 
 const useStyle = makeStyles((theme) => ({
@@ -12,7 +12,7 @@ const useStyle = makeStyles((theme) => ({
     alignItems: "center",
     height: "100%",
     "& >img": {
-      width: "50%",
+      width: "90%",
     },
     transition: 'transform 1s ease-in'
   },

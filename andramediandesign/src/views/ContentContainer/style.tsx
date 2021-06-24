@@ -14,7 +14,7 @@ root:{
     backgroundRepeat: "no-repeat",
     transition: 'width 1s ease-in-out',
     padding: theme.spacing(12,6),
-    overflowY: 'auto'
+    overflowY: 'auto',
 }
 }));
 

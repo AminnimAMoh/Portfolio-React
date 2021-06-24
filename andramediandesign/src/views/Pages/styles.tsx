@@ -9,17 +9,20 @@ const rootStyle = makeStyles((theme) => ({
         color: 'white'
     },
     topick_heading: {
-        color: 'white'
+        color: 'white',
+        '& >*:not(:first-child)':{
+            paddingTop: '8px'
+        }
     },
     onlineLink: {
 
     },
     link_ToExternals: {
-
+        color: '#5C3B42'
     },
     topic_pragraph:{
 
-    }
+    },
 }))
 
 export default rootStyle
