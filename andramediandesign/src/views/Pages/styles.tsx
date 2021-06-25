@@ -14,6 +14,9 @@ const useStyle = makeStyles((theme) => ({
   },
   topic_grid: {
     color: "white",
+    '& > *:not(:nth-child(n+1))':{
+      paddingTop: theme.spacing(10)
+    }
   },
   topick_heading: {
     color: "white",
