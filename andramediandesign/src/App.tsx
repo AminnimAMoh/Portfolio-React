@@ -14,7 +14,7 @@ const useStyle = makeStyles((theme) => ({
     flexFlow: 'row-reverse',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingRight: theme.spacing(30)
+    paddingRight: theme.spacing(20)
   }
 }));
 

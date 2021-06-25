@@ -5,23 +5,46 @@ import { makeStyles } from "@material-ui/core/styles";
 // };
 
 const useStyle = makeStyles((theme) => ({
-root:{
-    width: '0',
-    height: '100%',
-    opacity: 0,
-    backgroundImage:'url(images/Containers/Content_Frame/Page-Frame-Light-Shadow.png)',
-    backgroundSize: "cover",
-    backgroundPositionX: "right",
+  root: {
+    width: "0%",
+    height: "100%",
+    transform: "translateX(-150%)",
+    transition: "transform 1s ease-in-out, width .5s ease .2s",
+    overflowX: "hidden",
+    overflowY: "auto",
+    direction: "rtl",
+    backgroundImage:
+      "url(images/Containers/Content_Frame/Page-Frame-Light-Wave.png)",
     backgroundRepeat: "no-repeat",
-    transitionProperty: 'width, opacity',
-    transitionDuration: '1s',
-    transitionTimingFunction: 'ease-in-out',
-    overflowX:'hidden',
-    padding: theme.spacing(12,6),
-    overflowY: 'auto',
-    direction: 'rtl',
-    minWidth: '900px'
-}
+    backgroundSize: "cover",
+    backgroundPosition: "right",
+    padding: theme.spacing(12, 41, 0, 6),
+    [theme.breakpoints.down("lg")]: {
+      padding: theme.spacing(12, 40, 0, 6),
+    },
+    "&.close": {
+      animation: "displayOff .5s linear 2s 1 alternate",
+    },
+    "&.open": {
+      animation: "displayOn .5s linear 2s 1 alternate",
+    },
+  },
+  "@keyframes displayOff": {
+    "0%": {
+      display: "block",
+    },
+    "100%": {
+      display: "none",
+    },
+  },
+  "@keyframes displayOn": {
+    "0%": {
+      display: "none",
+    },
+    "100%": {
+      display: "block",
+    },
+  },
 }));
 
-export default useStyle
+export default useStyle;

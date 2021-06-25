@@ -7,9 +7,15 @@ const useStyle = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     height: "100%",
+    width: '20%',
     zIndex:1,
+    // backgroundImage:'url(images/Containers/Content_Frame/Page-Frame-Light-Small.png)',
+    // backgroundSize: "cover",
+    // backgroundPositionX: "right",
+    // backgroundRepeat: "no-repeat", 
     "& >img": {
-      width: "90%",
+      width: "100%",
+      minWidth: '30%'
     },
     transition: "transform 1s ease-in",
   },

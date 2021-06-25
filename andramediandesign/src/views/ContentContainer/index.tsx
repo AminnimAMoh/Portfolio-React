@@ -28,8 +28,8 @@ const buttonState: boolean=useSelector((state: RootState) =>state.buttonAction.c
 const renderObject: string=useSelector((state: RootState) =>state.buttonAction.renderPage)
   return (
     <div 
-    className={classes.root}
-    style={buttonState ? {width: '100%', opacity: '1'} : {}}
+    className={buttonState ? `${classes.root} open` :  `${classes.root} close` }
+    style={buttonState ? {transform: 'translateX(0%)', width: '100%'} : {}}
     >
       <RenderObject state={renderObject} />
     </div>
