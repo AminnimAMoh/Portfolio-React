@@ -24,14 +24,14 @@ function RenderObject(state: any): React.ReactElement {
 
 function ContentContainer({}: Props): React.ReactElement {
 const classes=useStyle()
-const buttonState: boolean=useSelector((state: RootState) =>state.buttonAction.containerState)
-const renderObject: string=useSelector((state: RootState) =>state.buttonAction.renderPage)
+const {containerState: {rootState, delayState}, renderPage }=useSelector((state: RootState) =>state.buttonAction)
+
   return (
     <div 
-    className={buttonState ? `${classes.root} open` :  `${classes.root} close` }
-    style={buttonState ? {transform: 'translateX(0%)', width: '100%'} : {}}
+    className={rootState ? `${classes.root} open` :  `${classes.root} close` }
+    style={rootState && !delayState ? {transform: 'translateX(0%)'} : !rootState && delayState ? {width: '0', padding: 0, opacity: 0} : {}}
     >
-      <RenderObject state={renderObject} />
+      <RenderObject state={renderPage} />
     </div>
   )
 }

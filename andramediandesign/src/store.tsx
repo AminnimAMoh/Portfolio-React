@@ -2,10 +2,10 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from 'react-redux'
 import buttonActionSlice from "./redux/slices/buttonActionSlice";
 
-const store = configureStore({
+const store: any = configureStore({
     reducer:{
         buttonAction: buttonActionSlice
-    }
+    },
 })
 
 export type RootState = ReturnType<typeof store.getState>

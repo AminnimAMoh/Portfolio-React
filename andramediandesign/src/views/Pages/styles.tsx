@@ -13,10 +13,6 @@ const useStyle = makeStyles((theme) => ({
     direction: "ltr",
   },
   topic_grid: {
-    transform: "translateX(-100%)",
-    display: 'none',
-    transition: "transform 1s ease-in-out .5s",
-    // maxWidth:'50%',
     color: "white",
   },
   topick_heading: {

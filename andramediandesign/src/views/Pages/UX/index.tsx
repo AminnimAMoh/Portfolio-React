@@ -6,7 +6,6 @@ import YouTubeEmbed from '../YouTubeEmbed'
 interface Props {}
 
 function UX({}: Props): React.ReactElement {
-  console.clear();
   const classes = useStyle();
   const preventDefault = (
     event:
@@ -19,10 +18,8 @@ function UX({}: Props): React.ReactElement {
         container
         spacing={4}
         justify="space-between"
-        alignItems="center"
-        // alignContent='flex-start'
+        alignContent='flex-start'
         className={classes.topic_grid}
-        style={{ transform: "translateX(0)", display: 'block' }}
       >
         <Grid item lg={6} md={12} className={classes.topick_heading}>
           <Typography variant="h3">

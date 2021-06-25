@@ -1,8 +1,9 @@
 import React from 'react'
 import MenuButton from './views/MenuButton'
 import ContentContainer from './views/ContentContainer'
+import { useSelector } from 'react-redux';
 import { makeStyles } from "@material-ui/core/styles";
-
+import { RootState } from './store';
 // const mytheme = {
 //   radius: 82,
 // };
@@ -13,8 +14,13 @@ const useStyle = makeStyles((theme) => ({
     display: 'flex',
     flexFlow: 'row-reverse',
     justifyContent: 'center',
-    alignItems: 'center',
-    paddingRight: theme.spacing(20)
+    alignItems: 'center',    
+    '&.open':{
+      paddingRight: theme.spacing(20),
+    },
+    '&.close':{
+      paddingRight: 0
+    }
   }
 }));
 
@@ -23,10 +29,11 @@ interface Props {
 }
 
 function App({ }: Props): React.ReactElement {
-  console.clear();
+  // console.clear();
+  const {containerState: {rootState}}=useSelector((state: RootState)=>state.buttonAction)
   const classes = useStyle()
   return (
-    <div className={classes.root}>
+    <div className={rootState ? `${classes.root} open` : `${classes.root} close`}>
       <MenuButton />
       <ContentContainer />
     </div>

@@ -9,10 +9,6 @@ const useStyle = makeStyles((theme) => ({
     height: "100%",
     width: '20%',
     zIndex:1,
-    // backgroundImage:'url(images/Containers/Content_Frame/Page-Frame-Light-Small.png)',
-    // backgroundSize: "cover",
-    // backgroundPositionX: "right",
-    // backgroundRepeat: "no-repeat", 
     "& >img": {
       width: "100%",
       minWidth: '30%'
@@ -31,8 +27,6 @@ const useStyle = makeStyles((theme) => ({
     transition: "transform 1s ease-in-out",
   },
   iconButtons: {
-    // width: myTheme.radius,
-    // height: myTheme.radius,
     position: "relative",
     backgroundSize: "contain",
     backgroundPosition: "center",

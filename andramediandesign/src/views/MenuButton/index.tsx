@@ -6,7 +6,10 @@ import { Props } from "./types";
 import useMeasure from "react-use-measure";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "src/store";
-import { containerStateToggle } from "../../redux/slices/buttonActionSlice";
+import {
+  containerStateToggle,
+  onDelayStateChange,
+} from "../../redux/slices/buttonActionSlice";
 
 const calPos = (
   index: number,
@@ -24,22 +27,28 @@ const calPos = (
 function MenuButton({}: Props): React.ReactElement {
   const classes = useStyle();
   const dispatch: AppDispatch = useDispatch();
-  const buttonsActive: boolean = useSelector(
-    (state: RootState) => state.buttonAction.containerState
-  );
+  const {
+    containerState: { rootState },
+  } = useSelector((state: RootState) => state.buttonAction);
   const [buttonMesures, { width }] = useMeasure();
   const [powerState, setPowerState] = useState<boolean>(false);
   const buttonSizing = width;
 
   const handlePowerClick = () => {
-    buttonsActive
-      ? dispatch(containerStateToggle("PowerButton"))
-      : setPowerState(() => !powerState);
+    if (rootState) {
+      dispatch(containerStateToggle("PowerButton"));    
+      setTimeout(() => {
+      dispatch(onDelayStateChange());
+    }, 500);
+    } else {
+      setPowerState(() => !powerState);
+    }
   };
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const payload = e.currentTarget.id;
     dispatch(containerStateToggle(payload));
+
   };
 
   return (
