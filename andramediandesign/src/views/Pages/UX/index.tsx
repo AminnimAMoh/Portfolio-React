@@ -149,7 +149,12 @@ function UX({ }: Props): React.ReactElement {
         <Grid item xs={12}>
           <img src='images/Pages/UX/Render-2.png' alt="content" />
         </Grid>
-        <Grid item container spacing={4} justify='center' alignItems="center">
+        <Grid item container 
+        spacing={4} 
+        justify='center' 
+        alignItems="center"
+        className={classes.inner_GridContainer}
+        >
           <Grid item xs={6}>
             To use the Atmoscube the user must connect it to its home and vehicles IoT (Internet of things), 
             the data received from the users amenities will be the core of the users experience within 

@@ -14,12 +14,12 @@ const useStyle = makeStyles((theme) => ({
   },
   topic_grid: {
     color: "white",
-    '& > *:nth-child(n+3)':{
-      paddingTop: theme.spacing(10)
-    },
     '& > .MuiGrid-item img':{
       width: '100%'
-    }
+    },
+    '& > *:nth-child(n+3)': {
+      paddingTop: theme.spacing(10)
+    },
   },
   topick_heading: {
     color: "white",
@@ -30,6 +30,11 @@ const useStyle = makeStyles((theme) => ({
   onlineLink: {},
   link_ToExternals: {
     color: "#5C3B42",
+  },
+  inner_GridContainer:{
+    '& > *':{
+        paddingTop: theme.spacing(10)
+    }
   },
   topic_pragraph: {},
 }));

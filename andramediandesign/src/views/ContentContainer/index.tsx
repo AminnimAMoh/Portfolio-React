@@ -3,6 +3,7 @@ import useStyle from './style'
 import {useSelector} from 'react-redux'
 import { RootState } from 'src/store'
 import UX from '../Pages/UX'
+import UI from '../Pages/UI'
 
 interface Props {
 
@@ -15,6 +16,10 @@ function RenderObject(state: any): React.ReactElement {
     case 'UX':
       return <UX/>
       break;
+    case 'UI':{
+      return <UI/>
+      break;
+    }
       default: 
       return  <h1>{state.state}</h1>
       break;
