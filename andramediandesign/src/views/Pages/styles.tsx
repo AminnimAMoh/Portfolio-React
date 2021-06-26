@@ -14,8 +14,11 @@ const useStyle = makeStyles((theme) => ({
   },
   topic_grid: {
     color: "white",
-    '& > *:not(:nth-child(n+1))':{
+    '& > *:nth-child(n+3)':{
       paddingTop: theme.spacing(10)
+    },
+    '& > .MuiGrid-item img':{
+      width: '100%'
     }
   },
   topick_heading: {
