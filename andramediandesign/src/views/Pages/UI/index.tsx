@@ -23,7 +23,7 @@ function UI({ }: Props): React.ReactElement {
             >
                 <Grid item lg={6} md={12} className={classes.topick_heading}>
                     <Typography variant="h3">
-                    Figting misinformation through social media
+                        Figting misinformation through social media
                     </Typography>
                     <Typography variant="h4">Collaboration Team:</Typography>
                     <Typography
@@ -45,7 +45,7 @@ function UI({ }: Props): React.ReactElement {
                         onClick={(e) => preventDefault}
                     >
                         <Typography variant="body2" className={classes.link_ToExternals}>
-                        Link to our high-fidelity prototype
+                            Link to our high-fidelity prototype
                         </Typography>
                     </Link>
                     <Link
@@ -55,25 +55,25 @@ function UI({ }: Props): React.ReactElement {
                         onClick={(e) => preventDefault}
                     >
                         <Typography variant="body2" className={classes.link_ToExternals}>
-                        Link to full report
+                            Link to full report
                         </Typography>
                     </Link>
                 </Grid>
                 <Grid item lg={6} md={12} className={classes.topic_pragraph}>
                     <Typography variant="body1">
-                        In our current state misinformation is frequently shared and 
-                        whether this is intentional or inadvertent it can have catastrophic 
-                        results on the spread of COVID-19. Maximising public access to 
-                        balanced, reliable, and up to date information is a critical 
+                        In our current state misinformation is frequently shared and
+                        whether this is intentional or inadvertent it can have catastrophic
+                        results on the spread of COVID-19. Maximising public access to
+                        balanced, reliable, and up to date information is a critical
                         success factor for authorities worldwide. Management of highly
-                         trusted information will have a vital role to play in the control 
-                         of COVID-19. The COVID-19 Fact Check app has been built to 
-                         facilitate an effective means of sharing information going forward.
-                          The application is an informal educational tool, which encourages 
-                          users to become aware of the false or misleading information that 
-                          they may find themselves coming across when partaking in online
-                           activity. It’s a gamified fun fact-based tool which will help the 
-                           world #StopTheSpread.
+                        trusted information will have a vital role to play in the control
+                        of COVID-19. The COVID-19 Fact Check app has been built to
+                        facilitate an effective means of sharing information going forward.
+                        The application is an informal educational tool, which encourages
+                        users to become aware of the false or misleading information that
+                        they may find themselves coming across when partaking in online
+                        activity. It’s a gamified fun fact-based tool which will help the
+                        world #StopTheSpread.
 
 
                     </Typography>
@@ -82,7 +82,7 @@ function UI({ }: Props): React.ReactElement {
                     <YouTubeEmbed embedID="aQ017METpTU" />
                 </Grid>
                 <Grid item xs={6}>
-                    <Typography variant='h5'>
+                    <Typography variant='h3'>
                         React.js
                     </Typography>
                 </Grid>
@@ -101,57 +101,91 @@ function UI({ }: Props): React.ReactElement {
                     </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                    <Typography variant='h5'>What is the strategy?</Typography>
-                    <Typography variant='h3'>Design Solution</Typography>
+                    <Typography variant='h3'>React Hooks</Typography>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
+                    <Typography variant='h5'>useState</Typography>
                     <Typography variant='body1'>
-                        Our design Solution is the Atmoscube, a cube roughly 450mm in width, height and depth.
-                        Within this hologram cube we are propose a city build game. The top of the product houses a
-                        touch and distance sensitive interface that along with AI voice operated system will be the way
-                        in which the user engages with the product. Within the product will be a small AR city projected
-                        from the base, this AR city will be built and managed by the user.
+                        "useState" is a React hook function that allows us to change the state of the function
+                        components if required.
+                        React hook functions are well design to secure the function component from possible errors
+                        in the code as well as stabilizing the connection between components between classes.
                     </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <img src='images/Pages/UX/Render.png' alt="content" />
-                </Grid>
-                <Grid item xs={6}>
+                    <Typography variant='h5'>useEffect</Typography>
                     <Typography variant='body1'>
-                        The design process was guided by the aim of empowering people through education
-                        in an effort to aid against biodiversity loss and animal extinction.
-                    </Typography>
-                    <br />
-                    <Typography variant='body1'>
-                        Stage one of the design process involved conducting research with finding key
-                        insights regarding the problem space in mind.
-                    </Typography>
-                    <br />
-                    <Typography variant='body1'>
-                        Stage two of the process involved studying the research gathered, finding explicit
-                        and intrinsic insights into solutions for the problem space.
-                    </Typography>
-                    <br />
-                    <Typography variant='body1'>
-                        Stage Three involved each design member submitting two idea and subsequent storyboards
-                        that aided the problem space and successfully met design criteria.
-                    </Typography>
-                    <br />
-                    <Typography variant='body1'>
-                        Stage Four involved each design team members idea being inputted into a design matrix
-                        created to highlight the best design and what was most suited to the tasks needs.
-                    </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                    <Typography variant='h5'>
-                        Trial and Error
-                    </Typography>
-                    <Typography variant='h3'>
-                        Design Process
+                        "useEffect" function is another React hook that allows us to read from our API data base
+                        only on specified circumstances.
+                        "useEffect" helps us to minimize the tokens on our API and reduces the load on the API
+                        server.
+                        In this application, we mainly use the "useEffect" hook to read and write on our API
+                        database with a minimum number of tokens for each request to maintain the API service.
                     </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <img src='images/Pages/UX/Render-2.png' alt="content" />
+                    <Typography variant='h3'>React-Router</Typography>
+                    <Typography variant="h5">useHistory</Typography>
+                    <Typography variant='body1'>
+                        "useHistory" is a hook function from React Router Core npm to trigger the Link
+                        function in a class function rather than the render function.
+                        "useHistory" in this application allows us to route between pages using different
+                        states of function components in conditions.
+                        In this application, this condition listens to the direction of the user's swipe.
+                    </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography variant='h5'>Switch</Typography>
+                    <Typography variant='body1'>
+                        "Switch" is unique in that it renders a route exclusively. In contrast, every
+                        "Route" that matches the location renders inclusively.
+                    </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography variant='h5'>Route</Typography>
+                    <Typography variant='body1'>
+                        "Route" most basic responsibility is to render some UI when its path matches the
+                        current URL passed as the path.
+                        "Route" also sets the props required for the routing component and on each request
+                        to the path it makes the hook between the sender and receiver component.
+                    </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography variant='h5'>Link</Typography>
+                    <Typography variant='body1'>
+                        "Link" allows us to navigate to specified path component/page in HTML format (render
+                        function) and transferring object properties as props.
+                        In this application, we have used "Link" on our buttons triggering routes to other
+                        pages and transferring the props to the function component.
+                    </Typography>
+                </Grid>
+                <Grid item xs={6}><Typography variant='h3'>Google Firebase</Typography></Grid>
+                <Grid item xs={6}>
+                    <Typography variant='body1'>
+                        Firebase is Google's free cloud storage that handles many aspects of backend functionality. For this
+                        project, this service allows reservation of questions and users results in a form of API data
+                        sources as well as deploying the platform.
+                    </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                    <Typography variant='body1'>
+                        One firebase data document is used to reserve the questions in. This allows for easy updates of the
+                        questions.
+                    </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                    <Typography variant='body1'>
+                        The second data document collects the users’ final results as well as their postcode. After a user
+                        is done the result and postcode of the question will be saved on this repository in the form of an
+                        array of objects. This information instantly will be
+                        downloaded from the API to draw the graph in the next page.
+                    </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                    <Typography variant='body1'>
+                        Thirdly, Google Firebase helps build and deploy the application on its servers from React.js. Google
+                        fiFirebase provides this service for free in addition to all other mentioned services.
+                    </Typography>
                 </Grid>
                 <Grid item container
                     spacing={4}

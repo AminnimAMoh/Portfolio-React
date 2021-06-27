@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { RootState } from "src/store";
 import data from "./data";
 import useStyle from "./style";
@@ -27,6 +27,7 @@ const calPos = (
 function MenuButton({}: Props): React.ReactElement {
   const classes = useStyle();
   const dispatch: AppDispatch = useDispatch();
+  const parentElement=useRef<HTMLDivElement>(null);
   const {
     containerState: { rootState },
   } = useSelector((state: RootState) => state.buttonAction);
@@ -46,9 +47,10 @@ function MenuButton({}: Props): React.ReactElement {
   };
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    console.log(parentElement);
+    
     const payload = e.currentTarget.id;
     dispatch(containerStateToggle(payload));
-
   };
 
   return (
@@ -70,6 +72,7 @@ function MenuButton({}: Props): React.ReactElement {
           >
             <div
               id={name}
+              ref={parentElement}
               className={classes.iconButtons}
               style={{
                 width: buttonSizing / 4,
