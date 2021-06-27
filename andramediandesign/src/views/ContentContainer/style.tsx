@@ -23,24 +23,22 @@ const useStyle = makeStyles((theme) => ({
     [theme.breakpoints.down("lg")]: {
       padding: theme.spacing(12, 40, 0, 6),
     },
-    "&.close": {
-      animation: "displayOff .5s linear 2s 1 alternate",
-    },
-    "&.open": {
-      animation: "displayOn .5s linear 2s 1 alternate",
+    [theme.breakpoints.down("md")]: {
+      backgroundImage: 'none',
+      padding: theme.spacing(0,6,6),
     },
   },
-  "@keyframes displayOff": {
-
-  },
-  "@keyframes displayOn": {
-    "0%": {
-      display: "none",
-    },
-    "100%": {
-      display: "block",
-    },
-  },
+  MobileFrame:{
+    display: 'none',
+    position: 'sticky',
+    height: '200px',
+    top: '-5px',
+    width: '100%',
+    [theme.breakpoints.down('md')]:{
+      display: 'block'
+    }
+    // height: '5',
+  }
 }));
 
 export default useStyle;

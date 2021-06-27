@@ -17,12 +17,22 @@ const calPos = (
   size: number,
   state: boolean
 ) => {
-  const inc = state ? 1.5 : 3;
-  const rad = size / inc;
-  var angle = ((2 * Math.PI) / length) * index;
-  const x = rad * Math.cos(angle);
-  const y = rad * Math.sin(angle);
-  return { x, y };
+  if (window.innerWidth > 1280) {
+    const inc = state ? 1.5 : 3;
+    const rad = size / inc;
+    const angle = ((2 * Math.PI) / length) * index;
+    const x = rad * Math.cos(angle);
+    const y = rad * Math.sin(angle);
+    return { x, y };
+  } else {
+    const phase=window.innerWidth<560 ? 8 : 20;
+    const inc = state ? 3 : 20;
+    const angle = ((Math.PI*2) / length+2) * index;
+    const rad = ((size)/inc);
+    const x = ((rad*5) * Math.cos(angle)+5*(rad * Math.sin(angle)))-phase;
+    const y = 0;
+    return { x, y };
+  }
 };
 function MenuButton({}: Props): React.ReactElement {
   const classes = useStyle();

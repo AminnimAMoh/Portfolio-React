@@ -36,6 +36,7 @@ const {containerState: {rootState, delayState}, renderPage }=useSelector((state:
     className={rootState ? `${classes.root} open` :  `${classes.root} close` }
     style={rootState && !delayState ? {transform: 'translateX(0%)'} : !rootState && delayState ? {width: '0', padding: 0, opacity: 0} : {}}
     >
+      <img src='images/Containers/Content_Frame/Mobile.png' alt='content' className={classes.MobileFrame}/>
       <RenderObject state={renderPage} />
     </div>
   )

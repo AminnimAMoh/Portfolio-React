@@ -9,11 +9,20 @@ const useStyle = makeStyles((theme) => ({
     height: "100%",
     width: '20%',
     zIndex:1,
+    transition: "transform 1s ease-in",
     "& >img": {
       width: "100%",
       minWidth: '30%'
     },
-    transition: "transform 1s ease-in",
+    [theme.breakpoints.down('md')]:{
+      width: '100%',
+      height: '20%',
+      paddingTop: theme.spacing(15),
+      "& >img": {
+        width: "20%",
+        minWidth: '20%'
+      },
+    }
   },
   powerButton: {
     cursor: "pointer",
