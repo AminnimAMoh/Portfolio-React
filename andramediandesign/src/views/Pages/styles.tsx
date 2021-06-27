@@ -17,8 +17,11 @@ const useStyle = makeStyles((theme) => ({
     '& > .MuiGrid-item img':{
       width: '100%'
     },
-    '& > *:nth-child(n+3)': {
-      paddingTop: theme.spacing(10)
+    '&>*':{
+      padding: theme.spacing(4)
+    },
+    '&>*:nth-child(n+4)': {
+      paddingTop: theme.spacing(20)
     },
   },
   topick_heading: {

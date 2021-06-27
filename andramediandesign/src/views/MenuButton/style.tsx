@@ -38,8 +38,8 @@ const useStyle = makeStyles((theme) => ({
         transform: "rotate(180deg)",
       },
       "&::before": {
-        transform: "scale(1.5)",
-        background: "rgba(100,100,100,.2)",
+        transform: "scale(1.2)",
+        background: "rgba(18,57,61,.2)",
       },
     },
     "&::after": {
@@ -51,8 +51,6 @@ const useStyle = makeStyles((theme) => ({
       bottom: 0,
       left: "-1px",
       zIndex: -1,
-      // height: myTheme.radius + 2,
-      // width: myTheme.radius + 2,
       borderRadius: "inherit",
       background:
         "linear-gradient(155deg, rgba(122,145,147,1) 0%, rgba(6,22,33,1) 100%)",
@@ -67,13 +65,18 @@ const useStyle = makeStyles((theme) => ({
       bottom: 0,
       left: "-1px",
       zIndex: -2,
-      // height: myTheme.radius,
-      // width: myTheme.radius,
       borderRadius: "inherit",
       background: "rgba(0,0,0,.5)",
-      filter: "blur(16px)",
+      filter: "blur(12px)",
       transition: "transform .2s ease-in-out",
     },
+    '&.focused':{
+      '&::before':{
+        transform: "scale(1.2)",
+        filter: "blur(12px)",
+        background: "rgba(18,57,61,1)",
+      }
+    }
   },
 }));
 

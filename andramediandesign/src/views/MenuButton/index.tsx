@@ -27,7 +27,7 @@ const calPos = (
 function MenuButton({}: Props): React.ReactElement {
   const classes = useStyle();
   const dispatch: AppDispatch = useDispatch();
-  const parentElement=useRef<HTMLDivElement>(null);
+  const parentElement = useRef<HTMLDivElement>(null);
   const {
     containerState: { rootState },
   } = useSelector((state: RootState) => state.buttonAction);
@@ -36,25 +36,39 @@ function MenuButton({}: Props): React.ReactElement {
   const buttonSizing = width;
 
   const handlePowerClick = () => {
+    const parentChilrdernLength = parentElement.current?.childElementCount;
+    const prentArray = parentElement.current?.children;
+    if (parentChilrdernLength && prentArray) {
+      for (let i = 1; i < parentChilrdernLength; i++) {
+        prentArray[i].children[0].classList.remove("focused");
+      }
+    }
     if (rootState) {
-      dispatch(containerStateToggle("PowerButton"));    
+      dispatch(containerStateToggle("PowerButton"));
       setTimeout(() => {
-      dispatch(onDelayStateChange());
-    }, 500);
+        dispatch(onDelayStateChange());
+      }, 500);
     } else {
       setPowerState(() => !powerState);
     }
   };
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    console.log(parentElement);
-    
     const payload = e.currentTarget.id;
+    const parentChilrdernLength = parentElement.current?.childElementCount;
+    const prentArray = parentElement.current?.children;
+    if (parentChilrdernLength && prentArray) {
+      for (let i = 1; i < parentChilrdernLength; i++) {
+        prentArray[i].children[0].id === payload
+          ? prentArray[i].children[0].classList.add("focused")
+          : prentArray[i].children[0].classList.remove("focused");
+      }
+    }
     dispatch(containerStateToggle(payload));
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} ref={parentElement}>
       <img
         ref={buttonMesures}
         src="images\Button\Menu_Trigger\Power_Button-Stoke.png"
@@ -62,7 +76,7 @@ function MenuButton({}: Props): React.ReactElement {
         className={classes.powerButton}
         onClick={handlePowerClick}
       />
-      {data.map(({ name, img, toolKit, width }, index) => {
+      {data.map(({ name, img, toolKit }, index) => {
         const { x, y } = calPos(index, data.length, buttonSizing, powerState);
         return (
           <div
@@ -72,7 +86,6 @@ function MenuButton({}: Props): React.ReactElement {
           >
             <div
               id={name}
-              ref={parentElement}
               className={classes.iconButtons}
               style={{
                 width: buttonSizing / 4,

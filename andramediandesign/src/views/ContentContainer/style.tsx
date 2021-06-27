@@ -19,7 +19,7 @@ const useStyle = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "right",
-    padding: theme.spacing(12, 41, 0, 6),
+    padding: theme.spacing(12, 41, 12, 6),
     [theme.breakpoints.down("lg")]: {
       padding: theme.spacing(12, 40, 0, 6),
     },
