@@ -3,9 +3,9 @@ import useStyle from "../styles";
 import { Grid, Typography, Link } from "@material-ui/core";
 import YouTubeEmbed from "../YouTubeEmbed";
 
-interface Props {}
+interface Props { }
 
-function UX({}: Props): React.ReactElement {
+function UX({ }: Props): React.ReactElement {
   const classes = useStyle();
   const preventDefault = (
     event:
@@ -71,24 +71,34 @@ function UX({}: Props): React.ReactElement {
         <Grid item xs={12}>
           <YouTubeEmbed embedID="AikAa-n8vq8" />
         </Grid>
-        <Grid item lg={6} md={12}>
-          <Typography variant="body1">
-            Currently our planet is at a critical point of animal extinction and
-            bidovirsty loss. To aid in combatting this loss we have designed the
-            Atmoscube. Through research conducted at the beginning of the design
-            process we’ve identified that people often feel unempowered in their
-            ability to help the environment. To solve this problem, we have
-            aimed to create an experience that informs and engages the user in
-            an effort to educate and empower. Empowerment provided by
-            interacting with the atomscube is designed to permeate throughout
-            the users daily life, providing them with a platform to continue
-            with environmentally positive life choices.
-          </Typography>
+        <Grid
+          item
+          container
+          direction= 'row'
+          spacing={4}
+          justify="center"
+          alignItems="flex-start"
+        >
+          <Grid item lg={6} md={12}>
+            <Typography variant="body1">
+              Currently our planet is at a critical point of animal extinction and
+              bidovirsty loss. To aid in combatting this loss we have designed the
+              Atmoscube. Through research conducted at the beginning of the design
+              process we’ve identified that people often feel unempowered in their
+              ability to help the environment. To solve this problem, we have
+              aimed to create an experience that informs and engages the user in
+              an effort to educate and empower. Empowerment provided by
+              interacting with the atomscube is designed to permeate throughout
+              the users daily life, providing them with a platform to continue
+              with environmentally positive life choices.
+            </Typography>
+          </Grid>
+          <Grid item lg={6} md={12}>
+            <Typography variant="h5">Knowledge As a tool to conserve</Typography>
+            <Typography variant="h3">Environment and Biodiversity</Typography>
+          </Grid>
         </Grid>
-        <Grid item lg={6} md={12}>
-          <Typography variant="h5">Knowledge As a tool to conserve</Typography>
-          <Typography variant="h3">Environment and Biodiversity</Typography>
-        </Grid>
+
         <Grid item lg={6} md={12}>
           <Typography variant="h5">What is the strategy?</Typography>
           <Typography variant="h3">Design Solution</Typography>

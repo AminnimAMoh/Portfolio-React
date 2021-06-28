@@ -8,13 +8,13 @@ const useStyle = makeStyles((theme) => ({
     alignItems: "center",
     height: "100%",
     width: '20%',
-    zIndex:1,
+    zIndex: 1,
     transition: "transform 1s ease-in",
     "& >img": {
       width: "100%",
       minWidth: '30%'
     },
-    [theme.breakpoints.down('md')]:{
+    [theme.breakpoints.down('md')]: {
       width: '100%',
       height: '20%',
       paddingTop: theme.spacing(15),
@@ -22,7 +22,17 @@ const useStyle = makeStyles((theme) => ({
         width: "20%",
         minWidth: '20%'
       },
-    }
+    },
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: theme.spacing(7)
+    },
+    [theme.breakpoints.down('xs')]: {
+      paddingTop: theme.spacing(1),
+      '&>img': {
+        // width: "40%",
+        minWidth: '25%'
+      }
+    },
   },
   powerButton: {
     cursor: "pointer",
@@ -79,8 +89,8 @@ const useStyle = makeStyles((theme) => ({
       filter: "blur(12px)",
       transition: "transform .2s ease-in-out",
     },
-    '&.focused':{
-      '&::before':{
+    '&.focused': {
+      '&::before': {
         transform: "scale(1.2)",
         filter: "blur(12px)",
         background: "rgba(18,57,61,1)",

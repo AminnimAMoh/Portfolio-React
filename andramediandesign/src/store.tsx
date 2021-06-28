@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from 'react-redux'
 import buttonActionSlice from "./redux/slices/buttonActionSlice";
+import ScreenSettingsSlice from "./redux/slices/ScreenSettingsSlice";
 
 const store: any = configureStore({
     reducer:{
-        buttonAction: buttonActionSlice
+        buttonAction: buttonActionSlice,
+        screenAction: ScreenSettingsSlice
     },
 })
 

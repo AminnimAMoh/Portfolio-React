@@ -1,9 +1,10 @@
 import React from 'react'
 import MenuButton from './views/MenuButton'
 import ContentContainer from './views/ContentContainer'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from "@material-ui/core/styles";
 import { RootState } from './store';
+import {rowGridToggleToReverce} from './redux/slices/ScreenSettingsSlice'
 // const mytheme = {
 //   radius: 82,
 // };
@@ -35,9 +36,13 @@ interface Props {
 }
 
 function App({ }: Props): React.ReactElement {
-  // console.clear();
+  console.clear();
+  const dispatch=useDispatch();
   const {containerState: {rootState}}=useSelector((state: RootState)=>state.buttonAction)
   const classes = useStyle()
+  if(window.innerWidth<1280){
+    dispatch(rowGridToggleToReverce())
+  }
   return (
     <div className={rootState ? `${classes.root} open` : `${classes.root} close`}>
       <MenuButton />
