@@ -31,13 +31,12 @@ const useStyle = makeStyles((theme) => ({
   MobileFrame:{
     display: 'none',
     position: 'sticky',
-    height: '200px',
+    height: 'auto',
     top: '-5px',
     width: '100%',
     [theme.breakpoints.down('md')]:{
       display: 'block'
     }
-    // height: '5',
   }
 }));
 

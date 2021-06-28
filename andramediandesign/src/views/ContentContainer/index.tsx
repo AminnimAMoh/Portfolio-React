@@ -24,7 +24,7 @@ function RenderObject(state: any): React.ReactElement {
       return  <h1>{state.state}</h1>
       break;
   }
-  return <div></div>
+  return <div style={{display: 'none'}}></div>
 }
 
 function ContentContainer({}: Props): React.ReactElement {
