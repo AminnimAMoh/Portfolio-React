@@ -71,7 +71,7 @@ function UX({}: Props): React.ReactElement {
         <Grid item xs={12}>
           <YouTubeEmbed embedID="AikAa-n8vq8" />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} md={12}>
           <Typography variant="body1">
             Currently our planet is at a critical point of animal extinction and
             bidovirsty loss. To aid in combatting this loss we have designed the
@@ -85,15 +85,15 @@ function UX({}: Props): React.ReactElement {
             with environmentally positive life choices.
           </Typography>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} md={12}>
           <Typography variant="h5">Knowledge As a tool to conserve</Typography>
           <Typography variant="h3">Environment and Biodiversity</Typography>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} md={12}>
           <Typography variant="h5">What is the strategy?</Typography>
           <Typography variant="h3">Design Solution</Typography>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} md={12}>
           <Typography variant="body1">
             Our design Solution is the Atmoscube, a cube roughly 450mm in width,
             height and depth. Within this hologram cube we are propose a city
