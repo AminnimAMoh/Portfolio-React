@@ -1,15 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState={
-    gridRowToReverce: false
+    gridRowToReverce: 'row',
+    screenState: 'wide'
 }
 
 const windowSettingsSlice=createSlice({
     name: 'ScreenSettings',
     initialState,
     reducers:{
-        rowGridToggleToReverce(state: any){
-            state.gridRowToReverce=true;
+        rowGridToggleToReverce(state: any, action: PayloadAction<number>){
+            state.gridRowToReverce='column-reverse';
+            if(action.payload<1280) state.screenState='limited';
         }
     }
 })

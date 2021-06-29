@@ -1,9 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const initialState = {
-  containerState: {
-    rootState: false,
-    delayState: true,
-  },
+  rootState: false,
+  delayState: true,
+  direction: true,
   buttonTrigered: "",
   renderPage: "",
 };
@@ -13,16 +12,16 @@ const buttonActionSlice = createSlice({
   initialState,
   reducers: {
     containerStateToggle(state: any, action: PayloadAction<string>) {
-      state.containerState.rootState =
+      state.rootState =
         action.payload === "PowerButton" ? false : true;
       state.buttonTrigered =
         action.payload === "PowerButton" ? " " : action.payload;
       state.renderPage =
         action.payload === "PowerButton" ? " " : action.payload;
-      state.containerState.delayState = false;
+      state.delayState = false;
     },
     onDelayStateChange(state) {
-      state.containerState.delayState = true;
+      state.delayState = true;
     },
   },
 });

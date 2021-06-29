@@ -2,11 +2,12 @@ import React from "react";
 import useStyle from "../styles";
 import { Grid, Typography, Link } from "@material-ui/core";
 import YouTubeEmbed from "../YouTubeEmbed";
+import {useSelector} from 'react-redux'
+import { RootState } from "src/store";
 
-interface Props { }
-
-function UX({ }: Props): React.ReactElement {
+function UX(): React.ReactElement {
   const classes = useStyle();
+  const {screenAction: {gridRowToReverce}}=useSelector((state: RootState) => state)
   const preventDefault = (
     event:
       | React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -74,7 +75,7 @@ function UX({ }: Props): React.ReactElement {
         <Grid
           item
           container
-          direction= 'row'
+          direction= {gridRowToReverce}
           spacing={4}
           justify="center"
           alignItems="flex-start"

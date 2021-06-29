@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import { RootState } from "src/store";
 import data from "./data";
 import useStyle from "./style";
-import { Props } from "./types";
 import useMeasure from "react-use-measure";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "src/store";
@@ -34,13 +33,14 @@ const calPos = (
     return { x, y };
   }
 };
-function MenuButton({}: Props): React.ReactElement {
+function MenuButton(): React.ReactElement {
   const classes = useStyle();
   const dispatch: AppDispatch = useDispatch();
   const parentElement = useRef<HTMLDivElement>(null);
   const {
-    containerState: { rootState },
-  } = useSelector((state: RootState) => state.buttonAction);
+    buttonAction: { rootState },
+    screenAction: {screenState}
+  } = useSelector((state: RootState) => state);
   const [buttonMesures, { width }] = useMeasure();
   const [powerState, setPowerState] = useState<boolean>(false);
   const buttonSizing = width;
@@ -78,7 +78,11 @@ function MenuButton({}: Props): React.ReactElement {
   };
 
   return (
-    <div className={classes.root} ref={parentElement}>
+    <div 
+    className={classes.root} 
+    ref={parentElement}
+    style={screenState==='wide' && !rootState ? {paddingTop: 0} : {}}
+    >
       <img
         ref={buttonMesures}
         src="images\Button\Menu_Trigger\Power_Button-Stoke.png"

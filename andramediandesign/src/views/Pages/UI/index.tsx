@@ -3,9 +3,7 @@ import useStyle from "../styles";
 import { Grid, Typography, Link } from "@material-ui/core";
 import YouTubeEmbed from "../YouTubeEmbed";
 
-interface Props {}
-
-function UI({}: Props): React.ReactElement {
+function UI(): React.ReactElement {
   const classes = useStyle();
   const preventDefault = (
     event:

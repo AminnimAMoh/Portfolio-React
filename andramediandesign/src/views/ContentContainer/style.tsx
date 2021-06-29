@@ -10,7 +10,7 @@ const useStyle = makeStyles((theme) => ({
     height: "100%",
     opacity: 1,
     transform: "translateX(-150%)",
-    transition: "transform 1s ease-in-out, width .5s ease .2s",
+    transition: "transform 1s ease-in-out .5s, width .5s ease, height .5s ease, padding .5s ease, opacity .5s ease .5s",
     overflowX: "hidden",
     overflowY: "auto",
     direction: "rtl",
@@ -27,6 +27,19 @@ const useStyle = makeStyles((theme) => ({
       backgroundImage: 'none',
       padding: theme.spacing(0,6,6),
     },
+    '&.open':{
+      transform: "translateX(0%)",
+    },
+    '&.open_vertically':{
+      transform: "translateY(0%)",
+    },
+    '&.close_vertically':{
+      transform: "translate(0%, 100%)",
+      padding: 0, opacity: 0
+    },
+    '&.close':{
+      padding: 0, opacity: 0
+    }
   },
   MobileFrame:{
     display: 'none',
