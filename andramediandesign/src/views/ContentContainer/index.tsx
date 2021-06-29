@@ -44,7 +44,7 @@ function ContentContainer(): React.ReactElement {
       style={
         rootState && !delayState && screenState === "wide"
           ? { width: "100%" }
-          : !rootState && !delayState && screenState === "wide"
+          : !rootState && delayState && screenState === "wide"
           ? { width: "0%" }
           : rootState && !delayState && screenState === "limited"
           ? { height: "100%" }

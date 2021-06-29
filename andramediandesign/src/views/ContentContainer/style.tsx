@@ -25,7 +25,7 @@ const useStyle = makeStyles((theme) => ({
     },
     [theme.breakpoints.down("md")]: {
       backgroundImage: 'none',
-      padding: theme.spacing(0,6,6),
+      padding: theme.spacing(0,6,12),
     },
     '&.open':{
       transform: "translateX(0%)",
