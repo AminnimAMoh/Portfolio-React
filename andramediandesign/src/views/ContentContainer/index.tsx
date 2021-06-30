@@ -27,9 +27,9 @@ function ContentContainer(): React.ReactElement {
     rootDetails.current &&
     scrollToTop.current &&
     rootDetails.current.scrollTop > 800
-      ? (scrollToTop.current.style.transform = "translateY(-15px) scale(1)")
+      ? (scrollToTop.current.style.transform = window.innerWidth>1280 ? "translateY(-15px) scale(1)" : "translateY(-75px) scale(1)")
       : scrollToTop.current &&
-        (scrollToTop.current.style.transform = "translateY(-15px) scale(0)");
+        (scrollToTop.current.style.transform = window.innerWidth>1280 ? "translateY(-15px) scale(0)" : "translateY(-75px) scale(1)");
   };
 
   const handleClick = () => {

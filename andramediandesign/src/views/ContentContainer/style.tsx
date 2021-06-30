@@ -64,6 +64,9 @@ const useStyle = makeStyles((theme) => ({
     borderRadius: "50%",
     cursor: "pointer",
     transition: "transform .5s ease-in-out",
+    [theme.breakpoints.down('md')]:{
+      transform: "translateY(-35px) scale(0)",
+    },
     "& >div": {
       width: '100%',
       height: '100%',
