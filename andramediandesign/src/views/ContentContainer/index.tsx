@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import useStyle from "./style";
 import { useSelector } from "react-redux";
 import { RootState } from "src/store";
@@ -21,6 +21,24 @@ function RenderObject(state: any): React.ReactElement {
 
 function ContentContainer(): React.ReactElement {
   const classes = useStyle();
+  const rootDetails = useRef<HTMLDivElement>(null);
+  const scrollToTop = useRef<HTMLDivElement>(null);
+  const handleScroll = () => {
+    rootDetails.current &&
+    scrollToTop.current &&
+    rootDetails.current.scrollTop > 800
+      ? (scrollToTop.current.style.transform = "translateY(-15px) scale(1)")
+      : scrollToTop.current &&
+        (scrollToTop.current.style.transform = "translateY(-15px) scale(0)");
+  };
+
+  const handleClick = () => {
+    rootDetails.current?.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   const {
     buttonAction: { rootState, delayState, renderPage },
     screenAction: { screenState },
@@ -28,6 +46,8 @@ function ContentContainer(): React.ReactElement {
 
   return (
     <div
+      onScroll={handleScroll}
+      ref={rootDetails}
       className={
         rootState && screenState === "wide"
           ? `${classes.root} open`
@@ -53,6 +73,13 @@ function ContentContainer(): React.ReactElement {
           : {}
       }
     >
+      <div
+        ref={scrollToTop}
+        className={classes.scrollToTop}
+        onClick={handleClick}
+      >
+        <div />
+      </div>
       <img
         src="images/Containers/Content_Frame/Mobile.png"
         alt="content"
