@@ -89,13 +89,17 @@ function MenuButton(): React.ReactElement {
           : {}
       }
     >
-      <img
-        ref={buttonMesures}
-        src="images\Button\Menu_Trigger\Power_Button-Stoke.png"
-        alt="content-asset"
-        className={classes.powerButton}
-        onClick={handlePowerClick}
-      />
+      <div 
+      className={powerState ? `${classes.powerButton} open` : `${classes.powerButton} close`} 
+      onClick={handlePowerClick}
+      >
+        <img
+          ref={buttonMesures}
+          src="images\Button\Menu_Trigger\Power_Button-Stoke.png"
+          alt="content-asset"
+        />
+      </div>
+
       {data.map(({ name, img, toolKit }, index) => {
         const { x, y } = calPos(index, data.length, buttonSizing, powerState);
         return (

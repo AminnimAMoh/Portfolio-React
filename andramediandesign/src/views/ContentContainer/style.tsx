@@ -89,9 +89,36 @@ const useStyle = makeStyles((theme) => ({
         width: mytheme.radius,
         height: mytheme.radius,
         filter: 'blur(15px)',
-        zIndex: -1,
+        zIndex: -2,
+        transition: 'transform .5s ease-in-out, background-color 1s ease-in'
       },
+      '&::after':{
+        content: '""',
+        display: 'block',
+        position: 'absolute',
+        top: '-1%', 
+        bottom: 0, 
+        left: 0, 
+        right: '-1%',
+        width: '102%',
+        height: '102%',
+        background: 'linear-gradient(163deg, rgba(156,60,65,1) 0%, rgba(18,57,61,1) 100%)',
+        borderRadius: '50%',
+        zIndex: -1,
+        transition: 'transform .5s ease-in-out .5s',
+        '-webkit-transition' : '-webkit-filter 500ms linear, -webkit-transform .5s ease-in-out .5s'
+      }
     },
+    '&:hover, &:focus':{
+      '&>div::before':{
+        transform: 'scale(1.5)',
+        backgroundColor: "#9C3C41",
+      },
+      '&>div::after':{
+        transform: 'scale(1.1)',
+        filter: 'blur(1.5px)',
+      }
+    }
   },
 }));
 
