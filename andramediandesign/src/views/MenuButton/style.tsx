@@ -56,7 +56,8 @@ const useStyle = makeStyles((theme) => ({
     '&.open':{
       "&::before": {
         filter: 'blur(15px)',
-        backgroundColor: "#9C3C41",
+        transform: 'scale(1.05)',
+        backgroundColor: "#12393D",
       }
     },
     '&.close':{
@@ -130,6 +131,16 @@ const useStyle = makeStyles((theme) => ({
       },
     },
   },
+  textOnPath:{
+    position: 'absolute',
+    "&>path":{
+      transform: 'translate(-693.7247px, -269.9313px)',
+      // fill: 'transparent',
+    },
+    '&>text':{
+      fill: 'white'
+    }
+  }
 }));
 
 export default useStyle;

@@ -44,6 +44,8 @@ function MenuButton(): React.ReactElement {
   const [buttonMesures, { width }] = useMeasure();
   const [powerState, setPowerState] = useState<boolean>(false);
   const buttonSizing = width;
+  const path =
+    "M771.8062,348.6448l.13-.1306c103.798-104.0754,272.37-104.1158,376.2175-.09l6.8143,6.8259c102.3864,102.5616,103.7173,268.2461,2.9919,372.4393l0,0c-101.9126,105.4213-269.9548,108.373-375.5069,6.5959l-6.9441-6.6957C668.5981,624.5027,666.93,453.8011,771.8062,348.6448Z";
 
   const handlePowerClick = () => {
     const parentChilrdernLength = parentElement.current?.childElementCount;
@@ -89,10 +91,22 @@ function MenuButton(): React.ReactElement {
           : {}
       }
     >
-      <div 
-      className={powerState ? `${classes.powerButton} open` : `${classes.powerButton} close`} 
-      onClick={handlePowerClick}
+      <div
+        className={
+          powerState
+            ? `${classes.powerButton} open`
+            : `${classes.powerButton} close`
+        }
+        onClick={handlePowerClick}
       >
+        <svg viewBox="0 0 555 555" className={classes.textOnPath}>
+          <path id="carve" d={path} />
+          <text width="500">
+            <textPath xlinkHref="#carve">
+              Hello!!! I am Amin. I am a React Front End Developer.
+            </textPath>
+          </text>
+        </svg>
         <img
           ref={buttonMesures}
           src="images\Button\Menu_Trigger\Power_Button-Stoke.png"
