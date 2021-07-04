@@ -95,14 +95,15 @@ const useStyle = makeStyles((theme) => ({
       content: '""',
       display: "block",
       position: "absolute",
-      top: "-1%",
+      top: "0",
       right: 0,
       bottom: 0,
-      left: "-1%",
+      left: "0",
       zIndex: -1,
       borderRadius: "inherit",
-      width: "104%",
-      height: "104%",
+      width: "100%",
+      height: "100%",
+      transform: 'scale(1.05)',
       background:
         "linear-gradient(155deg, rgba(122,145,147,1) 0%, rgba(6,22,33,1) 100%)",
       transition: "transform .5s ease-in, filter 500ms linear",
@@ -140,7 +141,7 @@ const useStyle = makeStyles((theme) => ({
     '&>text':{
       fill: 'white'
     }
-  }
+  },
 }));
 
 export default useStyle;

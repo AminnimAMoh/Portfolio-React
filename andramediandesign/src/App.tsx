@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
+
 import MenuButton from "./views/MenuButton";
 import ContentContainer from "./views/ContentContainer";
+import InfoFlout from './views/InfoFlout'
+
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { RootState } from "./store";
 import { rowGridToggleToReverce } from "./redux/slices/ScreenSettingsSlice";
-// const mytheme = {
-//   radius: 82,
-// };
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -29,10 +29,13 @@ const useStyle = makeStyles((theme) => ({
       paddingRight: 0,
     },
   },
+  landinginfo: {
+    position: "absolute",
+  },
 }));
 
 function App(): React.ReactElement {
-  console.clear();
+  // console.clear();
   const dispatch = useDispatch();
   const {
     buttonAction: { rootState },
@@ -43,11 +46,11 @@ function App(): React.ReactElement {
       dispatch(rowGridToggleToReverce(window.innerWidth));
     }
   });
-
   return (
     <div
       className={rootState ? `${classes.root} open` : `${classes.root} close`}
     >
+      <InfoFlout/>
       <MenuButton />
       <ContentContainer />
     </div>

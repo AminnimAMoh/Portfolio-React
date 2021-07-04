@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import { RootState } from "src/store";
-import data from "./data";
 import useStyle from "./style";
 import useMeasure from "react-use-measure";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,14 +37,14 @@ function MenuButton(): React.ReactElement {
   const dispatch: AppDispatch = useDispatch();
   const parentElement = useRef<HTMLDivElement>(null);
   const {
-    buttonAction: { rootState, delayState },
+    buttonAction: { rootState, delayState, data },
     screenAction: { screenState },
   } = useSelector((state: RootState) => state);
   const [buttonMesures, { width }] = useMeasure();
   const [powerState, setPowerState] = useState<boolean>(false);
   const buttonSizing = width;
-  const path =
-    "M771.8062,348.6448l.13-.1306c103.798-104.0754,272.37-104.1158,376.2175-.09l6.8143,6.8259c102.3864,102.5616,103.7173,268.2461,2.9919,372.4393l0,0c-101.9126,105.4213-269.9548,108.373-375.5069,6.5959l-6.9441-6.6957C668.5981,624.5027,666.93,453.8011,771.8062,348.6448Z";
+  // const path =
+  //   "M771.8062,348.6448l.13-.1306c103.798-104.0754,272.37-104.1158,376.2175-.09l6.8143,6.8259c102.3864,102.5616,103.7173,268.2461,2.9919,372.4393l0,0c-101.9126,105.4213-269.9548,108.373-375.5069,6.5959l-6.9441-6.6957C668.5981,624.5027,666.93,453.8011,771.8062,348.6448Z";
 
   const handlePowerClick = () => {
     const parentChilrdernLength = parentElement.current?.childElementCount;
@@ -91,6 +90,14 @@ function MenuButton(): React.ReactElement {
           : {}
       }
     >
+      {/* <svg viewBox="0 0 555 555" className={classes.textOnPath}>
+          <path id="carve" d={path} />
+          <text width="500">
+            <textPath xlinkHref="#carve">
+              Hello!!! I am Amin. I am a React Front End Developer.
+            </textPath>
+          </text>
+        </svg> */}
       <div
         className={
           powerState
@@ -99,14 +106,6 @@ function MenuButton(): React.ReactElement {
         }
         onClick={handlePowerClick}
       >
-        <svg viewBox="0 0 555 555" className={classes.textOnPath}>
-          <path id="carve" d={path} />
-          <text width="500">
-            <textPath xlinkHref="#carve">
-              Hello!!! I am Amin. I am a React Front End Developer.
-            </textPath>
-          </text>
-        </svg>
         <img
           ref={buttonMesures}
           src="images\Button\Menu_Trigger\Power_Button-Stoke.png"
@@ -114,27 +113,36 @@ function MenuButton(): React.ReactElement {
         />
       </div>
 
-      {data.map(({ name, img, toolKit }, index) => {
-        const { x, y } = calPos(index, data.length, buttonSizing, powerState);
-        return (
-          <div
-            key={name}
-            className={classes.buttonContainers}
-            style={{ transform: `translate(${x}px, ${y}px)` }}
-          >
+      {data.map(
+        (
+          {
+            name,
+            img,
+            toolKit,
+          }: { name: string; img: string; toolKit: string;},
+          index: number
+        ) => {
+          const { x, y } = calPos(index, data.length, buttonSizing, powerState);
+          return (
             <div
-              id={name}
-              className={classes.iconButtons}
-              style={{
-                width: buttonSizing / 4,
-                height: buttonSizing / 4,
-                backgroundImage: `url(${img})`,
-              }}
-              onClick={(e) => handleClick(e)}
-            ></div>
-          </div>
-        );
-      })}
+              key={name}
+              className={classes.buttonContainers}
+              style={{ transform: `translate(${x}px, ${y}px)` }}
+            >
+              <div
+                id={name}
+                className={classes.iconButtons}
+                style={{
+                  width: buttonSizing / 4,
+                  height: buttonSizing / 4,
+                  backgroundImage: `url(${img})`,
+                }}
+                onClick={(e) => handleClick(e)}
+              ></div>
+            </div>
+          );
+        }
+      )}
     </div>
   );
 }
