@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { RootState } from "./store";
 import { rowGridToggleToReverce } from "./redux/slices/ScreenSettingsSlice";
+import { Typography } from "@material-ui/core";
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -31,6 +32,11 @@ const useStyle = makeStyles((theme) => ({
   landinginfo: {
     position: "absolute",
   },
+  Splash:{
+    position: 'absolute', width: '100%', height: '100%',
+    padding: theme.spacing(6),
+    color: 'white'
+  }
 }));
 
 function App(): React.ReactElement {
@@ -49,6 +55,17 @@ function App(): React.ReactElement {
     <div
       className={rootState ? `${classes.root} open` : `${classes.root} close`}
     >
+      <div className={classes.Splash}>
+        <Typography variant="h1">
+          Hello!!!
+        </Typography>
+        <Typography variant="h1">
+          My name is Amin
+        </Typography>
+        <Typography variant="h1">
+          A React Front-End Dev
+        </Typography>
+      </div>
       <MenuButton />
       <ContentContainer />
     </div>

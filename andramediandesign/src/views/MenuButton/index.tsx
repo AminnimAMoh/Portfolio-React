@@ -86,7 +86,6 @@ function MenuButton(): React.ReactElement {
       setPowerState(() => !powerState);
     }
   };
-  console.log(showInfo);
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const payload = e.currentTarget.id;

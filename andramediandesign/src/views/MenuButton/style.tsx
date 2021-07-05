@@ -155,17 +155,20 @@ const useStyle = makeStyles((theme) => ({
   introTexts_text: {
     position: "relative",
     zIndex: 0,
-    padding: theme.spacing(1, 1, 1, 1),
+    display: 'block',
+    color: '#e4e5e7',
+    padding: theme.spacing(1, 1, 1, 2),
     "&::before": {
       content: '""',
       display: "block",
-      backgroundColor: "#e4e5e7",
+      // backgroundColor: "#e4e5e7",
       position: "absolute",
       top: 0,
       bottom: 0,
-      left: "-30%",
+      left: "-40%",
       right: 0,
       zIndex: -3,
+      borderRadius: '6px'
     },
     "&::after": {
       content: '""',
@@ -178,16 +181,18 @@ const useStyle = makeStyles((theme) => ({
       left: "-30%",
       right: 0,
       zIndex: 1,
-      transition: 'width 1s ease-in-out'
+      transition: 'width 1s ease-in-out 1.1s, transform 1s ease-in-out'
     },
     "&.open": {
       "&::after": {
         width: 0,
+        transform: 'translateX(100%) scale(1.1)',
       },
     },
     "&.close": {
       "&::after": {
-        width: '125%',
+        width: '130%',
+        transform: 'translateX(0) scale(1.1)'
       },
     },
   },
