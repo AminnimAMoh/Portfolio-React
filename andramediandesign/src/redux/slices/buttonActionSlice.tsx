@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {Positions} from '../../views/MenuButton/types'
 
 interface initialType {
   rootState: boolean;
@@ -28,42 +29,47 @@ const initialState: initialType = {
       name: "D3",
       img: "images/Button/Menu_List/Map.png",
       toolKit: "D3.js Project",
-      info: 'Hello!!!',
+      info: 'My Name is Amin a React.js Front End Dev',
       width: 200,
     },
     {
       name: "Info",
       img: "images/Button/Menu_List/info.png",
       toolKit: "Who am I",
-      info: 'My Name is Mohammad Amin Mohammadi',
+  
+      info: 'Thank you for your visit.!!!',
       width: 90,
     },
     {
       name: "CV",
       img: "images/Button/Menu_List/CV.png",
       toolKit: "Resume",
-      info: 'I am a React.js Front-End Developer',
+      info: '',
+      // info: 'I am a React.js Front-End Developer',
       width: 90,
     },
     {
       name: "UX",
       img: "images/Button/Menu_List/UX.png",
       toolKit: "UX Design Case Study",
-      info: 'Following menu helps you to findout more about me!!!',
+      // info: 'Following menu helps you to findout more about me!!!',
+      info: '',
+
       width: 150,
     },
     {
       name: "UI",
       img: "images/Button/Menu_List/UI.png",
       toolKit: "React.js User Interaction",
-      info: 'Thanks.',
+      // info: 'Thanks.',
+      info: '',
       width: 90,
     },
     {
       name: "CP",
       img: "images/Button/Menu_List/ColorPalette.png",
       toolKit: "P5.js Image to Color palette",
-      info: 'Thank you for your visit.!!!',
+      info: 'Hello!!!',
       width: 150,
     },
   ],
@@ -84,10 +90,14 @@ const buttonActionSlice = createSlice({
     onDelayStateChange(state) {
       state.delayState = true;
     },
+    addButtonsPosition(state, {payload}: PayloadAction<Positions[]>){
+      console.log(payload);
+      
+    }
   },
 });
 
-export const { containerStateToggle, onDelayStateChange } =
+export const { containerStateToggle, onDelayStateChange, addButtonsPosition } =
   buttonActionSlice.actions;
 
 export default buttonActionSlice.reducer;

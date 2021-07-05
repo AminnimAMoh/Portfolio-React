@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   moverText: {
     position: "absolute",
-
+    opacity: .5,
   },
 }));
 

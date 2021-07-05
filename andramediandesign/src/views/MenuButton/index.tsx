@@ -7,7 +7,11 @@ import { AppDispatch } from "src/store";
 import {
   containerStateToggle,
   onDelayStateChange,
+  // addButtonsPosition
 } from "../../redux/slices/buttonActionSlice";
+
+// import { Positions } from "./types";
+import { Typography } from "@material-ui/core";
 
 const calPos = (
   index: number,
@@ -35,6 +39,10 @@ const calPos = (
 function MenuButton(): React.ReactElement {
   const classes = useStyle();
   const dispatch: AppDispatch = useDispatch();
+  const [showInfo, setShowInfo] = useState<boolean>(false);
+  // const [buttonPositions, setButtonsPosition] = useState<Positions[]>([
+  //   { x: 0, y: 0 },
+  // ]);
   const parentElement = useRef<HTMLDivElement>(null);
   const {
     buttonAction: { rootState, delayState, data },
@@ -43,6 +51,21 @@ function MenuButton(): React.ReactElement {
   const [buttonMesures, { width }] = useMeasure();
   const [powerState, setPowerState] = useState<boolean>(false);
   const buttonSizing = width;
+
+  // useEffect(() => {
+  //   buttonSizing > 0 &&
+  //     data.map(
+  //       ({ name, img }: { name: string; img: string }, index: number) => {
+  //         // console.log(index);
+  //         const { x, y } = calPos(index, data.length, buttonSizing, powerState);
+  //         setButtonsPosition((preState) => {
+  //           return [...preState, { x, y }];
+  //         });
+  //       }
+  //     );
+  // }, [buttonSizing]);
+  // console.log(buttonPositions);
+
   // const path =
   //   "M771.8062,348.6448l.13-.1306c103.798-104.0754,272.37-104.1158,376.2175-.09l6.8143,6.8259c102.3864,102.5616,103.7173,268.2461,2.9919,372.4393l0,0c-101.9126,105.4213-269.9548,108.373-375.5069,6.5959l-6.9441-6.6957C668.5981,624.5027,666.93,453.8011,771.8062,348.6448Z";
 
@@ -63,6 +86,7 @@ function MenuButton(): React.ReactElement {
       setPowerState(() => !powerState);
     }
   };
+  console.log(showInfo);
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const payload = e.currentTarget.id;
@@ -105,6 +129,8 @@ function MenuButton(): React.ReactElement {
             : `${classes.powerButton} close`
         }
         onClick={handlePowerClick}
+        onMouseOver={() => setShowInfo(true)}
+        onMouseOut={() => setShowInfo(false)}
       >
         <img
           ref={buttonMesures}
@@ -119,16 +145,32 @@ function MenuButton(): React.ReactElement {
             name,
             img,
             toolKit,
-          }: { name: string; img: string; toolKit: string;},
+            info,
+          }: { name: string; img: string; toolKit: string; info: string },
           index: number
         ) => {
           const { x, y } = calPos(index, data.length, buttonSizing, powerState);
+          // setButtonsPosition((preState=>{return [...preState,{x,y}]}))
           return (
             <div
               key={name}
               className={classes.buttonContainers}
               style={{ transform: `translate(${x}px, ${y}px)` }}
             >
+              {info != "" && (
+                <div className={classes.introTexts_container}>
+                  <Typography
+                    variant="body1"
+                    className={
+                      showInfo && !powerState
+                        ? `${classes.introTexts_text} open`
+                        : `${classes.introTexts_text} close`
+                    }
+                  >
+                    {info}
+                  </Typography>
+                </div>
+              )}
               <div
                 id={name}
                 className={classes.iconButtons}

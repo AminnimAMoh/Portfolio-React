@@ -25,8 +25,8 @@ const useStyle = makeStyles((theme) => ({
   powerButton: {
     cursor: "pointer",
     zIndex: 2,
-    position: 'relative',
-    width: '100%',
+    position: "relative",
+    width: "100%",
     [theme.breakpoints.down("md")]: {
       width: "18%",
     },
@@ -42,30 +42,31 @@ const useStyle = makeStyles((theme) => ({
       display: "block",
       position: "absolute",
       zIndex: -1,
-      top: '10%',
+      top: "10%",
       bottom: 0,
-      left: '10%',
+      left: "10%",
       right: 0,
       width: "80%",
       height: "80%",
-      borderRadius: '50%',
+      borderRadius: "50%",
       opacity: 1,
-      filter: 'blur(10px)',
-      transition: 'background-color 1s cubic-bezier(0, 1.51, 0.12, -0.29), -webkit-filter 2000ms cubic-bezier(0, 1.51, 0.12, -0.29)'
+      filter: "blur(10px)",
+      transition:
+        "background-color 1s cubic-bezier(0, 1.51, 0.12, -0.29), -webkit-filter 2000ms cubic-bezier(0, 1.51, 0.12, -0.29)",
     },
-    '&.open':{
+    "&.open": {
       "&::before": {
-        filter: 'blur(15px)',
-        transform: 'scale(1.05)',
+        filter: "blur(15px)",
+        transform: "scale(1.05)",
         backgroundColor: "#12393D",
-      }
+      },
     },
-    '&.close':{
+    "&.close": {
       "&::before": {
-        filter: 'blur(5px)',
+        filter: "blur(5px)",
         backgroundColor: "#E4E5E7",
-      }
-    }
+      },
+    },
   },
   menuButtons: {
     position: "absolute",
@@ -103,7 +104,7 @@ const useStyle = makeStyles((theme) => ({
       borderRadius: "inherit",
       width: "100%",
       height: "100%",
-      transform: 'scale(1.05)',
+      transform: "scale(1.05)",
       background:
         "linear-gradient(155deg, rgba(122,145,147,1) 0%, rgba(6,22,33,1) 100%)",
       transition: "transform .5s ease-in, filter 500ms linear",
@@ -132,15 +133,63 @@ const useStyle = makeStyles((theme) => ({
       },
     },
   },
-  textOnPath:{
-    position: 'absolute',
-    "&>path":{
-      transform: 'translate(-693.7247px, -269.9313px)',
+  textOnPath: {
+    position: "absolute",
+    "&>path": {
+      transform: "translate(-693.7247px, -269.9313px)",
       // fill: 'transparent',
     },
-    '&>text':{
-      fill: 'white'
-    }
+    "&>text": {
+      fill: "white",
+    },
+  },
+  introTexts_container: {
+    position: "absolute",
+    width: "max-content",
+    transform: "translate(0, -50%)",
+    top: "50%",
+    left: "100%",
+    paddingLeft: theme.spacing(2),
+    zIndex: -3,
+  },
+  introTexts_text: {
+    position: "relative",
+    zIndex: 0,
+    padding: theme.spacing(1, 1, 1, 1),
+    "&::before": {
+      content: '""',
+      display: "block",
+      backgroundColor: "#e4e5e7",
+      position: "absolute",
+      top: 0,
+      bottom: 0,
+      left: "-30%",
+      right: 0,
+      zIndex: -3,
+    },
+    "&::after": {
+      content: '""',
+      display: "block",
+      backgroundColor: "#061621",
+      position: "absolute",
+      transform: "scale(1.1)",
+      top: 0,
+      bottom: 0,
+      left: "-30%",
+      right: 0,
+      zIndex: 1,
+      transition: 'width 1s ease-in-out'
+    },
+    "&.open": {
+      "&::after": {
+        width: 0,
+      },
+    },
+    "&.close": {
+      "&::after": {
+        width: '125%',
+      },
+    },
   },
 }));
 

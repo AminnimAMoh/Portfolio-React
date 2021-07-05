@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 
 import MenuButton from "./views/MenuButton";
 import ContentContainer from "./views/ContentContainer";
-import InfoFlout from './views/InfoFlout'
 
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
@@ -50,7 +49,6 @@ function App(): React.ReactElement {
     <div
       className={rootState ? `${classes.root} open` : `${classes.root} close`}
     >
-      <InfoFlout/>
       <MenuButton />
       <ContentContainer />
     </div>
