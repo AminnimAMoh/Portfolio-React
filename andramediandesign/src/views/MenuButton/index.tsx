@@ -11,7 +11,7 @@ import {
 } from "../../redux/slices/buttonActionSlice";
 
 // import { Positions } from "./types";
-import { Typography } from "@material-ui/core";
+// import { Typography } from "@material-ui/core";
 
 const calPos = (
   index: number,
@@ -39,7 +39,7 @@ const calPos = (
 function MenuButton(): React.ReactElement {
   const classes = useStyle();
   const dispatch: AppDispatch = useDispatch();
-  const [showInfo, setShowInfo] = useState<boolean>(false);
+  // const [showInfo, setShowInfo] = useState<boolean>(false);
   // const [buttonPositions, setButtonsPosition] = useState<Positions[]>([
   //   { x: 0, y: 0 },
   // ]);
@@ -65,9 +65,6 @@ function MenuButton(): React.ReactElement {
   //     );
   // }, [buttonSizing]);
   // console.log(buttonPositions);
-
-  // const path =
-  //   "M771.8062,348.6448l.13-.1306c103.798-104.0754,272.37-104.1158,376.2175-.09l6.8143,6.8259c102.3864,102.5616,103.7173,268.2461,2.9919,372.4393l0,0c-101.9126,105.4213-269.9548,108.373-375.5069,6.5959l-6.9441-6.6957C668.5981,624.5027,666.93,453.8011,771.8062,348.6448Z";
 
   const handlePowerClick = () => {
     const parentChilrdernLength = parentElement.current?.childElementCount;
@@ -113,14 +110,6 @@ function MenuButton(): React.ReactElement {
           : {}
       }
     >
-      {/* <svg viewBox="0 0 555 555" className={classes.textOnPath}>
-          <path id="carve" d={path} />
-          <text width="500">
-            <textPath xlinkHref="#carve">
-              Hello!!! I am Amin. I am a React Front End Developer.
-            </textPath>
-          </text>
-        </svg> */}
       <div
         className={
           powerState
@@ -128,8 +117,8 @@ function MenuButton(): React.ReactElement {
             : `${classes.powerButton} close`
         }
         onClick={handlePowerClick}
-        onMouseOver={() => setShowInfo(true)}
-        onMouseOut={() => setShowInfo(false)}
+        // onMouseOver={() => setShowInfo(true)}
+        // onMouseOut={() => setShowInfo(false)}
       >
         <img
           ref={buttonMesures}
@@ -149,14 +138,13 @@ function MenuButton(): React.ReactElement {
           index: number
         ) => {
           const { x, y } = calPos(index, data.length, buttonSizing, powerState);
-          // setButtonsPosition((preState=>{return [...preState,{x,y}]}))
           return (
             <div
               key={name}
               className={classes.buttonContainers}
               style={{ transform: `translate(${x}px, ${y}px)` }}
             >
-              {info != "" && (
+              {/* {info != "" && (
                 <div className={classes.introTexts_container}>
                   <Typography
                     variant="body1"
@@ -169,7 +157,7 @@ function MenuButton(): React.ReactElement {
                     {info}
                   </Typography>
                 </div>
-              )}
+              )} */}
               <div
                 id={name}
                 className={classes.iconButtons}
