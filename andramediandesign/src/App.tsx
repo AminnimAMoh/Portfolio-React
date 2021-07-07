@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 
 import MenuButton from "./views/MenuButton";
 import ContentContainer from "./views/ContentContainer";
-import InfoFlout from './views/InfoFlout'
 
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
@@ -32,6 +31,11 @@ const useStyle = makeStyles((theme) => ({
   landinginfo: {
     position: "absolute",
   },
+  Splash:{
+    position: 'absolute', width: '100%', height: '100%',
+    padding: theme.spacing(6),
+    color: 'white'
+  }
 }));
 
 function App(): React.ReactElement {
@@ -50,7 +54,6 @@ function App(): React.ReactElement {
     <div
       className={rootState ? `${classes.root} open` : `${classes.root} close`}
     >
-      <InfoFlout/>
       <MenuButton />
       <ContentContainer />
     </div>
