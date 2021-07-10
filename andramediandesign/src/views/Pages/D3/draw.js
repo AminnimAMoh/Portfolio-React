@@ -471,7 +471,7 @@ export const draw = (container, svgRef) => {
                 .attr("id", function () {
                     return stationName[i];
                 })
-                .attr("class", "cities-circles")
+                .attr("className", "cities-circles")
                 .attr("cx", function () {
                     return cord[0];
                 })
