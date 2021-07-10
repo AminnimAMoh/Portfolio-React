@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { select, Selection } from "d3-selection";
+import {draw} from './draw';
 
 interface Props {}
 
@@ -15,8 +16,9 @@ function D3({}: Props): React.ReactElement {
   useEffect(() => {
     !svg && setSvg(select(svgRef.current))
     svgRef && console.log(svgRef.current);
-    
   }, [svg]);
+
+  draw(svg)
   
   return (
     <div>
