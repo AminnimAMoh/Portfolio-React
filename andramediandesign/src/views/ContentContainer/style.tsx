@@ -57,7 +57,7 @@ const useStyle = makeStyles((theme) => ({
   scrollToTop: {
     position: "sticky",
     top: "100%",
-    right: "100%",
+    right: "0%",
     transform: "translateY(-15px) scale(0)",
     width: mytheme.radius,
     height: mytheme.radius,

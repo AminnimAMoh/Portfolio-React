@@ -56,6 +56,9 @@ const useStyle = makeStyles((theme) => ({
     position: 'relative',
     width: '100%',
   },
+  divider:{
+    backgroundColor: 'white !important'
+  }
 }));
 
 export default useStyle;

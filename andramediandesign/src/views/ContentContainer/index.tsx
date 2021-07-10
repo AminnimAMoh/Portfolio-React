@@ -4,15 +4,22 @@ import { useSelector } from "react-redux";
 import { RootState } from "src/store";
 import UX from "../Pages/UX";
 import UI from "../Pages/UI";
+import CV from "../Pages/CV";
+import D3 from '../Pages/D3'
 
 function RenderObject(state: any): React.ReactElement {
-  console.log(state);
 
   switch (state.state) {
     case "UX":
       return <UX />;
     case "UI": {
       return <UI />;
+    }
+    case "CV": {
+      return <CV />;
+    }
+    case "D3": {
+      return <D3 />;
     }
     default:
       return <h1>{state.state}</h1>;
