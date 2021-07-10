@@ -1,10 +1,21 @@
 import * as d3 from 'd3'
-
-
-export const draw = (svg) => {
-    // let containerElement = document.getElementById("Script-Container");
-    // let containerX = containerElement.offsetWidth;
-    // let containerY = containerElement.offsetHeight;
+import Radar from 'react-d3-radar';
+import AnnualRainAllYears from './data/Annual-Rain-All-Years.csv'
+import PThreeYears from './data/PThreeYears.csv'
+import MonthFiveYears from './data/Month-FiveYears.csv'
+import url from './data/GeoJson/bangladesh.geojson'
+import style from './style.css'
+export const draw = (container, svgRef) => {
+    let containerElement = svgRef.current;
+    let containerX = 0;
+    let containerY = 0;
+    if (containerElement) {
+        containerX = containerElement.offsetWidth
+        containerY = containerElement.offsetHeight
+    } else {
+        containerX = 300
+        containerY = 300
+    }
     let stationName = [];
     let rain1990 = [];
     let rain1995 = [];
@@ -120,7 +131,11 @@ export const draw = (svg) => {
     }];
 
 
-    let container = d3.select("#Script-Container").append("svg");
+    var mouse = function (node) {
+        console.log(node.target, node);
+    };
+
+    // let container = d3.select("#Script-Container").append("svg");
 
     let mapContainer = container.append("g").attr("id", "map-container-group");
     let cityCircles = container.append("g").attr("id", "city-indicators");
@@ -309,7 +324,7 @@ export const draw = (svg) => {
         .domain([1100, 4300])
         .range([4, 24]);
 
-    d3.csv("data/Annual-Rain-All-Years.csv", function (data) {
+    d3.csv(AnnualRainAllYears).then((data) => {
         for (let i = 0; i < data.length; i++) {
             stationName[i] = data[i].Station;
             rain1990.push(parseInt(data[i].Sum1990));
@@ -322,7 +337,7 @@ export const draw = (svg) => {
         }
     });
 
-    d3.csv("data/PThreeYears.csv", function (data) {
+    d3.csv(PThreeYears).then(data => {
         for (let i = 2; i < data.length; i++) {
             popCityName.push(data[i].City);
             populationOne.push(+data[i].Population1991);
@@ -338,7 +353,7 @@ export const draw = (svg) => {
     })
 
     let count = 0;
-    d3.csv("data/Month-FiveYears.csv", function (data) {
+    d3.csv(MonthFiveYears).then((data) => {
         for (let i = 0; i < data.length; i++) {
             rainMonthTotal1990.push({
                 month: rainMonthsName[count].name,
@@ -377,26 +392,25 @@ export const draw = (svg) => {
         }
     })
 
-    let url = "data/GeoJson/bangladesh.geojson";
-    d3.json(url, function (error, countries) {
-        if (error) console.log(error);
+    d3.json(url).then((countries) => {
         let names = [];
-
-        for (let i = 0; i < countries.features.length; i++) {
-            names.push(countries.features[i].properties.NAME_4);
-        }
+        if (countries) {
+            for (let i = 0; i < countries.features.length; i++) {
+                names.push(countries.features[i].properties.NAME_4);
+            }
         mapContainer.selectAll("path")
             .data(countries.features)
             .enter().append("path")
             .attr("d", geoGenerator)
+        }
     });
 
     function reDrawCan() {
 
 
         containerElement = document.getElementById("Script-Container");
-        w = containerElement.offsetWidth;
-        h = containerElement.offsetHeight;
+        w = 300;
+        h = 300;
         container
             .attr("width", w)
             .attr("height", h);
@@ -477,7 +491,7 @@ export const draw = (svg) => {
                 })
 
                 .on("click", function () {
-                    let coords = d3.mouse(this);
+                    let coords = mouse(this);
                     let group = container.append("g");
                     let nameOfCity = this.id;
                     let popOne, popTwo, popThree;
@@ -694,18 +708,18 @@ export const draw = (svg) => {
                         },],
                         color: "#cd1d27"
                     });
-
+                    let colorSet = d3.scaleOrdinal().range(["#9C3C41", "#12393D", "#9C3C41"]);
                     let radarChartOptions = {
                         w: 90,
                         h: 150,
                         margin: margin,
                         levels: 2,
-                        roundStrokes: true,
-                        color: d3.scaleOrdinal().range(["#9C3C41", "#12393D", "#9C3C41"]),
+                        // roundStrokes: true,
+                        // color: colorSet,
                         format: '.0f'
                     };
 
-                    let svg_radar1 = RadarChart(".rainG", thisCityRain, radarChartOptions);
+                    let svg_radar1 = Radar(".rainG", thisCityRain, radarChartOptions);
 
                     let textContainer = lables.selectAll("text")
                         .data(rectsLength);
@@ -730,6 +744,8 @@ export const draw = (svg) => {
                         .attr("font-size", 11)
                         .style("opacity", 1);
 
+                    let groupTx = coords[0] + graphRad * Math.cos(angleScale(i));
+                    let groupTy = coords[1] + graphRad * Math.sin(angleScale(i));
 
                     lables.attr("transform", "translate(" + groupTx + "," + groupTy + ")");
                     let formatComma = d3.format(",");
@@ -951,9 +967,6 @@ export const draw = (svg) => {
                 })
         }
         d3.selectAll("g").raise();
-
-        let powerButton = document.getElementById('main-button');
-        powerButton.addEventListener("click", removeFunction());
     }
 
     reDrawCan();

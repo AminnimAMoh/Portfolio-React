@@ -15,14 +15,13 @@ function D3({}: Props): React.ReactElement {
 
   useEffect(() => {
     !svg && setSvg(select(svgRef.current))
-    svgRef && console.log(svgRef.current);
+    // svgRef && console.log(svgRef.current);
+    svg && draw(svg,svgRef)
   }, [svg]);
-
-  draw(svg)
   
   return (
-    <div>
-      <svg ref={svgRef} />
+    <div style={{width: '100%', height: '100%'}}>
+      <svg style={{width: '100%', height: '100%'}} ref={svgRef} />
     </div>
   );
 }
