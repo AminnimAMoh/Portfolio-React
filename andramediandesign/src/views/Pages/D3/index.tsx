@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import { select, Selection } from "d3-selection";
 import {draw} from './draw';
-
+import {useDispatch} from 'react-redux'
+import {fetchAnnualrainData} from '../../../redux/slices/fetchSlice'
 interface Props {}
 
 // interface ParentCalcedSize {
@@ -10,6 +11,7 @@ interface Props {}
 // }
 
 function D3({}: Props): React.ReactElement {
+    const dispatch=useDispatch();
   const svgRef = useRef<SVGSVGElement | null>(null);
   const [svg, setSvg]=useState <null | Selection<SVGSVGElement | null, unknown, null, undefined>>(null)
 
@@ -17,6 +19,7 @@ function D3({}: Props): React.ReactElement {
     !svg && setSvg(select(svgRef.current))
     // svgRef && console.log(svgRef.current);
     svg && draw(svg,svgRef)
+    dispatch(fetchAnnualrainData())
   }, [svg]);
   
   return (

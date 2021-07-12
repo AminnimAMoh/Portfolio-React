@@ -12,15 +12,12 @@ function RenderObject(state: any): React.ReactElement {
   switch (state.state) {
     case "UX":
       return <UX />;
-    case "UI": {
+    case "UI":
       return <UI />;
-    }
-    case "CV": {
+    case "CV":
       return <CV />;
-    }
-    case "D3": {
-      return <D3 />;
-    }
+      case 'D3':
+        return <D3/>
     default:
       return <h1>{state.state}</h1>;
   }
