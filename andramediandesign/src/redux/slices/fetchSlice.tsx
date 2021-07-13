@@ -9,8 +9,13 @@ export const fetchAnnualrainData=createAsyncThunk(
     'fetchData/AnnualRainData',
     async (_, thunkAPI) => {
         try{
+<<<<<<< Updated upstream
             const response=axios.get('http://localhost:3000/annual_rain')
             return response
+=======
+            const response=await axiosInterceptor().get('annual_rain')
+            return response.data
+>>>>>>> Stashed changes
         }catch (err){
             return thunkAPI.rejectWithValue(err)
         }
