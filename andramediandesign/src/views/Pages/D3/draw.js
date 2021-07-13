@@ -8,7 +8,7 @@ import MonthFiveYears from "./data/Month-FiveYears.csv";
 import url from "./data/GeoJson/bangladesh.geojson";
 import slumsTutal from "./data/bangladesh_slums_total (1).csv";
 
-export const draw = (container, svgRef) => {
+export const draw = (container, svgRef, annualrain) => {
   let containerElement = svgRef.current;
   let containerX = 0;
   let containerY = 0;
@@ -367,6 +367,7 @@ export const draw = (container, svgRef) => {
     }
   });
 
+
   d3.csv(AnnualRainAllYears).then((data) => {
     for (let i = 0; i < data.length; i++) {
       stationName[i] = data[i].Station;
@@ -451,10 +452,15 @@ export const draw = (container, svgRef) => {
   });
 
   function reDrawCan() {
-    let datatransfer = rain2013;
+    const annualRainData=annualrain.data;
+    console.log(annualRainData);
+    const datatransfer=annualRainData.map(properties=> {
+     return properties['Sum2013'] 
+    });
+    // let datatransfer = rain2013;
     let firstMin = d3.min(datatransfer);
     let firstMax = d3.max(datatransfer);
-    console.log(rain2013.length);
+    console.log(datatransfer);
     let radScale = d3.scaleLinear().domain([firstMin, firstMax]).range([6, 24]);
 
     // function reDrawCan() {
@@ -1210,28 +1216,12 @@ export const draw = (container, svgRef) => {
     }
 
     function drawAll(data) {
-      let dataSet=[];
+      const annualRainData=annualrain.data;
+      const dataSet=annualRainData.map(properties=> {
+       return properties[`Sum${data}`] 
+      });
+      console.log(dataSet);
       yearSelected = data;
-      switch (data) {
-        case "1990":
-          dataSet = rain1990;
-          break;
-        case "1995":
-          dataSet = rain1995;
-          break;
-        case "2000":
-          dataSet = rain2000;
-          break;
-        case "2005":
-          dataSet = rain2005;
-          break;
-        case "2010":
-          dataSet = rain2010;
-          break;
-        case "2013":
-          dataSet = rain2013;
-          break;
-      }
 
       let circleTransition = d3.transition().ease(d3.easeExp).duration(1000);
 
@@ -1268,11 +1258,11 @@ export const draw = (container, svgRef) => {
 
       let managedArray = [];
       let sortedData = dataSet.sort(d3.descending);
-    console.log(sortedData);
+    // console.log(sortedData);
       let mid = Math.floor(sortedData.length / 2);
-      managedArray[0]=(sortedData[0]);
-      managedArray[1]=(sortedData[mid]);
-      managedArray[2]=(sortedData[sortedData.length - 1]);
+      // managedArray[0]=(sortedData[0]);
+      // managedArray[1]=(sortedData[mid]);
+      // managedArray[2]=(sortedData[sortedData.length - 1]);
 
     //   managedArray.push(sortedData[0]);
     //   managedArray.push(sortedData[mid]);

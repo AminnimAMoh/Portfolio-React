@@ -1,8 +1,9 @@
 import React, { useRef, useEffect, useState } from "react";
 import { select, Selection } from "d3-selection";
-import {draw} from './draw';
-import {useDispatch} from 'react-redux'
-import {fetchAnnualrainData} from '../../../redux/slices/fetchSlice'
+import { draw } from "./draw";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAnnualrainData } from "../../../redux/slices/fetchSlice";
+import { RootState } from "src/store";
 interface Props {}
 
 // interface ParentCalcedSize {
@@ -11,20 +12,31 @@ interface Props {}
 // }
 
 function D3({}: Props): React.ReactElement {
-    const dispatch=useDispatch();
+    const {
+        dataStore: {annualrain}
+    }=useSelector((state: RootState)=>state)
+  const dispatch = useDispatch();
   const svgRef = useRef<SVGSVGElement | null>(null);
-  const [svg, setSvg]=useState <null | Selection<SVGSVGElement | null, unknown, null, undefined>>(null)
+  const [svg, setSvg] = useState<null | Selection<
+    SVGSVGElement | null,
+    unknown,
+    null,
+    undefined
+  >>(null);
+
+  useEffect(()=>{
+    !annualrain.state && dispatch(fetchAnnualrainData());
+  }, [])
 
   useEffect(() => {
-    !svg && setSvg(select(svgRef.current))
+    !svg && setSvg(select(svgRef.current));
     // svgRef && console.log(svgRef.current);
-    svg && draw(svg,svgRef)
-    dispatch(fetchAnnualrainData())
-  }, [svg]);
-  
+    (annualrain.data.length>0 && svg) && draw(svg, svgRef, annualrain);
+  }, [svg,annualrain]);
+
   return (
-    <div style={{width: '100%', height: '100%'}}>
-      <svg style={{width: '100%', height: '100%'}} ref={svgRef} />
+    <div style={{ width: "100%", height: "100%" }}>
+      <svg style={{ width: "100%", height: "100%" }} ref={svgRef} />
     </div>
   );
 }
