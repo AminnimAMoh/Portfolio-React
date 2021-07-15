@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { select, Selection } from "d3-selection";
 import { draw } from "./draw";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAnnualrainData } from "../../../redux/slices/fetchSlice";
+import { fetchAnnualrainData, fetchSlumsData, fetchPopulationData, fetchMonthData } from "../../../redux/slices/fetchSlice";
 import { RootState } from "src/store";
 interface Props {}
 
@@ -25,7 +25,11 @@ function D3({}: Props): React.ReactElement {
   >>(null);
 
   useEffect(()=>{
-    !annualrain.state && dispatch(fetchAnnualrainData());
+    !annualrain.state && 
+    dispatch(fetchAnnualrainData());
+    dispatch(fetchSlumsData());
+    dispatch(fetchPopulationData());
+    dispatch(fetchMonthData());
   }, [])
 
   useEffect(() => {
