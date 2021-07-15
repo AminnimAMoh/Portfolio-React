@@ -8,21 +8,16 @@ import MonthFiveYears from "./data/Month-FiveYears.csv";
 import url from "./data/GeoJson/bangladesh.geojson";
 import slumsTutal from "./data/bangladesh_slums_total (1).csv";
 
-export const draw = (container, svgRef, annualrain) => {
+export const draw = (container, svgRef, annualrain, slums, population, month) => {
   let containerElement = svgRef.current;
   let containerX = 0;
   let containerY = 0;
   if (containerElement) {
-    containerX = containerElement.offsetWidth;
-    containerY = containerElement.offsetHeight;
+    containerX = containerElement.clientWidth;
+    containerY = containerElement.clientHeight;
+    console.log(containerX);
   }
   let stationName = [];
-  let rain1990 = [];
-  let rain1995 = [];
-  let rain2000 = [];
-  let rain2005 = [];
-  let rain2010 = [];
-  let rain2013 = [];
   let stationCord = [];
   let yearLableInc = 80;
   let mapXOffSet = -100;
@@ -164,7 +159,7 @@ export const draw = (container, svgRef, annualrain) => {
   ];
 
   let mouse = function (node) {
-    console.log(node.target, node);
+    // console.log(node.target, node);
   };
 
   // let container = d3.select("#Script-Container").append("svg");
@@ -366,20 +361,10 @@ export const draw = (container, svgRef, annualrain) => {
       });
     }
   });
-
-
-  d3.csv(AnnualRainAllYears).then((data) => {
-    for (let i = 0; i < data.length; i++) {
-      stationName[i] = data[i].Station;
-      rain1990.push(parseInt(data[i].Sum1990));
-      rain1995.push(parseInt(data[i].Sum1995));
-      rain2000.push(parseInt(data[i].Sum2000));
-      rain2005.push(parseInt(data[i].Sum2005));
-      rain2010.push(parseInt(data[i].Sum2010));
-      rain2013.push(parseInt(data[i].Sum2013));
-      stationCord.push(projectionTest([+data[i].longitude, +data[i].latitude]));
-    }
-  });
+  
+  annualrain.data.forEach(station=>{
+    stationCord.push(projectionTest([+station['longitude'], +station['latitude']]))
+  })
 
   d3.csv(PThreeYears).then((data) => {
     for (let i = 2; i < data.length; i++) {
@@ -453,14 +438,12 @@ export const draw = (container, svgRef, annualrain) => {
 
   function reDrawCan() {
     const annualRainData=annualrain.data;
-    console.log(annualRainData);
     const datatransfer=annualRainData.map(properties=> {
      return properties['Sum2013'] 
     });
     // let datatransfer = rain2013;
     let firstMin = d3.min(datatransfer);
     let firstMax = d3.max(datatransfer);
-    console.log(datatransfer);
     let radScale = d3.scaleLinear().domain([firstMin, firstMax]).range([6, 24]);
 
     // function reDrawCan() {
@@ -524,7 +507,7 @@ export const draw = (container, svgRef, annualrain) => {
     cityCircles.attr("transform", "translate(" + mapXOffSet + ",0)");
     cityLables.attr("transform", "translate(" + mapXOffSet + ",0)");
     ellipseContainer.attr("transform", "translate(" + mapXOffSet + ",0)");
-
+    const rain2013=annualrain.data.map(state=> +state['Sum2013'])
     let managedArray = [];
     let sortedData = rain2013.sort(d3.descending);
     managedArray.push(sortedData[0]);
@@ -1220,7 +1203,7 @@ export const draw = (container, svgRef, annualrain) => {
       const dataSet=annualRainData.map(properties=> {
        return properties[`Sum${data}`] 
       });
-      console.log(dataSet);
+      // console.log(dataSet);
       yearSelected = data;
 
       let circleTransition = d3.transition().ease(d3.easeExp).duration(1000);
@@ -1249,12 +1232,12 @@ export const draw = (container, svgRef, annualrain) => {
         .attr("r", function (d) {
           return radScale(d);
         })
-        .attr("cx", function (d, i) {
-          return stationCord[i][0];
-        })
-        .attr("cy", function (d, i) {
-          return stationCord[i][1];
-        });
+        // .attr("cx", function (d, i) {
+        //   return stationCord[i][0];
+        // })
+        // .attr("cy", function (d, i) {
+        //   return stationCord[i][1];
+        // });
 
       let managedArray = [];
       let sortedData = dataSet.sort(d3.descending);

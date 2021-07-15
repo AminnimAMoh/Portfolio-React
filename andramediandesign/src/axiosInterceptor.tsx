@@ -6,7 +6,7 @@ export default () => {
 
   const axiosInterceptor = axios.create({
     baseURL,
-    timeout: 1000,
+    timeout: 1100,
     headers,
   });
 

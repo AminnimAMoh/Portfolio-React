@@ -50,8 +50,6 @@ export const fetchSlumsData = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await axiosInterceptor().get("slums");
-      console.log(response);
-      
       return response.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
@@ -90,12 +88,10 @@ const FetchSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchAnnualrainData.fulfilled, (state: RootState, action) => {
-        console.log(action.payload);
-        
         return {
           ...state,
           annualrain: {
-            data: action.payload,
+            data: action.payload.annualRain,
             state: true,
           }
         };
@@ -104,7 +100,7 @@ const FetchSlice = createSlice({
         return {
           ...state,
           slums: {
-            data: action.payload,
+            data: action.payload.slums,
             state: true,
           }
         };
@@ -113,7 +109,7 @@ const FetchSlice = createSlice({
         return {
           ...state,
           population: {
-            data: action.payload,
+            data: action.payload.population,
             state: true,
           }
         };
@@ -122,7 +118,7 @@ const FetchSlice = createSlice({
         return {
           ...state,
           months: {
-            data: action.payload,
+            data: action.payload.monthlyTotal,
             state: true,
           }
         };
