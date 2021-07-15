@@ -2,26 +2,20 @@ import * as d3 from "d3";
 import Radar from "react-d3-radar";
 import style from "./style.css";
 
-import AnnualRainAllYears from "./data/Annual-Rain-All-Years.csv";
 import PThreeYears from "./data/PThreeYears.csv";
 import MonthFiveYears from "./data/Month-FiveYears.csv";
 import url from "./data/GeoJson/bangladesh.geojson";
 import slumsTutal from "./data/bangladesh_slums_total (1).csv";
 
-export const draw = (container, svgRef, annualrain) => {
+export const draw = (container, svgRef, annualrain, slums, population, months) => {
   let containerElement = svgRef.current;
   let containerX = 0;
   let containerY = 0;
   if (containerElement) {
-    containerX = containerElement.offsetWidth;
-    containerY = containerElement.offsetHeight;
+    containerX = containerElement.clientWidth;
+    containerY = containerElement.clientHeight;
   }
   let stationName = [];
-  let rain1990 = [];
-  let rain1995 = [];
-  let rain2000 = [];
-  let rain2005 = [];
-  let rain2010 = [];
   let rain2013 = [];
   let stationCord = [];
   let yearLableInc = 80;
@@ -367,19 +361,9 @@ export const draw = (container, svgRef, annualrain) => {
     }
   });
 
-
-  d3.csv(AnnualRainAllYears).then((data) => {
-    for (let i = 0; i < data.length; i++) {
-      stationName[i] = data[i].Station;
-      rain1990.push(parseInt(data[i].Sum1990));
-      rain1995.push(parseInt(data[i].Sum1995));
-      rain2000.push(parseInt(data[i].Sum2000));
-      rain2005.push(parseInt(data[i].Sum2005));
-      rain2010.push(parseInt(data[i].Sum2010));
-      rain2013.push(parseInt(data[i].Sum2013));
-      stationCord.push(projectionTest([+data[i].longitude, +data[i].latitude]));
-    }
-  });
+  annualrain.data.forEach(station=>{
+      stationCord.push(projectionTest([+station['longitude'], +station['latitude']]));
+  })
 
   d3.csv(PThreeYears).then((data) => {
     for (let i = 2; i < data.length; i++) {
