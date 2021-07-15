@@ -23,7 +23,7 @@ export const draw = (container, svgRef, annualrain, slums, population, months) =
   let w = containerX;
   let h = containerY;
   let yearSelected = "0";
-  let slumes = [];
+  let slumes = slums.data;
   let ellipsesLength = [
     {
       size: 70,
@@ -352,33 +352,33 @@ export const draw = (container, svgRef, annualrain, slums, population, months) =
 
   let radScale = d3.scaleLinear().domain([1100, 4300]).range([4, 24]);
 
-  d3.csv(slumsTutal, function (data) {
-    for (var i = 0; i < data.length; i++) {
-      slumes.push({
-        year: data[i].year,
-        pop: data[i].number,
-      });
-    }
-  });
+  // d3.csv(slumsTutal, function (data) {
+  //   for (var i = 0; i < data.length; i++) {
+  //     slumes.push({
+  //       year: data[i].year,
+  //       pop: data[i].number,
+  //     });
+  //   }
+  // });
 
   annualrain.data.forEach(station=>{
       stationCord.push(projectionTest([+station['longitude'], +station['latitude']]));
   })
 
-  d3.csv(PThreeYears).then((data) => {
-    for (let i = 2; i < data.length; i++) {
-      popCityName.push(data[i].City);
-      populationOne.push(+data[i].Population1991);
-      populationTwo.push(+data[i].Population2001);
-      populationThree.push(+data[i].Population2011);
-      popMinOne = +data[0].Min1991;
-      popMaxOne = +data[0].Max1991;
-      popMinTwo = +data[0].Min2001;
-      popMaxTwo = +data[0].Max2001;
-      popMinThree = +data[0].Min2011;
-      popMaxThree = +data[0].Max2011;
-    }
-  });
+  // d3.csv(PThreeYears).then((data) => {
+  //   for (let i = 2; i < data.length; i++) {
+  //     popCityName.push(data[i].City);
+  //     populationOne.push(+data[i].Population1991);
+  //     populationTwo.push(+data[i].Population2001);
+  //     populationThree.push(+data[i].Population2011);
+  //     popMinOne = +data[0].Min1991;
+  //     popMaxOne = +data[0].Max1991;
+  //     popMinTwo = +data[0].Min2001;
+  //     popMaxTwo = +data[0].Max2001;
+  //     popMinThree = +data[0].Min2011;
+  //     popMaxThree = +data[0].Max2011;
+  //   }
+  // });
 
   let count = 0;
   d3.csv(MonthFiveYears).then((data) => {
@@ -481,13 +481,13 @@ export const draw = (container, svgRef, annualrain, slums, population, months) =
       let groups;
       let dataSet;
       if (i == 0) {
-        dataSet = populationOne;
+        dataSet = population.data['Population1991'];
         groups = groupOne;
       } else if (i == 1) {
-        dataSet = populationTwo;
+        dataSet = population.data['Population2001'];
         groups = groupTwo;
       } else if (i == 2) {
-        dataSet = populationThree;
+        dataSet = population.data['Population2011'];
         groups = groupThree;
       }
 
@@ -676,7 +676,7 @@ export const draw = (container, svgRef, annualrain, slums, population, months) =
 
           let pieColorScale = d3
             .scaleSequential()
-            .domain([popMinOne, popMaxOne])
+            .domain([population.data['min1991'], popMaxOne])
             .interpolator(d3.interpolateBuPu);
 
           for (let i = 0; i < 3; i++) {
