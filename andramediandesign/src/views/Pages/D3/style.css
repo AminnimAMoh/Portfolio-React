@@ -21,6 +21,14 @@ path {
     box-shadow: 2px 2px 15px rgba(0, 0, 0, .5);
 }
 
+.stop-left {
+    stop-color: #426164;
+}
+
+.stop-right {
+    stop-color: #061621;
+}
+
 .cities-circles {
     fill: url(#Gradient);
     stroke: url(#Gradient);

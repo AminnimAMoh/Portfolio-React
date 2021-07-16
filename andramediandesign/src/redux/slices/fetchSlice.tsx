@@ -93,8 +93,11 @@ const FetchSlice = createSlice({
           annualrain: {
             data: action.payload.annualRain,
             state: true,
-          }
+          },
         };
+      })
+      .addCase(fetchAnnualrainData.rejected, (state: RootState, action) => {
+        return state;
       })
       .addCase(fetchSlumsData.fulfilled, (state: RootState, action) => {
         return {
@@ -102,8 +105,11 @@ const FetchSlice = createSlice({
           slums: {
             data: action.payload.slums,
             state: true,
-          }
+          },
         };
+      })
+      .addCase(fetchSlumsData.rejected, (state: RootState, action) => {
+        return state;
       })
       .addCase(fetchPopulationData.fulfilled, (state: RootState, action) => {
         return {
@@ -111,8 +117,11 @@ const FetchSlice = createSlice({
           population: {
             data: action.payload.population,
             state: true,
-          }
+          },
         };
+      })
+      .addCase(fetchPopulationData.rejected, (state: RootState, action) => {
+        return state;
       })
       .addCase(fetchMonthData.fulfilled, (state: RootState, action) => {
         return {
@@ -120,8 +129,11 @@ const FetchSlice = createSlice({
           months: {
             data: action.payload.monthlyTotal,
             state: true,
-          }
+          },
         };
+      })
+      .addCase(fetchMonthData.rejected, (state: RootState, action) => {
+        return state;
       });
   },
 });

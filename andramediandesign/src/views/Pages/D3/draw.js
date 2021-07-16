@@ -527,6 +527,7 @@ export const draw = (
       .enter()
       .append("circle")
       .attr("class", "cities-circles")
+      .attr("id", 'Hello')
       .attr("transform", function (d, i) {
         return "translate(0," + -radScale(d) + ")";
       })
@@ -566,32 +567,34 @@ export const draw = (
       .style("font-size", "6pt")
       .style("fill", "white");
 
-    for (let i = 0; i < stationCord.length; i++) {
-      let cord = stationCord[i];
-      let circleStations = cityCircles
+    // for (let i = 0; i < stationCord.length; i++) {
+    //   let cord = stationCord[i];
+      let circleStations = cityCircles.selectAll('circle')
+      .data(annualrain)
+      .enter()
         .append("circle")
-        .attr("id", function () {
-          return stationName[i];
+        .attr("id", function (d) {
+          console.log(d);
+          return d['Station'];
         })
         .attr("class", "cities-circles")
-        .attr("cx", function () {
-          return cord[0];
+        .attr("cx", (d)=> {
+          return d['latitude'];
         })
-        .attr("cy", function () {
-          return cord[1];
+        .attr("cy", (d)=> {
+          return (d['longitude']);
         })
-        .attr("r", function () {
-          return radScale(rain2013[i]);
+        .attr("r", (d)=> {
+          return radScale(d['Sum2013']);
         })
-        .on("mouseover", function (d) {
+        .on("mouseover", function () {
           d3.select(this).classed("active", true);
         })
-        .on("mouseout", function (d) {
+        .on("mouseout", function () {
           d3.select(this).classed("active", false);
         })
 
         .on("click", function () {
-          console.log(this.cx.animVal.value);
           let coords = [this.cx.animVal.value, this.cy.animVal.value];
           let group = container.append("g");
           let nameOfCity = this.id;
@@ -766,11 +769,11 @@ export const draw = (
 
           let r = 58;
           let margin = {
-              top: 50,
-              right: 80,
-              bottom: 50,
-              left: 80,
-            },
+            top: 50,
+            right: 80,
+            bottom: 50,
+            left: 80,
+          },
             width =
               Math.min(700, window.innerWidth / 4) - margin.left - margin.right,
             height = Math.min(
@@ -810,8 +813,10 @@ export const draw = (
           //     data.push(rainMonthTotal[i]);
           //   }
           // }
-          const data=months.forEach(month=>{
-            console.log(month);
+          const data = months.data.forEach(month => {
+            const dataStation=month['Station']
+            console.log( nameOfCity);
+            dataStation==nameOfCity && console.log(month['Station'])
           })
           thisCityRain.push({
             name: data[0].name,
@@ -1236,6 +1241,9 @@ export const draw = (
         .enter()
         .selectAll("circle")
         .attr("class", "cities-circles")
+        .attr('id', (d)=>{
+          console.log(d);
+        })
         .transition()
         .duration(500)
         .attr("r", function (d) {
@@ -1252,7 +1260,7 @@ export const draw = (
       managedArray.push(sortedData[sortedData.length - 1]);
       console.log(managedArray);
 
-      const legendGraphCircles=legendGraph.selectAll("circle").data(managedArray);
+      const legendGraphCircles = legendGraph.selectAll("circle").data(managedArray);
       legendGraphCircles.exit().remove();
 
       legendGraphCircles.enter().append("circle").attr("r", 0);
@@ -1271,12 +1279,12 @@ export const draw = (
           return radScale(d);
         });
 
-        const legendGraphLine=legendGraph.selectAll("line").data(managedArray);
-        legendGraphLine.exit().remove();
-  
-        legendGraphLine.enter().append("line").attr("r", 0);
-  
-        legendGraphLine
+      const legendGraphLine = legendGraph.selectAll("line").data(managedArray);
+      legendGraphLine.exit().remove();
+
+      legendGraphLine.enter().append("line").attr("r", 0);
+
+      legendGraphLine
         .select("line")
         .data(managedArray)
         .enter()
@@ -1287,12 +1295,12 @@ export const draw = (
           return "translate(0," + -radScale(d) * 2 + ")";
         });
 
-        const legendGraphText=legendGraph.selectAll("text").data(managedArray);
-        legendGraphText.exit().remove();
-  
-        legendGraphText.enter().append("text").attr("r", 0);
-  
-        legendGraphText
+      const legendGraphText = legendGraph.selectAll("text").data(managedArray);
+      legendGraphText.exit().remove();
+
+      legendGraphText.enter().append("text").attr("r", 0);
+
+      legendGraphText
         .select("line")
         .data(managedArray)
         .enter()
@@ -1307,7 +1315,7 @@ export const draw = (
         })
         .style("font-size", "6pt")
         .style("fill", "white");
-    }
+    // }
     d3.selectAll("g").raise();
 
     window.addEventListener("click", function (event) {

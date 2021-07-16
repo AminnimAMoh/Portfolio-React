@@ -1,12 +1,12 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
 export default () => {
-  const baseURL = process.env.REACT_APP_BACKEND;
+  const baseURL = process.env.REACT_APP_BASE_DESTINATION;
   const headers = { "Content-Type": "application/json" };
 
   const axiosInterceptor = axios.create({
     baseURL,
-    timeout: 2000,
+    timeout: 10000,
     headers,
   });
 
