@@ -14,7 +14,7 @@ export const draw = (
   annualrain,
   slums,
   population,
-  month
+  months
 ) => {
   let containerElement = svgRef.current;
   let containerX = 0;
@@ -591,7 +591,8 @@ export const draw = (
         })
 
         .on("click", function () {
-          let coords = mouse(this);
+          console.log(this.cx.animVal.value);
+          let coords = [this.cx.animVal.value, this.cy.animVal.value];
           let group = container.append("g");
           let nameOfCity = this.id;
           let popOne, popTwo, popThree;
@@ -777,7 +778,7 @@ export const draw = (
               window.innerHeight - margin.top - margin.bottom
             );
 
-          let data = [];
+          // let data = [];
           let thisCityRain = [];
           thisCityRain.splice(0, thisCityRain.length);
           let rainMonthTotal;
@@ -804,11 +805,14 @@ export const draw = (
             default:
               rainMonthTotal = rainMonthTotal2013;
           }
-          for (let i = 0; i < rainMonthTotal.length; i++) {
-            if (rainMonthTotal[i].name == nameOfCity) {
-              data.push(rainMonthTotal[i]);
-            }
-          }
+          // for (let i = 0; i < rainMonthTotal.length; i++) {
+          //   if (rainMonthTotal[i].name == nameOfCity) {
+          //     data.push(rainMonthTotal[i]);
+          //   }
+          // }
+          const data=months.forEach(month=>{
+            console.log(month);
+          })
           thisCityRain.push({
             name: data[0].name,
             axes: [
@@ -1209,7 +1213,6 @@ export const draw = (
       const dataSet = annualRainData.map((properties) => {
         return properties[`Sum${data}`];
       });
-      // console.log(dataSet);
       yearSelected = data;
 
       let circleTransition = d3.transition().ease(d3.easeExp).duration(1000);
@@ -1238,12 +1241,6 @@ export const draw = (
         .attr("r", function (d) {
           return radScale(d);
         });
-      // .attr("cx", function (d, i) {
-      //   return stationCord[i][0];
-      // })
-      // .attr("cy", function (d, i) {
-      //   return stationCord[i][1];
-      // });
 
       let managedArray = [];
       const dataFloat = dataSet.map((state) => +state);
