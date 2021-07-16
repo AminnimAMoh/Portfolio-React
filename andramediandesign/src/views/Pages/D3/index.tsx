@@ -41,6 +41,7 @@ function D3({}: Props): React.ReactElement {
     // svgRef && console.log(svgRef.current);
     annualrain.data.length > 0 && svg && draw(svg, svgRef, annualrain, slums, population, months);
   }, [svg, annualrain]);
+  console.clear()
 
   return (
     <div style={{ width: "100%", height: "100%" }}>

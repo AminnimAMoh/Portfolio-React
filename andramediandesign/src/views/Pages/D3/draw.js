@@ -8,7 +8,14 @@ import MonthFiveYears from "./data/Month-FiveYears.csv";
 import url from "./data/GeoJson/bangladesh.geojson";
 import slumsTutal from "./data/bangladesh_slums_total (1).csv";
 
-export const draw = (container, svgRef, annualrain, slums, population, month) => {
+export const draw = (
+  container,
+  svgRef,
+  annualrain,
+  slums,
+  population,
+  month
+) => {
   let containerElement = svgRef.current;
   let containerX = 0;
   let containerY = 0;
@@ -361,10 +368,12 @@ export const draw = (container, svgRef, annualrain, slums, population, month) =>
       });
     }
   });
-  
-  annualrain.data.forEach(station=>{
-    stationCord.push(projectionTest([+station['longitude'], +station['latitude']]))
-  })
+
+  annualrain.data.forEach((station) => {
+    stationCord.push(
+      projectionTest([+station["longitude"], +station["latitude"]])
+    );
+  });
 
   d3.csv(PThreeYears).then((data) => {
     for (let i = 2; i < data.length; i++) {
@@ -437,19 +446,15 @@ export const draw = (container, svgRef, annualrain, slums, population, month) =>
   });
 
   function reDrawCan() {
-    const annualRainData=annualrain.data;
-    const datatransfer=annualRainData.map(properties=> {
-     return properties['Sum2013'] 
+    const annualRainData = annualrain.data;
+    const datatransfer = annualRainData.map((properties) => {
+      return properties["Sum2013"];
     });
     // let datatransfer = rain2013;
     let firstMin = d3.min(datatransfer);
     let firstMax = d3.max(datatransfer);
     let radScale = d3.scaleLinear().domain([firstMin, firstMax]).range([6, 24]);
 
-    // function reDrawCan() {
-    // containerElement = document.getElementById("Script-Container");
-    // w = containerElement.offsetWidth;
-    // h = containerElement.offsetHeight;
     container.attr("width", w).attr("height", h);
 
     let allGroups = container
@@ -459,7 +464,7 @@ export const draw = (container, svgRef, annualrain, slums, population, month) =>
     mapContainer.attr("transform", "translate(" + mapXOffSet + ",0)");
     legendGraph.attr(
       "transform",
-      "translate(" + (265 + mapXOffSet) + " ," + (h - 230) + ")"
+      "translate(" + (265 + mapXOffSet) + " ," + (h - 100) + ")"
     );
 
     ellipseContainer
@@ -507,7 +512,9 @@ export const draw = (container, svgRef, annualrain, slums, population, month) =>
     cityCircles.attr("transform", "translate(" + mapXOffSet + ",0)");
     cityLables.attr("transform", "translate(" + mapXOffSet + ",0)");
     ellipseContainer.attr("transform", "translate(" + mapXOffSet + ",0)");
-    const rain2013=annualrain.data.map(state=> +state['Sum2013'])
+
+    const rain2013 = annualrain.data.map((state) => +state["Sum2013"]);
+
     let managedArray = [];
     let sortedData = rain2013.sort(d3.descending);
     managedArray.push(sortedData[0]);
@@ -527,7 +534,7 @@ export const draw = (container, svgRef, annualrain, slums, population, month) =>
         return radScale(d);
       });
 
-      legendGraph
+    legendGraph
       .selectAll("line")
       .data(managedArray)
       .enter()
@@ -543,7 +550,7 @@ export const draw = (container, svgRef, annualrain, slums, population, month) =>
       .attr("y1", 1)
       .style("stroke", "white");
 
-      legendGraph
+    legendGraph
       .selectAll("text")
       .data(managedArray)
       .enter()
@@ -1064,7 +1071,7 @@ export const draw = (container, svgRef, annualrain, slums, population, month) =>
       .on("click", function (d) {
         removeFunction();
         onClickTextFunction(this);
-        const yearListSelected=this.id;
+        const yearListSelected = this.id;
         drawAll(yearListSelected);
       });
 
@@ -1124,7 +1131,6 @@ export const draw = (container, svgRef, annualrain, slums, population, month) =>
           return arc(d);
         };
       }
-      legendGraph.selectAll("text").remove();
     }
 
     function removeEllipses() {
@@ -1199,9 +1205,9 @@ export const draw = (container, svgRef, annualrain, slums, population, month) =>
     }
 
     function drawAll(data) {
-      const annualRainData=annualrain.data;
-      const dataSet=annualRainData.map(properties=> {
-       return properties[`Sum${data}`] 
+      const annualRainData = annualrain.data;
+      const dataSet = annualRainData.map((properties) => {
+        return properties[`Sum${data}`];
       });
       // console.log(dataSet);
       yearSelected = data;
@@ -1231,37 +1237,50 @@ export const draw = (container, svgRef, annualrain, slums, population, month) =>
         .duration(500)
         .attr("r", function (d) {
           return radScale(d);
-        })
-        // .attr("cx", function (d, i) {
-        //   return stationCord[i][0];
-        // })
-        // .attr("cy", function (d, i) {
-        //   return stationCord[i][1];
-        // });
+        });
+      // .attr("cx", function (d, i) {
+      //   return stationCord[i][0];
+      // })
+      // .attr("cy", function (d, i) {
+      //   return stationCord[i][1];
+      // });
 
       let managedArray = [];
-      let sortedData = dataSet.sort(d3.descending);
-    // console.log(sortedData);
+      const dataFloat = dataSet.map((state) => +state);
+      const sortedData = dataFloat.sort(d3.descending);
+      // console.log(sortedData);
       let mid = Math.floor(sortedData.length / 2);
-      // managedArray[0]=(sortedData[0]);
-      // managedArray[1]=(sortedData[mid]);
-      // managedArray[2]=(sortedData[sortedData.length - 1]);
+      managedArray.push(sortedData[0]);
+      managedArray.push(sortedData[mid]);
+      managedArray.push(sortedData[sortedData.length - 1]);
+      console.log(managedArray);
 
-    //   managedArray.push(sortedData[0]);
-    //   managedArray.push(sortedData[mid]);
-    //   managedArray.push(sortedData[sortedData.length - 1]);
+      const legendGraphCircles=legendGraph.selectAll("circle").data(managedArray);
+      legendGraphCircles.exit().remove();
 
-      // legend.select("circle")
-      //   .data(managedArray)
-      //   .enter().selectAll("circle").transition().duration(500)
-      //   .attr("transform", function(d, i) {
-      //     return "translate(0," + (-radScale(d)) + ")";
-      //   })
-      //   .attr("r", function(d) {
-      //     return radScale(d);
-      //   });
+      legendGraphCircles.enter().append("circle").attr("r", 0);
 
-      legendGraph.select("line")
+      legendGraphCircles
+        .select("circle")
+        .data(managedArray)
+        .enter()
+        .selectAll("circle")
+        .transition()
+        .duration(500)
+        .attr("transform", function (d, i) {
+          return "translate(0," + -radScale(d) + ")";
+        })
+        .attr("r", function (d) {
+          return radScale(d);
+        });
+
+        const legendGraphLine=legendGraph.selectAll("line").data(managedArray);
+        legendGraphLine.exit().remove();
+  
+        legendGraphLine.enter().append("line").attr("r", 0);
+  
+        legendGraphLine
+        .select("line")
         .data(managedArray)
         .enter()
         .selectAll("line")
@@ -1271,14 +1290,19 @@ export const draw = (container, svgRef, annualrain, slums, population, month) =>
           return "translate(0," + -radScale(d) * 2 + ")";
         });
 
-        legendGraph
-        .selectAll("text")
+        const legendGraphText=legendGraph.selectAll("text").data(managedArray);
+        legendGraphText.exit().remove();
+  
+        legendGraphText.enter().append("text").attr("r", 0);
+  
+        legendGraphText
+        .select("line")
         .data(managedArray)
         .enter()
-        .append("text")
+        .selectAll("text")
         .attr("transform", function (d, i) {
           return (
-            "translate(" + (i * 50 + 12) + "," + (-radScale(d) * 2 - 6) + ")"
+            "translate(" + (i * 60 + 12) + "," + (-radScale(d) * 2 - 6) + ")"
           );
         })
         .text(function (d) {
