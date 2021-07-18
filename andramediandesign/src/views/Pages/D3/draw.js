@@ -8,7 +8,14 @@ import url from "./data/GeoJson/bangladesh.geojson";
 import slumsTutal from "./data/bangladesh_slums_total (1).csv";
 import { selectAll } from "d3-selection";
 
-export const draw = (container, svgRef, annualrain, slums, population, months) => {
+export const draw = (
+  container,
+  svgRef,
+  annualrain,
+  slums,
+  population,
+  months
+) => {
   let containerElement = svgRef.current;
   let containerX = 0;
   let containerY = 0;
@@ -362,9 +369,11 @@ export const draw = (container, svgRef, annualrain, slums, population, months) =
   //   }
   // });
 
-  annualrain.data.forEach(station=>{
-      stationCord.push(projectionTest([+station['longitude'], +station['latitude']]));
-  })
+  annualrain.data.forEach((station) => {
+    stationCord.push(
+      projectionTest([+station["longitude"], +station["latitude"]])
+    );
+  });
 
   // d3.csv(PThreeYears).then((data) => {
   //   for (let i = 2; i < data.length; i++) {
@@ -437,10 +446,10 @@ export const draw = (container, svgRef, annualrain, slums, population, months) =
   });
 
   function reDrawCan() {
-    const annualRainData=annualrain.data;
+    const annualRainData = annualrain.data;
     // console.log(annualRainData);
-    const datatransfer=annualRainData.map(properties=> {
-     return properties['Sum2013'] 
+    const datatransfer = annualRainData.map((properties) => {
+      return properties["Sum2013"];
     });
     // let datatransfer = rain2013;
     let firstMin = d3.min(datatransfer);
@@ -482,13 +491,19 @@ export const draw = (container, svgRef, annualrain, slums, population, months) =
       let groups;
       let dataSet;
       if (i == 0) {
-        dataSet = population.data.map(d=> {return d.Population1991});
+        dataSet = population.data.map((d) => {
+          return d.Population1991;
+        });
         groups = groupOne;
       } else if (i == 1) {
-        dataSet = population.data.map(d=> {return d.Population2001});
+        dataSet = population.data.map((d) => {
+          return d.Population2001;
+        });
         groups = groupTwo;
       } else if (i == 2) {
-        dataSet = population.data.map(d=> {return d.Population2011});
+        dataSet = population.data.map((d) => {
+          return d.Population2011;
+        });
         groups = groupThree;
       }
       groups.style("opacity", 1);
@@ -528,7 +543,7 @@ export const draw = (container, svgRef, annualrain, slums, population, months) =
         return radScale(d);
       });
 
-      legendGraph
+    legendGraph
       .selectAll("line")
       .data(managedArray)
       .enter()
@@ -544,7 +559,7 @@ export const draw = (container, svgRef, annualrain, slums, population, months) =
       .attr("y1", 1)
       .style("stroke", "white");
 
-      legendGraph
+    legendGraph
       .selectAll("text")
       .data(managedArray)
       .enter()
@@ -560,317 +575,311 @@ export const draw = (container, svgRef, annualrain, slums, population, months) =
       .style("font-size", "6pt")
       .style("fill", "white");
 
-      const circleStations = cityCircles.selectAll('circle').data(annualrain.data).enter()
-        .append("circle")
-        .attr("id",(d)=> {
-          return d.Station;
-        })
-        .attr("class", "cities-circles")
-        .attr("transform",(d)=> {
-          const pos=([+d.longitude, +d.latitude]);
-          return `translate(${pos[0]},${pos[1]}})`
-        })
-        .attr("r", (d)=>{
-          return radScale(d.Sum2013);
-        })
-        .on("mouseover", function (d) {
-          d3.select(this).classed("active", true);
-        })
-        .on("mouseout", function (d) {
-          d3.select(this).classed("active", false);
-        })
+    const circleStations = cityCircles
+      .selectAll("circle")
+      .data(annualrain.data)
+      .enter()
+      .append("circle")
+      .attr("id", (d) => {
+        return d.Station;
+      })
+      .attr("class", "cities-circles")
+      .attr("transform", (d) => {
+        const pos = [+d.longitude, +d.latitude];
+        return `translate(${pos[0]},${pos[1]}})`;
+      })
+      .attr("r", (d) => {
+        return radScale(d.Sum2013);
+      })
+      .on("mouseover", function (d) {
+        d3.select(this).classed("active", true);
+      })
+      .on("mouseout", function (d) {
+        d3.select(this).classed("active", false);
+      })
 
-        .on("click", function () {
-          let coords = [this.cx.animVal.value,this.cy.animVal.value];
-          let group = container.append("g");
-          let nameOfCity = this.id;
-          let popOne, popTwo, popThree;
+      .on("click", function () {
+        let coords = [this.cx.animVal.value, this.cy.animVal.value];
+        let group = container.append("g");
+        let nameOfCity = this.id;
+        let popOne, popTwo, popThree;
 
-          cityLables.selectAll("text").remove();
+        cityLables.selectAll("text").remove();
 
-          d3.selectAll("circle").classed("clicked", false);
-          d3.select(this).classed("clicked", true);
+        d3.selectAll("circle").classed("clicked", false);
+        d3.select(this).classed("clicked", true);
 
-          let circleTransition = d3
-            .transition()
-            .ease(d3.easePoly)
-            .duration(1000);
+        let circleTransition = d3.transition().ease(d3.easePoly).duration(1000);
 
-          let cgraphTransition = d3
-            .transition()
-            .ease(d3.easePoly)
-            .duration(1000);
+        let cgraphTransition = d3.transition().ease(d3.easePoly).duration(1000);
 
-          let ellipses = ellipseContainer
-            .selectAll("ellipse")
-            .data(ellipsesLength);
-          ellipses.exit().remove();
+        let ellipses = ellipseContainer
+          .selectAll("ellipse")
+          .data(ellipsesLength);
+        ellipses.exit().remove();
 
-          ellipses
-            .select("ellipse")
-            .data(ellipsesLength)
-            .enter()
-            .append("ellipse")
-            .attr("class", "ellipseCan")
-            .attr("cx", function (d, i) {
-              return coords[0] + graphRad * Math.cos(angleScale(i));
-            })
-            .attr("cy", function (d, i) {
-              return coords[1] + graphRad * Math.sin(angleScale(i));
-            })
-            .transition(circleTransition)
-            .attr("rx", function (d) {
-              return d.size;
-            })
-            .attr("ry", function (d) {
-              return d.size;
-            })
-            .attr("fill", "#061621")
-            .style("stroke", function (d) {
-              if (d.f == "none") {
-                return d.s;
-              } else {
-                return "url(#Gradient)";
-              }
-            })
-            .style("stroke-width", "1.5px")
-            .style("filter", "url(#graph-drop-shadow)");
-
-          let myLable = cityLables
-            .selectAll("text")
-            .data(ellipsesLength)
-            .enter()
-            .append("text")
-            .attr("x", function (d, i) {
-              return coords[0] + graphRad * Math.cos(angleScale(i));
-            })
-            .attr("y", function (d, i) {
-              return coords[1] + graphRad * Math.sin(angleScale(i)) - 20;
-            })
-            .text(function (d, i) {
-              if (i <= 2) {
-                return nameOfCity;
-              }
-            })
-            .attr("text-anchor", "middle")
-            .style("fill", "#9c3c41")
-            .style("font-size", "8pt");
-
-          let outer = d3
-            .scaleLinear()
-            .domain([popMinThree, popMaxThree])
-            .range([62, 70]);
-
-          let inner = d3.scaleLinear().domain([0, 63]).range([70, 0]);
-
-          let arcGenerator = d3
-            .arc()
-            .innerRadius(60)
-            .outerRadius(function (d) {
-              return outer(d.data);
-            });
-
-          let pieColorScale = d3
-            .scaleSequential()
-            .domain([population.data['min1991'], popMaxOne])
-            .interpolator(d3.interpolateBuPu);
-
-          for (let i = 0; i < 3; i++) {
-            let data;
-            let groupContainer;
-            let lable;
-            if (i == 0) {
-              data = populationOne;
-              groupContainer = groupOne;
-            } else if (i == 1) {
-              data = populationTwo;
-              groupContainer = groupTwo;
-            } else if (i == 2) {
-              data = populationThree;
-              groupContainer = groupThree;
+        ellipses
+          .select("ellipse")
+          .data(ellipsesLength)
+          .enter()
+          .append("ellipse")
+          .attr("class", "ellipseCan")
+          .attr("cx", function (d, i) {
+            return coords[0] + graphRad * Math.cos(angleScale(i));
+          })
+          .attr("cy", function (d, i) {
+            return coords[1] + graphRad * Math.sin(angleScale(i));
+          })
+          .transition(circleTransition)
+          .attr("rx", function (d) {
+            return d.size;
+          })
+          .attr("ry", function (d) {
+            return d.size;
+          })
+          .attr("fill", "#061621")
+          .style("stroke", function (d) {
+            if (d.f == "none") {
+              return d.s;
+            } else {
+              return "url(#Gradient)";
             }
+          })
+          .style("stroke-width", "1.5px")
+          .style("filter", "url(#graph-drop-shadow)");
 
-            let popScale = d3.pie()(data);
-
-            let cOne = groupContainer.selectAll("path").data(populationOne);
-            cOne.exit().remove();
-
-            let arc = cOne
-              .select("path")
-              .data(popScale)
-              .enter()
-              .append("path")
-              .attr("d", arcGenerator)
-              .style("fill", function (d, i) {
-                if (nameOfCity == popCityName[i]) {
-                  popOne = populationOne[i];
-                  popTwo = populationTwo[i];
-                  popThree = populationThree[i];
-                  return "#9C3C41";
-                } else {
-                  return pieColorScale(data[i]);
-                }
-              })
-              .style("stroke-width", "none")
-              .transition()
-              .ease(d3.easePoly)
-              .duration(1000)
-              .attrTween("d", arcTween);
-
-            function arcTween(d) {
-              let i = d3.interpolateNumber(70, 60);
-              return function (t) {
-                let r = i(t),
-                  arc = d3
-                    .arc()
-                    .outerRadius(function (d) {
-                      return outer(d.data);
-                    })
-                    .innerRadius(r);
-                return arc(d);
-              };
+        let myLable = cityLables
+          .selectAll("text")
+          .data(ellipsesLength)
+          .enter()
+          .append("text")
+          .attr("x", function (d, i) {
+            return coords[0] + graphRad * Math.cos(angleScale(i));
+          })
+          .attr("y", function (d, i) {
+            return coords[1] + graphRad * Math.sin(angleScale(i)) - 20;
+          })
+          .text(function (d, i) {
+            if (i <= 2) {
+              return nameOfCity;
             }
+          })
+          .attr("text-anchor", "middle")
+          .style("fill", "#9c3c41")
+          .style("font-size", "8pt");
 
-            let groupTx =
-              mapXOffSet + coords[0] + graphRad * Math.cos(angleScale(i));
-            let groupTy = coords[1] + graphRad * Math.sin(angleScale(i));
+        let outer = d3
+          .scaleLinear()
+          .domain([popMinThree, popMaxThree])
+          .range([62, 70]);
 
-            groupContainer.attr(
-              "transform",
-              "translate(" + groupTx + "," + groupTy + ")"
-            );
+        let inner = d3.scaleLinear().domain([0, 63]).range([70, 0]);
+
+        let arcGenerator = d3
+          .arc()
+          .innerRadius(60)
+          .outerRadius(function (d) {
+            return outer(d.data);
+          });
+
+        let pieColorScale = d3
+          .scaleSequential()
+          .domain([population.data["min1991"], popMaxOne])
+          .interpolator(d3.interpolateBuPu);
+
+        for (let i = 0; i < 3; i++) {
+          let data;
+          let groupContainer;
+          let lable;
+          if (i == 0) {
+            data = populationOne;
+            groupContainer = groupOne;
+          } else if (i == 1) {
+            data = populationTwo;
+            groupContainer = groupTwo;
+          } else if (i == 2) {
+            data = populationThree;
+            groupContainer = groupThree;
           }
 
-          let rainGroupTx =
-            mapXOffSet + coords[0] + graphRad * Math.cos(angleScale(3)) - 125;
-          let rainGroupTy =
-            coords[1] + graphRad * Math.sin(angleScale(3)) - 125;
+          const popScale = d3.pie()(data);
 
-          rainGroup
-            .attr(
-              "transform",
-              "translate(" + rainGroupTx + "," + rainGroupTy + ")"
-            )
-            .style("opacity", 1);
+          const cOne = groupContainer.selectAll("path").data(populationOne);
+          cOne.exit().remove();
 
-          let r = 58;
-          let margin = {
-              top: 50,
-              right: 80,
-              bottom: 50,
-              left: 80,
-            },
-            width =
-              Math.min(700, window.innerWidth / 4) - margin.left - margin.right,
-            height = Math.min(
-              width,
-              window.innerHeight - margin.top - margin.bottom
-            );
-
-          let data = [];
-          // let thisCityRain = [];
-          // thisCityRain.splice(0, thisCityRain.length);
-          const thisCityRain=months.data.map((d, i)=>{
-            if (d.Station == nameOfCity) {
-            return {name: d.Station, value: d[`MonthlyTotal${yearSelected}`], axis: rainMonthsName[i%12].name, color: "#cd1d27"};
-            }
-          });
-          console.log(thisCityRain);
-
-          let radarChartOptions = {
-            w: 90,
-            h: 150,
-            margin: margin,
-            levels: 2,
-            roundStrokes: true,
-            color: d3.scaleOrdinal().range(["#9C3C41", "#12393D", "#9C3C41"]),
-            format: ".0f",
-          };
-
-          let svg_radar1 = Radar(".rainG", thisCityRain, radarChartOptions);
-
-          let textContainer = lables.selectAll("text").data(rectsLength);
-
-          textContainer.exit().remove();
-
-          textContainer
-            .select("text")
-            .data(rectsLength)
+          const arc = cOne
+            .select("path")
+            .data(popScale)
             .enter()
-            .append("text")
-            .attr("x", function (d) {
-              return d.x;
-            })
-            .attr("y", function (d) {
-              return d.y + 5;
-            })
-            .text(function (d) {
-              return d.text;
-            })
-            .attr("width", 20)
-            .attr("fill", "#B0B2B8")
-            .attr("font-size", 11)
-            .style("opacity", 1);
-
-          let groupTx =
-            mapXOffSet + coords[0] + graphRad * Math.cos(angleScale(i));
-          let groupTy = coords[1] + graphRad * Math.sin(angleScale(i));
-          lables.attr(
-            "transform",
-            "translate(" + groupTx + "," + groupTy + ")"
-          );
-          let formatComma = d3.format(",");
-
-          textContainer
-            .select("text")
-            .data(rectsLength)
-            .enter()
-            .append("text")
-            .attr("x", function (d) {
-              if (
-                formatComma(popOne) == "NaN" ||
-                formatComma(popTwo) == "NaN" ||
-                formatComma(popThree) == "NaN"
-              ) {
-                return d.x + 25;
+            .append("path")
+            .attr("d", arcGenerator)
+            .style("fill", function (d, i) {
+              if (nameOfCity == popCityName[i]) {
+                popOne = populationOne[i];
+                popTwo = populationTwo[i];
+                popThree = populationThree[i];
+                return "#9C3C41";
               } else {
-                return d.x + 35;
+                return pieColorScale(data[i]);
               }
             })
-            .attr("y", function (d) {
-              return d.y + 25;
-            })
-            .text(function (d, i) {
-              switch (i) {
-                case 0:
-                  if (formatComma(popOne) == "NaN") {
-                    return "Data Missing";
-                  }
-                  return formatComma(popOne);
-                  break;
-                case 1:
-                  if (formatComma(popTwo) == "NaN") {
-                    return "Data Missing";
-                  }
-                  return formatComma(popTwo);
-                  break;
-                case 2:
-                  if (formatComma(popThree) == "NaN") {
-                    return "Data Missing";
-                  }
-                  return formatComma(popThree);
-                  break;
-              }
-            })
-            .attr("width", 20)
-            .style("fill", "#E4E5E7")
-            .style("font-size", 11);
+            .style("stroke-width", "none")
+            .transition()
+            .ease(d3.easePoly)
+            .duration(1000)
+            .attrTween("d", arcTween);
 
-          lables.attr(
+          const groupTx =
+            mapXOffSet + coords[0] + graphRad * Math.cos(angleScale(i));
+          const groupTy = coords[1] + graphRad * Math.sin(angleScale(i));
+
+          groupContainer.attr(
             "transform",
             "translate(" + groupTx + "," + groupTy + ")"
           );
+          function arcTween(d) {
+            const i = d3.interpolateNumber(70, 60);
+            return function (t) {
+              const r = i(t),
+                arc = d3
+                  .arc()
+                  .outerRadius(function (d) {
+                    return outer(d.data);
+                  })
+                  .innerRadius(r);
+              return arc(d);
+            };
+          }
+        }
+
+        let rainGroupTx =
+          mapXOffSet + coords[0] + graphRad * Math.cos(angleScale(3)) - 125;
+        let rainGroupTy = coords[1] + graphRad * Math.sin(angleScale(3)) - 125;
+
+        rainGroup
+          .attr(
+            "transform",
+            "translate(" + rainGroupTx + "," + rainGroupTy + ")"
+          )
+          .style("opacity", 1);
+
+        let r = 58;
+        let margin = {
+            top: 50,
+            right: 80,
+            bottom: 50,
+            left: 80,
+          },
+          width =
+            Math.min(700, window.innerWidth / 4) - margin.left - margin.right,
+          height = Math.min(
+            width,
+            window.innerHeight - margin.top - margin.bottom
+          );
+
+        let data = [];
+        // let thisCityRain = [];
+        // thisCityRain.splice(0, thisCityRain.length);
+        let thisCityRain = [];
+        months.data.map((d, i) => {
+          d.Station === nameOfCity &&
+            thisCityRain.push({
+              name: d.Station,
+              value: d[`MonthlyTotal${yearSelected}`],
+              axis: rainMonthsName[i % 12].name,
+              color: "#cd1d27",
+            });
         });
+        console.log(thisCityRain);
+        const radarChartOptions = {
+          w: 90,
+          h: 150,
+          margin: margin,
+          levels: 2,
+          roundStrokes: true,
+          color: d3.scaleOrdinal().range(["#9C3C41", "#12393D", "#9C3C41"]),
+          format: ".0f",
+        };
+
+        const svg_radar1 = Radar(".rainG", thisCityRain, radarChartOptions);
+
+        let textContainer = lables.selectAll("text").data(rectsLength);
+
+        textContainer.exit().remove();
+
+        textContainer
+          .select("text")
+          .data(rectsLength)
+          .enter()
+          .append("text")
+          .attr("x", function (d) {
+            return d.x;
+          })
+          .attr("y", function (d) {
+            return d.y + 5;
+          })
+          .text(function (d) {
+            return d.text;
+          })
+          .attr("width", 20)
+          .attr("fill", "#B0B2B8")
+          .attr("font-size", 11)
+          .style("opacity", 1);
+
+        // let groupTx =
+        //   mapXOffSet + coords[0] + graphRad * Math.cos(angleScale(i));
+        // let groupTy = coords[1] + graphRad * Math.sin(angleScale(i));
+
+        // lables.attr("transform", "translate(" + groupTx + "," + groupTy + ")");
+        let formatComma = d3.format(",");
+
+        textContainer
+          .select("text")
+          .data(rectsLength)
+          .enter()
+          .append("text")
+          .attr("x", function (d) {
+            if (
+              formatComma(popOne) == "NaN" ||
+              formatComma(popTwo) == "NaN" ||
+              formatComma(popThree) == "NaN"
+            ) {
+              return d.x + 25;
+            } else {
+              return d.x + 35;
+            }
+          })
+          .attr("y", function (d) {
+            return d.y + 25;
+          })
+          .text(function (d, i) {
+            switch (i) {
+              case 0:
+                if (formatComma(popOne) == "NaN") {
+                  return "Data Missing";
+                }
+                return formatComma(popOne);
+                break;
+              case 1:
+                if (formatComma(popTwo) == "NaN") {
+                  return "Data Missing";
+                }
+                return formatComma(popTwo);
+                break;
+              case 2:
+                if (formatComma(popThree) == "NaN") {
+                  return "Data Missing";
+                }
+                return formatComma(popThree);
+                break;
+            }
+          })
+          .attr("width", 20)
+          .style("fill", "#E4E5E7")
+          .style("font-size", 11);
+
+        // lables.attr("transform", "translate(" + groupTx + "," + groupTy + ")");
+      });
 
     let rectScale = d3.scaleLinear().domain([0, 20]).range([4, 24]);
 
@@ -983,7 +992,7 @@ export const draw = (container, svgRef, annualrain, slums, population, months) =
       .on("click", function (d) {
         removeFunction();
         onClickTextFunction(this);
-        const yearListSelected=this.id;
+        const yearListSelected = this.id;
         drawAll(yearListSelected);
       });
 
@@ -1118,9 +1127,9 @@ export const draw = (container, svgRef, annualrain, slums, population, months) =
     }
 
     function drawAll(data) {
-      const annualRainData=annualrain.data;
-      const dataSet=annualRainData.map(properties=> {
-       return properties[`Sum${data}`] 
+      const annualRainData = annualrain.data;
+      const dataSet = annualRainData.map((properties) => {
+        return properties[`Sum${data}`];
       });
       console.log(dataSet);
       yearSelected = data;
@@ -1160,15 +1169,15 @@ export const draw = (container, svgRef, annualrain, slums, population, months) =
 
       let managedArray = [];
       let sortedData = dataSet.sort(d3.descending);
-    // console.log(sortedData);
+      // console.log(sortedData);
       let mid = Math.floor(sortedData.length / 2);
       // managedArray[0]=(sortedData[0]);
       // managedArray[1]=(sortedData[mid]);
       // managedArray[2]=(sortedData[sortedData.length - 1]);
 
-    //   managedArray.push(sortedData[0]);
-    //   managedArray.push(sortedData[mid]);
-    //   managedArray.push(sortedData[sortedData.length - 1]);
+      //   managedArray.push(sortedData[0]);
+      //   managedArray.push(sortedData[mid]);
+      //   managedArray.push(sortedData[sortedData.length - 1]);
 
       // legend.select("circle")
       //   .data(managedArray)
@@ -1180,7 +1189,8 @@ export const draw = (container, svgRef, annualrain, slums, population, months) =
       //     return radScale(d);
       //   });
 
-      legendGraph.select("line")
+      legendGraph
+        .select("line")
         .data(managedArray)
         .enter()
         .selectAll("line")
@@ -1190,7 +1200,7 @@ export const draw = (container, svgRef, annualrain, slums, population, months) =
           return "translate(0," + -radScale(d) * 2 + ")";
         });
 
-        legendGraph
+      legendGraph
         .selectAll("text")
         .data(managedArray)
         .enter()
