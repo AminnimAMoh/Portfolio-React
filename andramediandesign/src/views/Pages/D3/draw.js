@@ -778,18 +778,19 @@ export const draw = (
           );
 
         let data = [];
-        // let thisCityRain = [];
-        // thisCityRain.splice(0, thisCityRain.length);
-        let thisCityRain = [];
+        let thisCityRain = {
+          color:  "#cd1d27",
+          name: nameOfCity,
+          axis: [{}]
+        };
         months.data.map((d, i) => {
           d.Station === nameOfCity &&
-            thisCityRain.push({
-              name: d.Station,
+            thisCityRain.axis.push({
               value: d[`MonthlyTotal${yearSelected}`],
               axis: rainMonthsName[i % 12].name,
-              color: "#cd1d27",
             });
         });
+        thisCityRain.axis.splice(0,1)
         console.log(thisCityRain);
         const radarChartOptions = {
           w: 90,
@@ -1169,25 +1170,7 @@ export const draw = (
 
       let managedArray = [];
       let sortedData = dataSet.sort(d3.descending);
-      // console.log(sortedData);
       let mid = Math.floor(sortedData.length / 2);
-      // managedArray[0]=(sortedData[0]);
-      // managedArray[1]=(sortedData[mid]);
-      // managedArray[2]=(sortedData[sortedData.length - 1]);
-
-      //   managedArray.push(sortedData[0]);
-      //   managedArray.push(sortedData[mid]);
-      //   managedArray.push(sortedData[sortedData.length - 1]);
-
-      // legend.select("circle")
-      //   .data(managedArray)
-      //   .enter().selectAll("circle").transition().duration(500)
-      //   .attr("transform", function(d, i) {
-      //     return "translate(0," + (-radScale(d)) + ")";
-      //   })
-      //   .attr("r", function(d) {
-      //     return radScale(d);
-      //   });
 
       legendGraph
         .select("line")
