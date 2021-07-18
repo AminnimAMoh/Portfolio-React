@@ -6,6 +6,7 @@ import PThreeYears from "./data/PThreeYears.csv";
 import MonthFiveYears from "./data/Month-FiveYears.csv";
 import url from "./data/GeoJson/bangladesh.geojson";
 import slumsTutal from "./data/bangladesh_slums_total (1).csv";
+import { selectAll } from "d3-selection";
 
 export const draw = (container, svgRef, annualrain, slums, population, months) => {
   let containerElement = svgRef.current;
@@ -22,7 +23,7 @@ export const draw = (container, svgRef, annualrain, slums, population, months) =
   let mapXOffSet = -100;
   let w = containerX;
   let h = containerY;
-  let yearSelected = "0";
+  let yearSelected = "2013";
   let slumes = slums.data;
   let ellipsesLength = [
     {
@@ -437,14 +438,14 @@ export const draw = (container, svgRef, annualrain, slums, population, months) =
 
   function reDrawCan() {
     const annualRainData=annualrain.data;
-    console.log(annualRainData);
+    // console.log(annualRainData);
     const datatransfer=annualRainData.map(properties=> {
      return properties['Sum2013'] 
     });
     // let datatransfer = rain2013;
     let firstMin = d3.min(datatransfer);
     let firstMax = d3.max(datatransfer);
-    console.log(datatransfer);
+    // console.log(datatransfer);
     let radScale = d3.scaleLinear().domain([firstMin, firstMax]).range([6, 24]);
 
     // function reDrawCan() {
@@ -481,16 +482,15 @@ export const draw = (container, svgRef, annualrain, slums, population, months) =
       let groups;
       let dataSet;
       if (i == 0) {
-        dataSet = population.data['Population1991'];
+        dataSet = population.data.map(d=> {return d.Population1991});
         groups = groupOne;
       } else if (i == 1) {
-        dataSet = population.data['Population2001'];
+        dataSet = population.data.map(d=> {return d.Population2001});
         groups = groupTwo;
       } else if (i == 2) {
-        dataSet = population.data['Population2011'];
+        dataSet = population.data.map(d=> {return d.Population2011});
         groups = groupThree;
       }
-
       groups.style("opacity", 1);
 
       let arcG = d3.arc().innerRadius(0).outerRadius(0);
@@ -560,22 +560,18 @@ export const draw = (container, svgRef, annualrain, slums, population, months) =
       .style("font-size", "6pt")
       .style("fill", "white");
 
-    for (let i = 0; i < stationCord.length; i++) {
-      let cord = stationCord[i];
-      let circleStations = cityCircles
+      const circleStations = cityCircles.selectAll('circle').data(annualrain.data).enter()
         .append("circle")
-        .attr("id", function () {
-          return stationName[i];
+        .attr("id",(d)=> {
+          return d.Station;
         })
         .attr("class", "cities-circles")
-        .attr("cx", function () {
-          return cord[0];
+        .attr("transform",(d)=> {
+          const pos=([+d.longitude, +d.latitude]);
+          return `translate(${pos[0]},${pos[1]}})`
         })
-        .attr("cy", function () {
-          return cord[1];
-        })
-        .attr("r", function () {
-          return radScale(rain2013[i]);
+        .attr("r", (d)=>{
+          return radScale(d.Sum2013);
         })
         .on("mouseover", function (d) {
           d3.select(this).classed("active", true);
@@ -585,7 +581,7 @@ export const draw = (container, svgRef, annualrain, slums, population, months) =
         })
 
         .on("click", function () {
-          let coords = mouse(this);
+          let coords = [this.cx.animVal.value,this.cy.animVal.value];
           let group = container.append("g");
           let nameOfCity = this.id;
           let popOne, popTwo, popThree;
@@ -772,91 +768,14 @@ export const draw = (container, svgRef, annualrain, slums, population, months) =
             );
 
           let data = [];
-          let thisCityRain = [];
-          thisCityRain.splice(0, thisCityRain.length);
-          let rainMonthTotal;
-          switch (yearSelected) {
-            case "1990":
-              rainMonthTotal = rainMonthTotal1990;
-              break;
-            case "1995":
-              rainMonthTotal = rainMonthTotal1995;
-              break;
-            case "2000":
-              rainMonthTotal = rainMonthTotal2000;
-              break;
-            case "2005":
-              rainMonthTotal = rainMonthTotal2005;
-              break;
-            case "2010":
-              rainMonthTotal = rainMonthTotal2010;
-              break;
-            case "2013":
-              rainMonthTotal = rainMonthTotal2013;
-              break;
-
-            default:
-              rainMonthTotal = rainMonthTotal2013;
-          }
-          for (let i = 0; i < rainMonthTotal.length; i++) {
-            if (rainMonthTotal[i].name == nameOfCity) {
-              data.push(rainMonthTotal[i]);
+          // let thisCityRain = [];
+          // thisCityRain.splice(0, thisCityRain.length);
+          const thisCityRain=months.data.map((d, i)=>{
+            if (d.Station == nameOfCity) {
+            return {name: d.Station, value: d[`MonthlyTotal${yearSelected}`], axis: rainMonthsName[i%12].name, color: "#cd1d27"};
             }
-          }
-          thisCityRain.push({
-            name: data[0].name,
-            axes: [
-              {
-                axis: data[0].month,
-                value: data[0].total,
-              },
-              {
-                axis: data[1].month,
-                value: data[1].total,
-              },
-              {
-                axis: data[2].month,
-                value: data[2].total,
-              },
-              {
-                axis: data[3].month,
-                value: data[3].total,
-              },
-              {
-                axis: data[4].month,
-                value: data[4].total,
-              },
-              {
-                axis: data[5].month,
-                value: data[5].total,
-              },
-              {
-                axis: data[6].month,
-                value: data[6].total,
-              },
-              {
-                axis: data[7].month,
-                value: data[7].total,
-              },
-              {
-                axis: data[8].month,
-                value: data[8].total,
-              },
-              {
-                axis: data[9].month,
-                value: data[9].total,
-              },
-              {
-                axis: data[10].month,
-                value: data[10].total,
-              },
-              {
-                axis: data[11].month,
-                value: data[11].total,
-              },
-            ],
-            color: "#cd1d27",
           });
+          console.log(thisCityRain);
 
           let radarChartOptions = {
             w: 90,
@@ -952,7 +871,6 @@ export const draw = (container, svgRef, annualrain, slums, population, months) =
             "translate(" + groupTx + "," + groupTy + ")"
           );
         });
-    }
 
     let rectScale = d3.scaleLinear().domain([0, 20]).range([4, 24]);
 

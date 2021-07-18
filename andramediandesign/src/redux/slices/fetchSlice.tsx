@@ -88,8 +88,6 @@ const FetchSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchAnnualrainData.fulfilled, (state: RootState, action) => {
-        console.log(action.payload);
-        
         return {
           ...state,
           annualrain: {
@@ -117,8 +115,6 @@ const FetchSlice = createSlice({
         };
       })
       .addCase(fetchMonthData.fulfilled, (state: RootState, action) => {
-        console.log(action.payload);
-        
         return {
           ...state,
           months: {
