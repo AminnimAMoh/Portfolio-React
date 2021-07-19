@@ -1,4 +1,11 @@
 
+.stop-left {
+    stop-color: #426164;
+}
+
+.stop-right {
+    stop-color: #061621;
+}
 #Script-Container {
     /* box-sizing: border-box; */
     position: relative;

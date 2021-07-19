@@ -8,6 +8,8 @@ import url from "./data/GeoJson/bangladesh.geojson";
 import slumsTutal from "./data/bangladesh_slums_total (1).csv";
 import { selectAll } from "d3-selection";
 
+import { generateGradient, shadowGenerator } from "./styleFunctions";
+
 export const draw = (
   container,
   svgRef,
@@ -190,155 +192,20 @@ export const draw = (
   ///////////////////////////Circles Drop Shadow///////////////////////////
   /*--------------------------------------------------------------*/
   /*--------------------------------------------------------------*/
-  let gradient = container
-    .append("defs")
-    .append("linearGradient")
-    .attr("id", "Gradient")
-    .attr("gradientTransform", "rotate(180)");
-  gradient.append("stop").attr("class", "stop-left").attr("offset", "0");
-  gradient.append("stop").attr("class", "stop-right").attr("offset", "1");
 
-  let defsShadow = container.append("defs");
-
-  // create filter with id #drop-shadow
-  // height=130% so that the shadow is not clipped
-  let filterShadow = defsShadow
-    .append("filter")
-    .attr("id", "drop-shadow")
-    .attr("height", "330%")
-    .attr("width", "330%");
-
-  // SourceAlpha refers to opacity of graphic that this filter will be applied to
-  // convolve that with a Gaussian with standard deviation 3 and store result
-  // in blur
-  filterShadow
-    .append("feGaussianBlur")
-    .attr("in", "SourceAlpha")
-    .attr("stdDeviation", 3);
-
-  // translate output of Gaussian blur to the right and downwards with 2px
-  // store result in offsetBlur
-  filterShadow
-    .append("feOffset")
-    .attr("dx", 10)
-    .attr("dy", 10)
-    .attr("result", "offsetBlur");
-
-  // Control opacity of shadow filter
-  let feTransferShadow = filterShadow.append("feComponentTransfer");
-
-  feTransferShadow.append("feFuncA").attr("type", "linear").attr("slope", 0.3);
-
-  // overlay original SourceGraphic over translated blurred opacity by using
-  // feMerge filter. Order of specifying inputs is important!
-  let feMergeShadow = filterShadow.append("feMerge");
-
-  feMergeShadow.append("feMergeNode");
-  feMergeShadow.append("feMergeNode").attr("in", "SourceGraphic");
-
-  /*--------------------------------------------------------------*/
-  /*--------------------------------------------------------------*/
-  ///////////////////////////Circles Drop Shadow///////////////////////////
-  /*--------------------------------------------------------------*/
-  /*--------------------------------------------------------------*/
-
-  /*--------------------------------------------------------------*/
-  /*--------------------------------------------------------------*/
-  ///////////////////////////Graph Drop Shadow///////////////////////////
-  /*--------------------------------------------------------------*/
-  /*--------------------------------------------------------------*/
-
-  let defsGraph = container.append("defs");
-
-  // create filter with id #drop-shadow
-  // height=130% so that the shadow is not clipped
-  let filterGraph = defsGraph
-    .append("filter")
-    .attr("id", "graph-drop-shadow")
-    .attr("height", "130%");
-
-  // SourceAlpha refers to opacity of graphic that this filter will be applied to
-  // convolve that with a Gaussian with standard deviation 3 and store result
-  // in blur
-  filterGraph
-    .append("feGaussianBlur")
-    .attr("in", "SourceAlpha")
-    .attr("stdDeviation", 6);
-
-  // translate output of Gaussian blur to the right and downwards with 2px
-  // store result in offsetBlur
-  filterGraph
-    .append("feOffset")
-    .attr("dx", 0)
-    .attr("dy", 0)
-    .attr("result", "offsetBlur");
-
-  // Control opacity of shadow filter
-  let feTransferGraph = filterGraph.append("feComponentTransfer");
-
-  feTransferGraph.append("feFuncA").attr("type", "linear").attr("slope", 1);
-
-  // overlay original SourceGraphic over translated blurred opacity by using
-  // feMerge filter. Order of specifying inputs is important!
-  let feMergeGraph = filterGraph.append("feMerge");
-
-  feMergeGraph.append("feMergeNode");
-  feMergeGraph.append("feMergeNode").attr("in", "SourceGraphic");
-
-  /*--------------------------------------------------------------*/
-  /*--------------------------------------------------------------*/
-  ///////////////////////////Graph Drop Shadow///////////////////////////
-  /*--------------------------------------------------------------*/
-  /*--------------------------------------------------------------*/
-
-  /*--------------------------------------------------------------*/
-  ///////////////////////////Legend Drop Shadow///////////////////////////
-  /*--------------------------------------------------------------*/
-  /*--------------------------------------------------------------*/
-
-  let defsLegend = container.append("defs");
-
-  // create filter with id #drop-shadow
-  // height=130% so that the shadow is not clipped
-  let filterLegend = defsLegend
-    .append("filter")
-    .attr("id", "legend-drop-shadow")
-    .attr("height", "330%")
-    .attr("width", "330%");
-
-  // SourceAlpha refers to opacity of graphic that this filter will be applied to
-  // convolve that with a Gaussian with standard deviation 3 and store result
-  // in blur
-  filterLegend
-    .append("feGaussianBlur")
-    .attr("in", "SourceAlpha")
-    .attr("stdDeviation", 1);
-
-  // translate output of Gaussian blur to the right and downwards with 2px
-  // store result in offsetBlur
-  filterLegend
-    .append("feOffset")
-    .attr("dx", 10)
-    .attr("dy", 5)
-    .attr("result", "offsetBlur");
-
-  // Control opacity of shadow filter
-  let feTransferLegend = filterLegend.append("feComponentTransfer");
-
-  feTransferLegend.append("feFuncA").attr("type", "linear").attr("slope", 0.2);
-
-  // overlay original SourceGraphic over translated blurred opacity by using
-  // feMerge filter. Order of specifying inputs is important!
-  let feMergeLegend = filterLegend.append("feMerge");
-
-  feMergeLegend.append("feMergeNode");
-  feMergeLegend.append("feMergeNode").attr("in", "SourceGraphic");
-
-  /*--------------------------------------------------------------*/
-  /*--------------------------------------------------------------*/
-  ///////////////////////////Legend Drop Shadow///////////////////////////
-  /*--------------------------------------------------------------*/
-  /*--------------------------------------------------------------*/
+  generateGradient(container);
+  shadowGenerator(container, "drop-shadow", "330%", "330%", 3, 10, 10, 0.3);
+  shadowGenerator(container, "graph-drop-shadow", "130%", "130%", 6, 0, 0, 1);
+  shadowGenerator(
+    container,
+    "legend-drop-shadow",
+    "330%",
+    "330%",
+    1,
+    10,
+    5,
+    0.2
+  );
 
   let projection = d3.geoMercator().scale(5200).translate([-7720, 2600]);
 
@@ -525,7 +392,10 @@ export const draw = (
     ellipseContainer.attr("transform", "translate(" + mapXOffSet + ",0)");
 
     let managedArray = [];
-    let sortedData = rain2013.sort(d3.descending);
+    const legendData = annualrain.data.map((data) => {
+      return data.Sum2013;
+    });
+    const sortedData = legendData.sort(d3.descending);
     managedArray.push(sortedData[0]);
     managedArray.push(sortedData[sortedData.length / 2]);
     managedArray.push(sortedData[sortedData.length - 1]);
@@ -536,10 +406,10 @@ export const draw = (
       .enter()
       .append("circle")
       .attr("class", "cities-circles")
-      .attr("transform", (d, i)=> {
+      .attr("transform", (d, i) => {
         return "translate(0," + -radScale(d) + ")";
       })
-      .attr("r", (d)=> {
+      .attr("r", (d) => {
         return radScale(d);
       });
 
@@ -779,9 +649,9 @@ export const draw = (
 
         let data = [];
         let thisCityRain = {
-          color:  "#cd1d27",
+          color: "#cd1d27",
           name: nameOfCity,
-          axis: [{}]
+          axis: [{}],
         };
         months.data.map((d, i) => {
           d.Station === nameOfCity &&
@@ -790,7 +660,7 @@ export const draw = (
               axis: rainMonthsName[i % 12].name,
             });
         });
-        thisCityRain.axis.splice(0,1)
+        thisCityRain.axis.splice(0, 1);
         console.log(thisCityRain);
         const radarChartOptions = {
           w: 90,
@@ -1053,7 +923,6 @@ export const draw = (
           return arc(d);
         };
       }
-      legendGraph.selectAll("text").remove();
     }
 
     function removeEllipses() {
@@ -1160,22 +1029,39 @@ export const draw = (
         .attr("r", function (d) {
           return radScale(d);
         });
-        // .attr('transform', (d)=>{
-        //   const pos = projectionTest([+d.longitude, +d.latitude]);
-        //   return `translate(${pos[0]},${pos[1]})`;
-        // })
-        // .attr("cx", function (d, i) {
-        //   return stationCord[i][0];
-        // })
-        // .attr("cy", function (d, i) {
-        //   return stationCord[i][1];
-        // });
 
       let managedArray = [];
       let sortedData = dataSet.sort(d3.descending);
-      let mid = Math.floor(sortedData.length / 2);
+      managedArray.push(sortedData[0]);
+      managedArray.push(sortedData[sortedData.length / 2]);
+      managedArray.push(sortedData[sortedData.length - 1]);
 
-      legendGraph
+      const legendGraphLines = legendGraph.selectAll("line").data(managedArray);
+      legendGraphLines.exit().remove();
+
+      const legendGraphCircle = legendGraph
+        .selectAll("circle")
+        .data(managedArray);
+      legendGraphLines.exit().remove();
+
+      const legendGraphText = legendGraph.selectAll("text").data(managedArray);
+      legendGraphLines.exit().remove();
+
+      legendGraphCircle
+        .select("circle")
+        .data(managedArray)
+        .enter()
+        .selectAll("circle")
+        .transition()
+        .duration(500)
+        .attr("transform", function (d, i) {
+          return "translate(0," + -radScale(d) + ")";
+        })
+        .attr("r", function (d) {
+          return radScale(d);
+        });
+
+      legendGraphLines
         .select("line")
         .data(managedArray)
         .enter()
@@ -1186,7 +1072,7 @@ export const draw = (
           return "translate(0," + -radScale(d) * 2 + ")";
         });
 
-      legendGraph
+      legendGraphText
         .selectAll("text")
         .data(managedArray)
         .enter()
@@ -1196,7 +1082,8 @@ export const draw = (
             "translate(" + (i * 50 + 12) + "," + (-radScale(d) * 2 - 6) + ")"
           );
         })
-        .text(function (d) {
+        .text((d) => {
+          console.log(d);
           return d + "mm";
         })
         .style("font-size", "6pt")
