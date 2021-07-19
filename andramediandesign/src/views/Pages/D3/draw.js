@@ -469,7 +469,10 @@ export const draw = (
       })
 
       .on("click", function () {
-        let coords = [this.cx.animVal.value, this.cy.animVal.value];
+        const coords = [
+          this.transform.animVal[0].matrix.e,
+          this.transform.animVal[0].matrix.f,
+        ];
         let group = container.append("g");
         let nameOfCity = this.id;
         let popOne, popTwo, popThree;
@@ -620,6 +623,12 @@ export const draw = (
               return arc(d);
             };
           }
+
+          // let groupTx =
+          //   mapXOffSet + coords[0] + graphRad * Math.cos(angleScale(i));
+          // let groupTy = coords[1] + graphRad * Math.sin(angleScale(i));
+          lables.attr("transform", "translate(" + groupTx + "," + groupTy + ")");
+          
         }
 
         let rainGroupTx =
@@ -672,10 +681,10 @@ export const draw = (
           format: ".0f",
         };
 
-        const svg_radar1 = Radar(".rainG", thisCityRain, radarChartOptions);
+        // const svg_radar1 = Radar(".rainG", thisCityRain, radarChartOptions);
 
         let textContainer = lables.selectAll("text").data(rectsLength);
-
+        let formatComma = d3.format(",");
         textContainer.exit().remove();
 
         textContainer
@@ -696,13 +705,6 @@ export const draw = (
           .attr("fill", "#B0B2B8")
           .attr("font-size", 11)
           .style("opacity", 1);
-
-        // let groupTx =
-        //   mapXOffSet + coords[0] + graphRad * Math.cos(angleScale(i));
-        // let groupTy = coords[1] + graphRad * Math.sin(angleScale(i));
-
-        // lables.attr("transform", "translate(" + groupTx + "," + groupTy + ")");
-        let formatComma = d3.format(",");
 
         textContainer
           .select("text")
@@ -748,8 +750,6 @@ export const draw = (
           .attr("width", 20)
           .style("fill", "#E4E5E7")
           .style("font-size", 11);
-
-        // lables.attr("transform", "translate(" + groupTx + "," + groupTy + ")");
       });
 
     let rectScale = d3.scaleLinear().domain([0, 20]).range([4, 24]);
@@ -1042,7 +1042,7 @@ export const draw = (
       const legendGraphCircle = legendGraph
         .selectAll("circle")
         .data(managedArray);
-        legendGraphCircle.exit().remove();
+      legendGraphCircle.exit().remove();
 
       const legendGraphText = legendGraph.selectAll("text").data(managedArray);
       legendGraphText.exit().remove();
@@ -1072,7 +1072,7 @@ export const draw = (
           return "translate(0," + -radScale(d) * 2 + ")";
         });
 
-        legendGraphText
+      legendGraphText
         .select("text")
         .data(managedArray)
         .enter()
