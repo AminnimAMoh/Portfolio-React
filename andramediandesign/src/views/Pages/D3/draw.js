@@ -536,10 +536,10 @@ export const draw = (
       .enter()
       .append("circle")
       .attr("class", "cities-circles")
-      .attr("transform", function (d, i) {
+      .attr("transform", (d, i)=> {
         return "translate(0," + -radScale(d) + ")";
       })
-      .attr("r", function (d) {
+      .attr("r", (d)=> {
         return radScale(d);
       });
 
@@ -585,8 +585,8 @@ export const draw = (
       })
       .attr("class", "cities-circles")
       .attr("transform", (d) => {
-        const pos = [+d.longitude, +d.latitude];
-        return `translate(${pos[0]},${pos[1]}})`;
+        const pos = projectionTest([+d.longitude, +d.latitude]);
+        return `translate(${pos[0]},${pos[1]})`;
       })
       .attr("r", (d) => {
         return radScale(d.Sum2013);
@@ -1127,13 +1127,12 @@ export const draw = (
         .style("font-family", "imported-Azo-Bold");
     }
 
-    function drawAll(data) {
+    function drawAll(year) {
       const annualRainData = annualrain.data;
       const dataSet = annualRainData.map((properties) => {
-        return properties[`Sum${data}`];
+        return properties[`Sum${year}`];
       });
-      console.log(dataSet);
-      yearSelected = data;
+      yearSelected = year;
 
       let circleTransition = d3.transition().ease(d3.easeExp).duration(1000);
 
@@ -1160,13 +1159,17 @@ export const draw = (
         .duration(500)
         .attr("r", function (d) {
           return radScale(d);
-        })
-        .attr("cx", function (d, i) {
-          return stationCord[i][0];
-        })
-        .attr("cy", function (d, i) {
-          return stationCord[i][1];
         });
+        // .attr('transform', (d)=>{
+        //   const pos = projectionTest([+d.longitude, +d.latitude]);
+        //   return `translate(${pos[0]},${pos[1]})`;
+        // })
+        // .attr("cx", function (d, i) {
+        //   return stationCord[i][0];
+        // })
+        // .attr("cy", function (d, i) {
+        //   return stationCord[i][1];
+        // });
 
       let managedArray = [];
       let sortedData = dataSet.sort(d3.descending);
