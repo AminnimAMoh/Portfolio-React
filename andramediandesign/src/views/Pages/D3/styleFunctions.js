@@ -12,14 +12,6 @@ export const generateGradient = (container) => {
     .attr("gradientTransform", "rotate(180)");
   gradient.append("stop").attr("class", "stop-left").attr("offset", "0");
   gradient.append("stop").attr("class", "stop-right").attr("offset", "1");
-
-//   let gradient = container
-//     .append("defs")
-//     .append("linearGradient")
-//     .attr("id", "Gradient")
-//     .attr("gradientTransform", "rotate(180)");
-//   gradient.append("stop").attr("class", "stop-left").attr("offset", "0");
-//   gradient.append("stop").attr("class", "stop-right").attr("offset", "1");
 };
 
 export const shadowGenerator = (

@@ -337,7 +337,7 @@ export const draw = (
     mapContainer.attr("transform", "translate(" + mapXOffSet + ",0)");
     legendGraph.attr(
       "transform",
-      "translate(" + (265 + mapXOffSet) + " ," + (h - 230) + ")"
+      "translate(" + (265 + mapXOffSet) + " ," + (h - 100) + ")"
     );
 
     ellipseContainer
@@ -436,7 +436,7 @@ export const draw = (
       .append("text")
       .attr("transform", function (d, i) {
         return (
-          "translate(" + (i * 50 + 12) + "," + (-radScale(d) * 2 - 3) + ")"
+          "translate(" + (i * 50 + 52) + "," + (-radScale(d) * 2 - 3) + ")"
         );
       })
       .text(function (d) {
@@ -1042,10 +1042,10 @@ export const draw = (
       const legendGraphCircle = legendGraph
         .selectAll("circle")
         .data(managedArray);
-      legendGraphLines.exit().remove();
+        legendGraphCircle.exit().remove();
 
       const legendGraphText = legendGraph.selectAll("text").data(managedArray);
-      legendGraphLines.exit().remove();
+      legendGraphText.exit().remove();
 
       legendGraphCircle
         .select("circle")
@@ -1072,14 +1072,14 @@ export const draw = (
           return "translate(0," + -radScale(d) * 2 + ")";
         });
 
-      legendGraphText
-        .selectAll("text")
+        legendGraphText
+        .select("text")
         .data(managedArray)
         .enter()
-        .append("text")
+        .selectAll("text")
         .attr("transform", function (d, i) {
           return (
-            "translate(" + (i * 50 + 12) + "," + (-radScale(d) * 2 - 6) + ")"
+            "translate(" + (i * 50 + 52) + "," + (-radScale(d) * 2 - 3) + ")"
           );
         })
         .text((d) => {
