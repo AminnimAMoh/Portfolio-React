@@ -241,7 +241,6 @@ export const draw = (
       projectionTest([+station["longitude"], +station["latitude"]])
     );
   });
-
   // d3.csv(PThreeYears).then((data) => {
   //   for (let i = 2; i < data.length; i++) {
   //     popCityName.push(data[i].City);
@@ -337,7 +336,7 @@ export const draw = (
     mapContainer.attr("transform", "translate(" + mapXOffSet + ",0)");
     legendGraph.attr(
       "transform",
-      "translate(" + (265 + mapXOffSet) + " ," + (h - 100) + ")"
+      "translate(" + (265 + mapXOffSet) + " ," + (h) + ")"
     );
 
     ellipseContainer
@@ -557,24 +556,43 @@ export const draw = (
 
         let pieColorScale = d3
           .scaleSequential()
-          .domain([population.data["min1991"], popMaxOne])
+          .domain([population.data.min1991, popMaxOne])
           .interpolator(d3.interpolateBuPu);
+
+        population.data.map(data => {
+          popCityName.push(data.City);
+          // populationOne.push(+data.Population1991);
+          // populationTwo.push(+data.Population2001);
+          // populationThree.push(+data.Population2011);
+          popMinOne = +data.Min1991;
+          popMaxOne = +data.Max1991;
+          popMinTwo = +data.Min2001;
+          popMaxTwo = +data.Max2001;
+          popMinThree = +data.Min2011;
+          popMaxThree = +data.Max2011;
+        })
 
         for (let i = 0; i < 3; i++) {
           let data;
           let groupContainer;
           let lable;
-          if (i == 0) {
-            data = populationOne;
+          if (i === 0) {
+            data = population.data.map(data => {
+              return +data.Population1991
+            });
             groupContainer = groupOne;
-          } else if (i == 1) {
-            data = populationTwo;
+          } else if (i === 1) {
+            data = population.data.map(data => {
+              return +data.Population2001
+            });
             groupContainer = groupTwo;
-          } else if (i == 2) {
-            data = populationThree;
+          } else if (i === 2) {
+            data = population.data.map(data => {
+              return +data.Population2011
+            });
             groupContainer = groupThree;
           }
-
+console.log(data);
           const popScale = d3.pie()(data);
 
           const cOne = groupContainer.selectAll("path").data(populationOne);
@@ -588,9 +606,9 @@ export const draw = (
             .attr("d", arcGenerator)
             .style("fill", function (d, i) {
               if (nameOfCity == popCityName[i]) {
-                popOne = populationOne[i];
-                popTwo = populationTwo[i];
-                popThree = populationThree[i];
+                popOne = population.data[i].Population1991;
+                popTwo = population.data[i].Population2001;
+                popThree = population.data[i].Population2011;
                 return "#9C3C41";
               } else {
                 return pieColorScale(data[i]);
@@ -627,8 +645,8 @@ export const draw = (
           // let groupTx =
           //   mapXOffSet + coords[0] + graphRad * Math.cos(angleScale(i));
           // let groupTy = coords[1] + graphRad * Math.sin(angleScale(i));
-          lables.attr("transform", "translate(" + groupTx + "," + groupTy + ")");
-          
+          lables.attr("transform", "translate(" + (groupTx + 110) + "," + groupTy + ")");
+
         }
 
         let rainGroupTx =
@@ -644,11 +662,11 @@ export const draw = (
 
         let r = 58;
         let margin = {
-            top: 50,
-            right: 80,
-            bottom: 50,
-            left: 80,
-          },
+          top: 50,
+          right: 80,
+          bottom: 50,
+          left: 80,
+        },
           width =
             Math.min(700, window.innerWidth / 4) - margin.left - margin.right,
           height = Math.min(
@@ -713,11 +731,11 @@ export const draw = (
           .append("text")
           .attr("x", function (d) {
             if (
-              formatComma(popOne) == "NaN" ||
-              formatComma(popTwo) == "NaN" ||
-              formatComma(popThree) == "NaN"
+              formatComma(popOne) === "NaN" ||
+              formatComma(popTwo) === "NaN" ||
+              formatComma(popThree) === "NaN"
             ) {
-              return d.x + 25;
+              return d.x - 20;
             } else {
               return d.x + 35;
             }

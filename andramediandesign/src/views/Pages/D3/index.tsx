@@ -32,10 +32,10 @@ function D3({ }: Props): React.ReactElement {
   }, [])
 
   useEffect(() => {
+    // (annualrain.data && population.data && months.data && slums.data) &&
     !svg && setSvg(select(svgRef.current));
-    // svgRef && console.log(svgRef.current);
     (annualrain.data.length > 0 && svg) && draw(svg, svgRef, annualrain, slums, population, months);
-  }, [svg, annualrain]);
+  }, [svg, months]);
 
   return (
     <div style={{ width: "100%", height: "100%" }}>
