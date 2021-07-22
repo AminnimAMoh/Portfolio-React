@@ -4,6 +4,7 @@ import style from "./style.css";
 
 import PopulationCircles from "./MapComponents/PopulationCircles";
 import removeEllipses from "./MapComponents/RemoveEllipses";
+import slumsComponent from './MapComponents/SlumsComponent'
 
 import PThreeYears from "./data/PThreeYears.csv";
 import MonthFiveYears from "./data/Month-FiveYears.csv";
@@ -12,7 +13,8 @@ import slumsTutal from "./data/bangladesh_slums_total (1).csv";
 import { selectAll } from "d3-selection";
 
 import { generateGradient, shadowGenerator } from "./styleFunctions";
-import { onClickTextFunction } from "./utilities";
+import { onClickTextFunction, slumScale } from "./utilities";
+
 export const draw = (
   container,
   svgRef,
@@ -36,7 +38,6 @@ export const draw = (
   let w = containerX;
   let h = containerY;
   let yearSelected = "2013";
-  let slumes = slums.data;
   let ellipsesLength = [
     {
       size: 70,
@@ -483,7 +484,8 @@ export const draw = (
           lables,
           d3,
           nameOfCity,
-          angleScale
+          angleScale,
+          rectsLength
         );
 
         let rainGroupTx =
@@ -536,74 +538,6 @@ export const draw = (
         };
 
         // const svg_radar1 = Radar(".rainG", thisCityRain, radarChartOptions);
-
-        let textContainer = lables.selectAll("text").data(rectsLength);
-        let formatComma = d3.format(",");
-        textContainer.exit().remove();
-
-        textContainer
-          .select("text")
-          .data(rectsLength)
-          .enter()
-          .append("text")
-          .attr("x", function (d) {
-            return d.x;
-          })
-          .attr("y", function (d) {
-            return d.y + 5;
-          })
-          .text(function (d) {
-            return d.text;
-          })
-          .attr("width", 20)
-          .attr("fill", "#B0B2B8")
-          .attr("font-size", 11)
-          .style("opacity", 1);
-
-        textContainer
-          .select("text")
-          .data(rectsLength)
-          .enter()
-          .append("text")
-          .attr("x", function (d) {
-            if (
-              formatComma(popOne) === "NaN" ||
-              formatComma(popTwo) === "NaN" ||
-              formatComma(popThree) === "NaN"
-            ) {
-              return d.x - 20;
-            } else {
-              return d.x - 28;
-            }
-          })
-          .attr("y", function (d) {
-            return d.y + 25;
-          })
-          .text(function (d, i) {
-            switch (i) {
-              case 0:
-                if (formatComma(popOne) == "NaN") {
-                  return "Data Missing";
-                }
-                return formatComma(popOne);
-                break;
-              case 1:
-                if (formatComma(popTwo) == "NaN") {
-                  return "Data Missing";
-                }
-                return formatComma(popTwo);
-                break;
-              case 2:
-                if (formatComma(popThree) == "NaN") {
-                  return "Data Missing";
-                }
-                return formatComma(popThree);
-                break;
-            }
-          })
-          .attr("width", 20)
-          .style("fill", "#E4E5E7")
-          .style("font-size", 11);
       });
 
     let rectScale = d3.scaleLinear().domain([0, 20]).range([4, 24]);
@@ -612,51 +546,10 @@ export const draw = (
 
     let colorScale = d3.scaleLinear().domain([0, 20]).range([255, 153]);
 
-    let slumMin = 55.1;
-    let slumMax = 87.3;
-    let slumScale = d3
-      .scaleLinear()
-      .domain([slumMin, slumMax])
-      .range([20, 100]);
-
-    lableSluems.attr("transform", "translate(100,20)");
-    yearsSluems.attr("transform", "translate(150,20)");
-    yearsSluems
-      .selectAll("rect")
-      .data(slumes)
-      .enter()
-      .append("rect")
-      .attr("transform", function (d, i) {
-        return "translate(" + i * yearLableInc + "," + 10 + ")";
-      })
-      .attr("width", 2)
-      .attr("height", 0)
-      .style("fill", "#7a9193");
-
-    yearsSluems
-      .selectAll("text")
-      .data(slumes)
-      .enter()
-      .append("text")
-      .attr("transform", function (d, i) {
-        return "translate(" + (i * yearLableInc + 30) + "," + 60 + ")";
-      })
-      .text(function (d) {
-        return "%" + d.pop;
-      })
-      .style("text-anchor", "middle")
-      .style("opacity", 0)
-      .style("fill", "#9C3C41")
-      .style("font-size", "8pt");
-
-    lableSluems
-      .append("text")
-      .attr("transform", "translate(-100,60)")
-      .text("Slums Population")
-      .style("fill", "#9C3C41")
-      .style("font-size", "8pt");
-
     let check;
+
+    slumsComponent(slums,yearsSluems,lableSluems,yearLableInc)
+
     yearsContainer.attr("transform", "translate(150,20)");
     yearsContainer
       .selectAll("text")
@@ -685,7 +578,7 @@ export const draw = (
           .transition()
           .duration(500)
           .attr("height", function (d, i) {
-            return slumScale(d.pop);
+            return slumScale(+d.value,slums);
           });
         yearsSluems
           .selectAll("text")

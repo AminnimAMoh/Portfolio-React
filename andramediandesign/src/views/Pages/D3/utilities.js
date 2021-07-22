@@ -18,3 +18,10 @@ export const onClickTextFunction = (d, yearsContainer) => {
     .style("fill", "#9C3C41")
     .style("font-family", "imported-Azo-Bold");
 };
+
+export const slumScale = (data,slums) => {
+  const scale=d3.scaleLinear()
+    .domain([slums.data[0].min, slums.data[0].max])
+    .range([20, 100]);
+  return scale(data)
+};

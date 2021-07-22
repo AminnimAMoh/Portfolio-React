@@ -9,7 +9,8 @@ const PopulationCircles = (
   lables,
   d3,
   nameOfCity,
-  angleScale
+  angleScale,
+  rectsLength
 ) => {
   const arcGenerator = d3
     .arc()
@@ -110,6 +111,74 @@ const PopulationCircles = (
       "transform",
       "translate(" + (groupTx + 110) + "," + groupTy + ")"
     );
+
+    let textContainer = lables.selectAll("text").data(rectsLength);
+    let formatComma = d3.format(",");
+    textContainer.exit().remove();
+
+    textContainer
+      .select("text")
+      .data(rectsLength)
+      .enter()
+      .append("text")
+      .attr("x", function (d) {
+        return d.x;
+      })
+      .attr("y", function (d) {
+        return d.y + 5;
+      })
+      .text(function (d) {
+        return d.text;
+      })
+      .attr("width", 20)
+      .attr("fill", "#B0B2B8")
+      .attr("font-size", 11)
+      .style("opacity", 1);
+
+    textContainer
+      .select("text")
+      .data(rectsLength)
+      .enter()
+      .append("text")
+      .attr("x", function (d) {
+        if (
+          formatComma(popOne) === "NaN" ||
+          formatComma(popTwo) === "NaN" ||
+          formatComma(popThree) === "NaN"
+        ) {
+          return d.x - 20;
+        } else {
+          return d.x - 28;
+        }
+      })
+      .attr("y", function (d) {
+        return d.y + 25;
+      })
+      .text(function (d, i) {
+        switch (i) {
+          case 0:
+            if (formatComma(popOne) == "NaN") {
+              return "Data Missing";
+            }
+            return formatComma(popOne);
+            break;
+          case 1:
+            if (formatComma(popTwo) == "NaN") {
+              return "Data Missing";
+            }
+            return formatComma(popTwo);
+            break;
+          case 2:
+            if (formatComma(popThree) == "NaN") {
+              return "Data Missing";
+            }
+            return formatComma(popThree);
+            break;
+        }
+      })
+      .attr("width", 20)
+      .style("fill", "#E4E5E7")
+      .style("font-size", 11);
   }
 };
 export default PopulationCircles;
