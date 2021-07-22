@@ -5,7 +5,8 @@ import style from "./style.css";
 import PopulationCircles from "./MapComponents/PopulationCircles";
 import removeEllipses from "./MapComponents/RemoveEllipses";
 import slumsComponent from './MapComponents/SlumsComponent';
-import DrawAll from './MapComponents/DrawAllComponents'
+import DrawAll from './MapComponents/DrawAllComponents';
+import removeFunction from './MapComponents/RemoveFunction'
 
 import PThreeYears from "./data/PThreeYears.csv";
 import MonthFiveYears from "./data/Month-FiveYears.csv";
@@ -609,69 +610,11 @@ export const draw = (
           .style("opacity", 0);
       })
       .on("click", function (d) {
-        removeFunction();
+        removeFunction(cityLables,ellipseContainer,groupOne, groupTwo, groupThree, container,lables,cityCircles);
         onClickTextFunction(this,yearsContainer);
         const yearListSelected = this.id;
         DrawAll(annualrain,yearListSelected, yearSelected, firstMin, firstMax, radScale, cityCircles, legendGraph);
       });
-
-    function removeFunction() {
-      cityLables.selectAll("text").remove();
-      let ellipseG = ellipseContainer.selectAll("ellipse");
-      ellipseG.transition().duration(500).attr("rx", "0").attr("ry", "0");
-
-      let pathOne = groupOne.selectAll("path");
-      pathOne
-        .transition()
-        .ease(d3.easePoly)
-        .duration(1000)
-        .attrTween("d", arcTweenClose)
-        .style("opacity", 0);
-
-      pathOne = groupTwo.selectAll("path");
-      pathOne
-        .transition()
-        .ease(d3.easePoly)
-        .duration(1000)
-        .attrTween("d", arcTweenClose)
-        .style("opacity", 0);
-
-      pathOne = groupThree.selectAll("path");
-      pathOne
-        .transition()
-        .ease(d3.easePoly)
-        .duration(1000)
-        .attrTween("d", arcTweenClose)
-        .style("opacity", 0);
-
-      let monthRain = container
-        .select(".rainG")
-        .transition()
-        .duration(500)
-        .style("opacity", 0);
-
-      let labelsContainer = lables
-        .selectAll("text")
-        .transition()
-        .duration(500)
-        .style("opacity", 0);
-
-      let cityCircleContainer = cityCircles
-        .selectAll("circle")
-        .classed("clicked", false);
-
-      function arcTweenClose(d) {
-        let i = d3.interpolateNumber(70, 0);
-        return function (t) {
-          let r = i(t),
-            arc = d3
-              .arc()
-              .outerRadius(r - 2)
-              .innerRadius(r);
-          return arc(d);
-        };
-      }
-    }
 
     removeEllipses(
       d3,
@@ -685,8 +628,7 @@ export const draw = (
       cityLables
     );
 
-    DrawAll(annualrain,year, yearSelected, firstMin, firstMax, radScale, cityCircles, legendGraph)
-
+    DrawAll(annualrain,2013, yearSelected, firstMin, firstMax, radScale, cityCircles, legendGraph)
 
     d3.selectAll("g").raise();
 
