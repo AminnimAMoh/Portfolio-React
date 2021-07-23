@@ -1,14 +1,16 @@
 const removeEllipses = (
   d3,
-  ellipseContainer,
-  groupOne,
-  groupTwo,
-  groupThree,
   container,
-  lables,
-  cityCircles,
-  cityLables
+  generatedGroups
 ) => {
+  const ellipseContainer = generatedGroups.ellipseContainer;
+  const groupOne = generatedGroups.groupOne;
+  const groupTwo = generatedGroups.groupTwo;
+  const groupThree = generatedGroups.groupThree;
+  const lables = generatedGroups.lables;
+  const cityCircles = generatedGroups.cityCircles;
+  const cityLables = generatedGroups.cityLables;
+
   cityLables.selectAll("text").remove();
   let ellipseG = ellipseContainer.selectAll("ellipse");
   ellipseG.transition().duration(500).attr("rx", 0).attr("ry", 0);

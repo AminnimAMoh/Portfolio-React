@@ -1,15 +1,17 @@
 import * as d3 from "d3";
 
-const slumsComponent = (slums,yearsSluems,lableSluems,yearLableInc) => {
+const slumsComponent = (slums, generatedGroups, yearLableInc) => {
   let slumMin = 55.1;
   let slumMax = 87.3;
+  const yearsSlums = generatedGroups.yearsSlums;
+  const lableSlums = generatedGroups.lableSlums;
 
   const slumsData = slums.data.map((data) => {
     return { year: data.year, value: data.number };
   });
-  lableSluems.attr("transform", "translate(100,20)");
-  yearsSluems.attr("transform", "translate(150,20)");
-  yearsSluems
+  lableSlums.attr("transform", "translate(100,20)");
+  yearsSlums.attr("transform", "translate(150,20)");
+  yearsSlums
     .selectAll("rect")
     .data(slumsData)
     .enter()
@@ -21,7 +23,7 @@ const slumsComponent = (slums,yearsSluems,lableSluems,yearLableInc) => {
     .attr("height", 0)
     .style("fill", "#7a9193");
 
-  yearsSluems
+  yearsSlums
     .selectAll("text")
     .data(slumsData)
     .enter()
@@ -37,7 +39,7 @@ const slumsComponent = (slums,yearsSluems,lableSluems,yearLableInc) => {
     .style("fill", "#9C3C41")
     .style("font-size", "8pt");
 
-  lableSluems
+  lableSlums
     .append("text")
     .attr("transform", "translate(-100,60)")
     .text("Slums Population")

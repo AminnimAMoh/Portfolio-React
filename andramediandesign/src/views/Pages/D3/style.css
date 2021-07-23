@@ -1,4 +1,3 @@
-
 .stop-left {
     stop-color: #426164;
 }
@@ -17,7 +16,7 @@
 }
 
 text {
-    font-family: "imported-Azo-Medium";
+    /* font-family: "imported-Azo-Medium"; */
     color: #E4E5E7;
 }
 

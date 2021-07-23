@@ -6,24 +6,24 @@ const stationsClick = (
   population,
   months,
   yearSelected,
+  generatedGroups,
   d3,
-  container,
-  cityLables,
-  ellipseContainer,
-  groupOne,
-  groupTwo,
-  groupThree,
-  lables,
   mapXOffSet,
-  rainGroup,
   selected
 ) => {
+  const cityLables = generatedGroups.cityLables;
+  const ellipseContainer = generatedGroups.ellipseContainer;
+  const groupOne = generatedGroups.groupOne;
+  const groupTwo = generatedGroups.groupTwo;
+  const groupThree = generatedGroups.groupThree;
+  const lables = generatedGroups.lables;
+  const rainGroup = generatedGroups.rainGroup;
+
   const graphRad = 120;
   const coords = [
     selected.transform.animVal[0].matrix.e,
     selected.transform.animVal[0].matrix.f,
   ];
-  let group = container.append("g");
   let nameOfCity = selected.id;
   let popOne, popTwo, popThree;
 

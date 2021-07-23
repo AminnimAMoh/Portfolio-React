@@ -7,6 +7,8 @@ import slumsComponent from "./MapComponents/SlumsComponent";
 import DrawAll from "./MapComponents/DrawAllComponents";
 import removeFunction from "./MapComponents/RemoveFunction";
 
+import { generateAllGroups } from "./DrawFunction/generateAllGroups";
+
 import stationsClick from "./MapMouseControles/StationsClick";
 
 import url from "./data/GeoJson/bangladesh.geojson";
@@ -14,7 +16,7 @@ import { staticState } from "./data/staticVariables";
 
 import { selectAll } from "d3-selection";
 
-import { generateGradient, shadowGenerator } from "./styleFunctions";
+import { generatGradient, shadowGenerator, generateBlur } from "./styleFunctions";
 import {
   onClickTextFunction,
   slumScale,
@@ -43,27 +45,19 @@ export const draw = (
   let h = containerY;
   let yearSelected = "2013";
 
-  let mapContainer = container.append("g").attr("id", "map-container-group");
-  let yearsContainer = container.append("g").attr("class", "year-container");
-  let yearsSluems = container.append("g").attr("class", "year-slumes");
-  let lableSluems = container.append("g").attr("class", "lable-slumes");
-  let cityCircles = container.append("g").attr("id", "city-indicators");
-  let legendGraph = container.append("g").attr("id", "graph-legend-group");
-  let ellipseContainer = container.append("g").attr("id", "ellipse-group");
-  let cityLables = container.append("g").attr("id", "city-Lable");
-  let groupOne = container.append("g").attr("id", "population-groupOne");
-  let groupTwo = container.append("g").attr("id", "population-groupTwo");
-  let groupThree = container.append("g").attr("id", "population-groupThree");
-  let lables = container.append("g").attr("id", "graph-lables");
-  let rainGroup = container.append("g").attr("class", "rainG");
-
+  const generatedGroups = generateAllGroups(d3, container);
+  while (!generatedGroups) {
+    generatedGroups = generateAllGroups(d3, container);
+  }
+  console.log(generatedGroups);
   /*--------------------------------------------------------------*/
   /*--------------------------------------------------------------*/
   ///////////////////////////Circles Drop Shadow////////////////////
   /*--------------------------------------------------------------*/
   /*--------------------------------------------------------------*/
 
-  generateGradient(container);
+  generatGradient(container);
+  generateBlur(container);
   shadowGenerator(container, "drop-shadow", "330%", "330%", 3, 10, 10, 0.3);
   shadowGenerator(container, "graph-drop-shadow", "130%", "130%", 6, 0, 0, 1);
   shadowGenerator(
@@ -89,7 +83,7 @@ export const draw = (
       for (let i = 0; i < countries.features.length; i++) {
         names.push(countries.features[i].properties.NAME_4);
       }
-      mapContainer
+      generatedGroups.mapContainer
         .selectAll("path")
         .data(countries.features)
         .enter()
@@ -116,13 +110,16 @@ export const draw = (
       .selectAll("g")
       .attr("transform", "translate(" + w / 2 + "," + h / 2 + ")");
 
-    mapContainer.attr("transform", "translate(" + mapXOffSet + ",0)");
-    legendGraph.attr(
+    generatedGroups.mapContainer.attr(
+      "transform",
+      "translate(" + mapXOffSet + ",0)"
+    );
+    generatedGroups.legendGraph.attr(
       "transform",
       "translate(" + (265 + mapXOffSet) + " ," + h + ")"
     );
 
-    ellipseContainer
+    generatedGroups.ellipseContainer
       .selectAll("ellipse")
       .data(staticState.ellipsesLength)
       .enter()
@@ -143,17 +140,17 @@ export const draw = (
         dataSet = population.data.map((d) => {
           return d.Population1991;
         });
-        groups = groupOne;
+        groups = generatedGroups.groupOne;
       } else if (i == 1) {
         dataSet = population.data.map((d) => {
           return d.Population2001;
         });
-        groups = groupTwo;
+        groups = generatedGroups.groupTwo;
       } else if (i == 2) {
         dataSet = population.data.map((d) => {
           return d.Population2011;
         });
-        groups = groupThree;
+        groups = generatedGroups.groupThree;
       }
       groups.style("opacity", 1);
 
@@ -169,9 +166,18 @@ export const draw = (
         .attr("d", arcG);
     }
 
-    cityCircles.attr("transform", "translate(" + mapXOffSet + ",0)");
-    cityLables.attr("transform", "translate(" + mapXOffSet + ",0)");
-    ellipseContainer.attr("transform", "translate(" + mapXOffSet + ",0)");
+    generatedGroups.cityCircles.attr(
+      "transform",
+      "translate(" + mapXOffSet + ",0)"
+    );
+    generatedGroups.cityLables.attr(
+      "transform",
+      "translate(" + mapXOffSet + ",0)"
+    );
+    generatedGroups.ellipseContainer.attr(
+      "transform",
+      "translate(" + mapXOffSet + ",0)"
+    );
 
     let managedArray = [];
     const legendData = annualrain.data.map((data) => {
@@ -182,7 +188,7 @@ export const draw = (
     managedArray.push(sortedData[sortedData.length / 2]);
     managedArray.push(sortedData[sortedData.length - 1]);
 
-    legendGraph
+    generatedGroups.legendGraph
       .selectAll("circle")
       .data(managedArray)
       .enter()
@@ -195,7 +201,7 @@ export const draw = (
         return radScale(d);
       });
 
-    legendGraph
+    generatedGroups.legendGraph
       .selectAll("line")
       .data(managedArray)
       .enter()
@@ -211,7 +217,7 @@ export const draw = (
       .attr("y1", 1)
       .style("stroke", "white");
 
-    legendGraph
+    generatedGroups.legendGraph
       .selectAll("text")
       .data(managedArray)
       .enter()
@@ -227,7 +233,7 @@ export const draw = (
       .style("font-size", "6pt")
       .style("fill", "white");
 
-    const circleStations = cityCircles
+    const circleStations = generatedGroups.cityCircles
       .selectAll("circle")
       .data(annualrain.data)
       .enter()
@@ -255,16 +261,9 @@ export const draw = (
           population,
           months,
           yearSelected,
+          generatedGroups,
           d3,
-          container,
-          cityLables,
-          ellipseContainer,
-          groupOne,
-          groupTwo,
-          groupThree,
-          lables,
           mapXOffSet,
-          rainGroup,
           this
         );
       });
@@ -277,10 +276,10 @@ export const draw = (
 
     let check;
 
-    slumsComponent(slums, yearsSluems, lableSluems, yearLableInc);
+    slumsComponent(slums, generatedGroups, yearLableInc);
 
-    yearsContainer.attr("transform", "translate(150,20)");
-    yearsContainer
+    generatedGroups.yearsContainer.attr("transform", "translate(150,20)");
+    generatedGroups.yearsContainer
       .selectAll("text")
       .data(staticState.yearSelector)
       .enter()
@@ -302,14 +301,14 @@ export const draw = (
         let year = this.id;
         d3.select(this).classed("active", true);
 
-        yearsSluems
+        generatedGroups.yearsSlums
           .selectAll("rect")
           .transition()
           .duration(500)
           .attr("height", function (d, i) {
             return slumScale(+d.value, slums);
           });
-        yearsSluems
+        generatedGroups.yearsSlums
           .selectAll("text")
           .transition()
           .delay(500)
@@ -324,12 +323,12 @@ export const draw = (
       })
       .on("mouseout", function (d) {
         d3.select(this).classed("active", false);
-        yearsSluems
+        generatedGroups.yearsSlums
           .selectAll("rect")
           .transition()
           .duration(500)
           .attr("height", 0);
-        yearsSluems
+        generatedGroups.yearsSlums
           .selectAll("text")
           .transition()
           .delay(500)
@@ -337,51 +336,30 @@ export const draw = (
           .style("opacity", 0);
       })
       .on("click", function (d) {
-        removeFunction(
-          cityLables,
-          ellipseContainer,
-          groupOne,
-          groupTwo,
-          groupThree,
-          container,
-          lables,
-          cityCircles
-        );
-        onClickTextFunction(this, yearsContainer);
+        removeFunction(d3, container, generatedGroups);
+        onClickTextFunction(this, generatedGroups.yearsContainer);
         const yearListSelected = this.id;
         DrawAll(
+          d3,
           annualrain,
           yearListSelected,
           yearSelected,
           firstMin,
           firstMax,
-          radScale,
-          cityCircles,
-          legendGraph
+          generatedGroups
         );
       });
 
-    removeEllipses(
-      d3,
-      ellipseContainer,
-      groupOne,
-      groupTwo,
-      groupThree,
-      container,
-      lables,
-      cityCircles,
-      cityLables
-    );
+    removeEllipses(d3, container, generatedGroups);
 
     DrawAll(
+      d3,
       annualrain,
       2013,
       yearSelected,
       firstMin,
       firstMax,
-      radScale,
-      cityCircles,
-      legendGraph
+      generatedGroups
     );
 
     d3.selectAll("g").raise();
@@ -393,7 +371,7 @@ export const draw = (
         event.srcElement.id === "control-canvas" ||
         event.srcElement.id === "map-canvas"
       ) {
-        yearsContainer
+        generatedGroups.yearsContainer
           .selectAll("text")
           .attr("font-size", 12)
           .style("fill", "white")

@@ -1,18 +1,29 @@
-import * as d3 from "d3";
+const DrawAll = (
+  d3,
+  annualrain,
+  year,
+  yearSelected,
+  firstMin,
+  firstMax,
+  generatedGroups
+) => {
+  const cityCircles = generatedGroups.cityCircles;
+  const legendGraph = generatedGroups.legendGraph;
 
-const DrawAll = (annualrain,year, yearSelected, firstMin, firstMax, radScale, cityCircles, legendGraph) => {
   const annualRainData = annualrain.data;
+
   const dataSet = annualRainData.map((properties) => {
-    return properties[`Sum${year}`];
+    return +properties[`Sum${year}`];
   });
-  yearSelected = year;
+
+  yearSelected=year;
 
   let circleTransition = d3.transition().ease(d3.easeExp).duration(1000);
 
   firstMin = d3.min(dataSet);
   firstMax = d3.max(dataSet);
 
-  radScale = d3.scaleLinear().domain([firstMin, firstMax]).range([4, 24]);
+  const radScale = d3.scaleLinear().domain([firstMin, firstMax]).range([4, 24]);
 
   let selectContainerCircles = cityCircles.selectAll("circle").data(dataSet);
 
@@ -81,7 +92,6 @@ const DrawAll = (annualrain,year, yearSelected, firstMin, firstMax, radScale, ci
       return "translate(" + (i * 50 + 52) + "," + (-radScale(d) * 2 - 3) + ")";
     })
     .text((d) => {
-      console.log(d);
       return d + "mm";
     })
     .style("font-size", "6pt")

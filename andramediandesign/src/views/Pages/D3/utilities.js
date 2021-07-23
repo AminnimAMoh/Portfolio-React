@@ -11,12 +11,10 @@ export const onClickTextFunction = (d, yearsContainer) => {
     .selectAll("text")
     .attr("font-size", 12)
     .style("fill", "white")
-    .style("font-family", "imported-Azo");
 
   d3.select(d)
     .attr("font-size", 24)
     .style("fill", "#9C3C41")
-    .style("font-family", "imported-Azo-Bold");
 };
 
 export const slumScale = (data,slums) => {

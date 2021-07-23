@@ -1,12 +1,17 @@
 import * as d3 from "d3";
 
-export const generateGradient = (container) => {
-  var blurFilter = container.append("defs")
+export const generateBlur = (container) => {
+  var blurFilter = container
+    .append("defs")
     .append("filter")
     .attr("id", "blurFilter")
     .append("feGaussianBlur")
     .attr("stdDeviation", 20);
-  var gradient = container.append("defs")
+};
+
+export const generatGradient = (container) => {
+  var gradient = container
+    .append("defs")
     .append("linearGradient")
     .attr("id", "Gradient")
     .attr("gradientTransform", "rotate(180)");
