@@ -1,5 +1,4 @@
 import * as d3 from "d3";
-import Radar from "react-d3-radar";
 import style from "./style.css";
 
 import removeEllipses from "./MapComponents/RemoveEllipses";
@@ -45,11 +44,13 @@ export const draw = (
   let h = containerY;
   let yearSelected = "2013";
 
+  let count=0;
   const generatedGroups = generateAllGroups(d3, container);
   while (!generatedGroups) {
     generatedGroups = generateAllGroups(d3, container);
+    count++;
   }
-  console.log(generatedGroups);
+  console.log(count);
   /*--------------------------------------------------------------*/
   /*--------------------------------------------------------------*/
   ///////////////////////////Circles Drop Shadow////////////////////

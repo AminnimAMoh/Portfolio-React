@@ -1,6 +1,8 @@
 import { staticState } from "../data/staticVariables";
 import { angleScale } from "../utilities";
 import PopulationCircles from "../MapComponents/PopulationCircles";
+import Radar from "react-d3-radar";
+import RadarChartEngin from '../ExternalResource/RadarChart'
 
 const stationsClick = (
   population,
@@ -130,27 +132,27 @@ const stationsClick = (
   let thisCityRain = {
     color: "#cd1d27",
     name: nameOfCity,
-    axis: [{}],
+    axes: [{}],
   };
   months.data.map((d, i) => {
     d.Station === nameOfCity &&
-      thisCityRain.axis.push({
-        value: d[`MonthlyTotal${yearSelected}`],
+      thisCityRain.axes.push({
+        value: +d[`MonthlyTotal${yearSelected}`],
         axis: staticState.rainMonthsName[i % 12].name,
       });
   });
-  thisCityRain.axis.splice(0, 1);
+  thisCityRain.axes.splice(0, 1);
   const radarChartOptions = {
     w: 90,
     h: 150,
     margin: margin,
     levels: 2,
-    roundStrokes: true,
+    roundStrokes: false,
     color: d3.scaleOrdinal().range(["#9C3C41", "#12393D", "#9C3C41"]),
-    format: ".0f",
+    format: '.1f'
   };
-
-  // const svg_radar1 = Radar(".rainG", thisCityRain, radarChartOptions);
+  // console.log(thisCityRain);
+  let svg_radar1 = RadarChartEngin(".rainG", thisCityRain, radarChartOptions);
 };
 
 export default stationsClick;
