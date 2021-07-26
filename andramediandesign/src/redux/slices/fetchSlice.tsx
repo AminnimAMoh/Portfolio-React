@@ -5,7 +5,7 @@ import axiosInterceptor from "../../axiosInterceptor";
 
 interface states {
   data: [];
-  state: boolean;
+  state: string;
 }
 interface fetchStat {
   annualrain: states;
@@ -16,20 +16,20 @@ interface fetchStat {
 
 const initialState: fetchStat = {
   annualrain: {
-    state: false,
     data: [],
+    state: "empty"
   },
   slums: {
     data: [],
-    state: false,
+    state: "empty",
   },
   population: {
     data: [],
-    state: false,
+    state: "empty",
   },
   months: {
     data: [],
-    state: false,
+    state: "empty",
   },
 };
 
@@ -87,13 +87,32 @@ const FetchSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(fetchAnnualrainData.pending, (state: RootState, action) => {
+        return {
+          ...state,
+          annualrain: {
+            state: "pending",
+            data: []
+          },
+        };
+      })
       .addCase(fetchAnnualrainData.fulfilled, (state: RootState, action) => {
         return {
           ...state,
           annualrain: {
             data: action.payload,
-            state: true,
-          }
+            state: "fulfilled",
+          },
+        };
+      })
+
+      .addCase(fetchSlumsData.pending, (state: RootState, action) => {
+        return {
+          ...state,
+          slums: {
+            state: "pending",
+            data: []
+          },
         };
       })
       .addCase(fetchSlumsData.fulfilled, (state: RootState, action) => {
@@ -101,8 +120,18 @@ const FetchSlice = createSlice({
           ...state,
           slums: {
             data: action.payload,
-            state: true,
-          }
+            state: "fulfilled",
+          },
+        };
+      })
+
+      .addCase(fetchPopulationData.pending, (state: RootState, action) => {
+        return {
+          ...state,
+          population: {
+            state: "pending",
+            data: []
+          },
         };
       })
       .addCase(fetchPopulationData.fulfilled, (state: RootState, action) => {
@@ -110,8 +139,18 @@ const FetchSlice = createSlice({
           ...state,
           population: {
             data: action.payload,
-            state: true,
-          }
+            state: "fulfilled",
+          },
+        };
+      })
+
+      .addCase(fetchMonthData.pending, (state: RootState, action) => {
+        return {
+          ...state,
+          months: {
+            state: "pending",
+            data: []
+          },
         };
       })
       .addCase(fetchMonthData.fulfilled, (state: RootState, action) => {
@@ -119,8 +158,8 @@ const FetchSlice = createSlice({
           ...state,
           months: {
             data: action.payload,
-            state: true,
-          }
+            state: "fulfilled",
+          },
         };
       });
   },
