@@ -39,17 +39,16 @@ const useStyle = makeStyles((theme) => ({
     padding: theme.spacing(6),
     color: "white",
   },
-  loading:{
-    width: '100%',
-    position: 'absolute',
+  loading: {
+    width: "100%",
+    position: "absolute",
     top: 0,
     zIndex: 1,
-  }
+  },
 }));
 
 function App(): React.ReactElement {
   // console.clear();
-  const [dataStates, setDataStates] = useState<Array<String>>([]);
   const [svgSetupTrigger, setSVGSetupTrigger] = useState<boolean>(false);
   const dispatch = useDispatch();
   const {
@@ -64,29 +63,22 @@ function App(): React.ReactElement {
   });
 
   useEffect(() => {
-    setDataStates([
-      annualrain.state,
-      slums.state,
-      population.state,
-      months.state,
-    ]);
-    (dataStates[0] === "fulfilled" &&
-      dataStates[1] === "fulfilled" &&
-      dataStates[2] === "fulfilled" &&
-      dataStates[3] === "fulfilled") &&
+    annualrain.state === "fulfilled" &&
+      slums.state === "fulfilled" &&
+      population.state === "fulfilled" &&
+      months.state === "fulfilled" &&
       setSVGSetupTrigger(true);
   }, [annualrain.state, slums.state, population.state, months.state]);
-    console.log(dataStates);
-    
+
   return (
     <div
       className={rootState ? `${classes.root} open` : `${classes.root} close`}
     >
-      {(!svgSetupTrigger && buttonTrigered==='D3') &&
-        <div className={classes.loading}> 
-        <DataFetchPending />
+      {!svgSetupTrigger && buttonTrigered === "D3" && (
+        <div className={classes.loading}>
+          <DataFetchPending />
         </div>
-        }
+      )}
       <MenuButton />
       <ContentContainer />
     </div>

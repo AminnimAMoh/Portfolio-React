@@ -23,7 +23,6 @@ function D3({}: Props): React.ReactElement {
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
   const svgRef = useRef<SVGSVGElement | null>(null);
-  const [dataStates, setDataStates] = useState<Array<String>>([]);
   const [svgSetupTrigger, setSVGSetupTrigger] = useState<boolean>(false);
 
   const [svg, setSvg] = useState<null | Selection<
@@ -41,16 +40,10 @@ function D3({}: Props): React.ReactElement {
   }, []);
 
   useEffect(() => {
-    setDataStates([
-      annualrain.state,
-      slums.state,
-      population.state,
-      months.state,
-    ]);
-    (dataStates[0] === "fulfilled" &&
-      dataStates[1] === "fulfilled" &&
-      dataStates[2] === "fulfilled" &&
-      dataStates[3] === "fulfilled") &&
+    annualrain.state === "fulfilled" &&
+      slums.state === "fulfilled" &&
+      population.state === "fulfilled" &&
+      months.state === "fulfilled" &&
       setSVGSetupTrigger(true);
   }, [annualrain.state, slums.state, population.state, months.state]);
 
