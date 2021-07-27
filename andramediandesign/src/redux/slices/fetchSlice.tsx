@@ -1,89 +1,125 @@
+//All data fetching happens here.
+//Stage 1 type introduction and initialState configuration.
+//Stage 2 asyncThunk function to call the APIs through Axios Interceptor. No TOKEN CHECK 🤝
+//Stage 3 Reducers.
+//Stage 4 asyncThunk responses handling.
+
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "src/store";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInterceptor from "../../axiosInterceptor";
 
+//Setting a type check for properties in initialState object.
+//This helps to prevent mutation on properties from different components.
 interface states {
   data: [];
   state: string;
   error: string;
 }
+
+//Setting the type specification on the initialState object.
+//This helps to prevent mutation on properties from different components.
 interface fetchStat {
-  referesh: boolean,
+  refresh: boolean;
   annualrain: states;
   slums: states;
   population: states;
   months: states;
 }
 
+//Configuring the main state for this slice.
 const initialState: fetchStat = {
-  referesh: false,
+  refresh: false,
   annualrain: {
     data: [],
     state: "empty",
-    error: ''
+    error: "",
   },
   slums: {
     data: [],
     state: "empty",
-    error: ''
+    error: "",
   },
   population: {
     data: [],
     state: "empty",
-    error: ''
+    error: "",
   },
   months: {
     data: [],
     state: "empty",
-    error: ''
+    error: "",
   },
 };
 
+//AsyncThunk function to read 'annualrain' data from data store.
+//Benefits of using asyncThunk in this case is easy API response handeling.
 export const fetchAnnualrainData = createAsyncThunk(
+  //Name of the action to be monitored in Redux console.
   "fetchData/AnnualRainData",
-  async (_, thunkAPI) => {
+  //Dicunstructing 'thunkAPI' and grabing 'rejectWithValue' that we will need
+  //for error handeling.
+  async (_, { rejectWithValue }) => {
     try {
       const response = await axiosInterceptor().get("annualrain");
       return response.data.annualRain;
     } catch (err) {
-      return thunkAPI.rejectWithValue(err);
+      //Rejecting the action so we can change the state on error for each asyncThunk action.
+      return rejectWithValue(err);
     }
   }
 );
 
+//AsyncThunk function to read 'slums' data from data store.
+//Benefits of using asyncThunk in this case is easy API response handeling.
 export const fetchSlumsData = createAsyncThunk(
+  //Name of the action to be monitored in Redux console.
   "fetchData/SlumsData",
-  async (_, thunkAPI) => {
+  //Dicunstructing 'thunkAPI' and grabing 'rejectWithValue' that we will need
+  //for error handeling.
+  async (_, { rejectWithValue }) => {
     try {
       const response = await axiosInterceptor().get("slums");
       return response.data.slums;
     } catch (err) {
-      return thunkAPI.rejectWithValue(err);
+      //Rejecting the action so we can change the state on error for each asyncThunk action.
+      return rejectWithValue(err);
     }
   }
 );
 
+//AsyncThunk function to read 'population' data from data store.
+//Benefits of using asyncThunk in this case is easy API response handeling.
 export const fetchPopulationData = createAsyncThunk(
+  //Name of the action to be monitored in Redux console.
   "fetchData/PopulationData",
-  async (_, thunkAPI) => {
+  //Dicunstructing 'thunkAPI' and grabing 'rejectWithValue' that we will need
+  //for error handeling.
+  async (_, { rejectWithValue }) => {
     try {
       const response = await axiosInterceptor().get("population");
       return response.data.population;
     } catch (err) {
-      return thunkAPI.rejectWithValue(err);
+      //Rejecting the action so we can change the state on error for each asyncThunk action.
+      return rejectWithValue(err);
     }
   }
 );
 
+//AsyncThunk function to read 'months' data from data store.
+//Benefits of using asyncThunk in this case is easy API response handeling.
 export const fetchMonthData = createAsyncThunk(
+  //Name of the action to be monitored in Redux console.
   "fetchData/MonthsData",
-  async (_, thunkAPI) => {
+  //Dicunstructing 'thunkAPI' and grabing 'rejectWithValue' that we will need
+  //for error handeling.
+  async (_, { rejectWithValue }) => {
     try {
       const response = await axiosInterceptor().get("months");
       return response.data.monthlyTotal;
     } catch (err) {
-      return thunkAPI.rejectWithValue(err);
+      //Rejecting the action so we can change the state on error for each asyncThunk action.
+      return rejectWithValue(err);
     }
   }
 );
@@ -92,16 +128,16 @@ const FetchSlice = createSlice({
   name: "dataFetchSlice",
   initialState,
   reducers: {
-    readDataAgain: (state)=>{
-      state.referesh=true;
-    }
+    readDataAgain: (state) => {
+      state.refresh = true;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchAnnualrainData.pending, (state: RootState, action) => {
         return {
           ...state,
-          referesh: false,
+          refresh: false,
           annualrain: {
             ...state.annualrain,
             state: "pending",
@@ -111,7 +147,7 @@ const FetchSlice = createSlice({
       .addCase(fetchAnnualrainData.fulfilled, (state: RootState, action) => {
         return {
           ...state,
-          referesh: false,
+          refresh: false,
           annualrain: {
             ...state.annualrain,
             data: action.payload,
@@ -122,11 +158,11 @@ const FetchSlice = createSlice({
       .addCase(fetchAnnualrainData.rejected, (state: RootState, action) => {
         return {
           ...state,
-          referesh: false,
+          refresh: false,
           annualrain: {
             ...state.annualrain,
             state: "rejected",
-            error: action.payload
+            error: action.payload,
           },
         };
       })
@@ -134,7 +170,7 @@ const FetchSlice = createSlice({
       .addCase(fetchSlumsData.pending, (state: RootState, action) => {
         return {
           ...state,
-          referesh: false,
+          refresh: false,
           slums: {
             ...state.slums,
             state: "pending",
@@ -144,7 +180,7 @@ const FetchSlice = createSlice({
       .addCase(fetchSlumsData.fulfilled, (state: RootState, action) => {
         return {
           ...state,
-          referesh: false,
+          refresh: false,
           slums: {
             ...state.slums,
             data: action.payload,
@@ -155,11 +191,11 @@ const FetchSlice = createSlice({
       .addCase(fetchSlumsData.rejected, (state: RootState, action) => {
         return {
           ...state,
-          referesh: false,
+          refresh: false,
           slums: {
             ...state.slums,
             state: "rejected",
-            error: action.payload
+            error: action.payload,
           },
         };
       })
@@ -167,18 +203,18 @@ const FetchSlice = createSlice({
       .addCase(fetchPopulationData.pending, (state: RootState, action) => {
         return {
           ...state,
-          referesh: false,
+          refresh: false,
           population: {
             ...state.population,
             state: "pending",
-            error: action.payload
+            error: action.payload,
           },
         };
       })
       .addCase(fetchPopulationData.fulfilled, (state: RootState, action) => {
         return {
           ...state,
-          referesh: false,
+          refresh: false,
           population: {
             ...state.population,
             data: action.payload,
@@ -189,11 +225,11 @@ const FetchSlice = createSlice({
       .addCase(fetchPopulationData.rejected, (state: RootState, action) => {
         return {
           ...state,
-          referesh: false,
+          refresh: false,
           population: {
             ...state.population,
             state: "rejected",
-            error: action.payload
+            error: action.payload,
           },
         };
       })
@@ -201,38 +237,38 @@ const FetchSlice = createSlice({
       .addCase(fetchMonthData.pending, (state: RootState, action) => {
         return {
           ...state,
-          referesh: false,
-          months:{
+          refresh: false,
+          months: {
             ...state.months,
-            state: 'pending'
-          }
-        }
+            state: "pending",
+          },
+        };
       })
       .addCase(fetchMonthData.fulfilled, (state: RootState, action) => {
-        return{
+        return {
           ...state,
-          referesh: false,
-          months:{
+          refresh: false,
+          months: {
             ...state.months,
             data: action.payload,
-            state: 'fulfilled'
-          }
-        }
-      })     
+            state: "fulfilled",
+          },
+        };
+      })
       .addCase(fetchMonthData.rejected, (state: RootState, action) => {
         return {
           ...state,
-          referesh: false,
-          months:{
+          refresh: false,
+          months: {
             ...state.months,
-            state: 'rejected',
-            error: action.payload
-          }
-        }
+            state: "rejected",
+            error: action.payload,
+          },
+        };
       });
   },
 });
 
-export const {readDataAgain}=FetchSlice.actions;
+export const { readDataAgain } = FetchSlice.actions;
 
 export default FetchSlice.reducer;

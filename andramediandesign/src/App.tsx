@@ -1,3 +1,6 @@
+//This is the 'majula'. Dark Souls fans are familiar with this place. 😅
+//Here we managing the main states. 
+
 import React, { useEffect, useState } from "react";
 
 import MenuButton from "./views/MenuButton";
@@ -27,10 +30,18 @@ function App(): React.ReactElement {
   const {
     buttonAction: { rootState, buttonTrigered },
     dataStore: { annualrain, slums, population, months },
+    //RootState is the type of Redux ToolKit for store.
+    //Addresses the type for reducers, middlewares, etc. 
   } = useSelector((state: RootState) => state);
   const classes = useStyle();
+
+  //This hook listens to the size changes on the browser window.
+  //The page layout will be changed on small screens.
+  //More specifically this hook will toggle the flex-flow on elements listening to 'screenState'.
+  //Set up at 'ScreenSettingsSlice.tsx'->
   useEffect(() => {
     if (window.innerWidth < 1280) {
+      //Sending the window width size as an argument to be checked in the reducer.
       dispatch(rowGridToggleToReverce(window.innerWidth));
     }
   });
@@ -58,8 +69,15 @@ function App(): React.ReactElement {
       setSnackState(true);
   }, [annualrain.state, slums.state, population.state, months.state]);
 
+
+  //This function controles click action on the snack bar.
   const snackBarRefreshAction = () => {
+    //First we set the 'refresh state of the 'fetchSlice' action to trigger the fetch
+    //action on the asyncThunk function with state 'rejected'.
+    //In this case only the rejected API will be called, not the rest. 🤯
+    //More detail at 'fetchSlice.tsx'.
     dispatch(readDataAgain())
+    //Close the snack bar. 
     setSnackState(false);
   };
 
