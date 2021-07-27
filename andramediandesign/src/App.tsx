@@ -12,12 +12,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { rowGridToggleToReverce } from "./redux/slices/ScreenSettingsSlice";
 import {readDataAgain} from './redux/slices/fetchSlice'
 
+//An easy way to apply transitions to Material-UI components.
+//Pre writen transition from Material-UI.
+//I could write it my self, just to show off some gadgeta. 😉
 function TransitionUp(props: any | undefined | null) {
   return <Slide {...props} direction="up" />;
 }
 
 function App(): React.ReactElement {
-  // console.clear();
+  console.clear();
   const [svgSetupTrigger, setSVGSetupTrigger] = useState<boolean>(false);
   const [snackState, setSnackState] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -33,6 +36,12 @@ function App(): React.ReactElement {
   });
 
   useEffect(() => {
+    //Chacking if all data is fetched without error from APIs.
+    //If there is a problem with any of the APIs application must stop.
+    //Prompt the user to trigger the fetch action for the API call with an error.
+    //This condition controls the visibility of the loading component at the top of the 
+    //screen in Map section. 
+    //Untile the 'svgSetupTrigger' state is false the component will be visible.
     annualrain.state === "fulfilled" &&
       slums.state === "fulfilled" &&
       population.state === "fulfilled" &&

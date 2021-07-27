@@ -14,13 +14,17 @@ interface Props {}
 
 function D3({}: Props): React.ReactElement {
   const {
+    //Distructing the 'dataStore' slice from the store for a easier and more clear use
+    //in the code. 
     dataStore: { annualrain, slums, population, months, referesh },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
   const svgRef = useRef<SVGSVGElement | null>(null);
   const [svgSetupTrigger, setSVGSetupTrigger] = useState<boolean>(false);
 
+  //Constructing a state variable to reserve the SVG canvas.
   const [svg, setSvg] = useState<null | Selection<
+  //A SVG element type variable from d3 selection library that can be null, unknown, undefined too.
     SVGSVGElement | null,
     unknown,
     null,
