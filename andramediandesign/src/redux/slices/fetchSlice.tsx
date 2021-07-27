@@ -6,8 +6,10 @@ import axiosInterceptor from "../../axiosInterceptor";
 interface states {
   data: [];
   state: string;
+  error: string;
 }
 interface fetchStat {
+  referesh: boolean,
   annualrain: states;
   slums: states;
   population: states;
@@ -15,21 +17,26 @@ interface fetchStat {
 }
 
 const initialState: fetchStat = {
+  referesh: false,
   annualrain: {
     data: [],
-    state: "empty"
+    state: "empty",
+    error: ''
   },
   slums: {
     data: [],
     state: "empty",
+    error: ''
   },
   population: {
     data: [],
     state: "empty",
+    error: ''
   },
   months: {
     data: [],
     state: "empty",
+    error: ''
   },
 };
 
@@ -84,24 +91,42 @@ export const fetchMonthData = createAsyncThunk(
 const FetchSlice = createSlice({
   name: "dataFetchSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    readDataAgain: (state)=>{
+      state.referesh=true;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchAnnualrainData.pending, (state: RootState, action) => {
         return {
           ...state,
+          referesh: false,
           annualrain: {
+            ...state.annualrain,
             state: "pending",
-            data: []
           },
         };
       })
       .addCase(fetchAnnualrainData.fulfilled, (state: RootState, action) => {
         return {
           ...state,
+          referesh: false,
           annualrain: {
+            ...state.annualrain,
             data: action.payload,
             state: "fulfilled",
+          },
+        };
+      })
+      .addCase(fetchAnnualrainData.rejected, (state: RootState, action) => {
+        return {
+          ...state,
+          referesh: false,
+          annualrain: {
+            ...state.annualrain,
+            state: "rejected",
+            error: action.payload
           },
         };
       })
@@ -109,18 +134,32 @@ const FetchSlice = createSlice({
       .addCase(fetchSlumsData.pending, (state: RootState, action) => {
         return {
           ...state,
+          referesh: false,
           slums: {
+            ...state.slums,
             state: "pending",
-            data: []
           },
         };
       })
       .addCase(fetchSlumsData.fulfilled, (state: RootState, action) => {
         return {
           ...state,
+          referesh: false,
           slums: {
+            ...state.slums,
             data: action.payload,
             state: "fulfilled",
+          },
+        };
+      })
+      .addCase(fetchSlumsData.rejected, (state: RootState, action) => {
+        return {
+          ...state,
+          referesh: false,
+          slums: {
+            ...state.slums,
+            state: "rejected",
+            error: action.payload
           },
         };
       })
@@ -128,18 +167,33 @@ const FetchSlice = createSlice({
       .addCase(fetchPopulationData.pending, (state: RootState, action) => {
         return {
           ...state,
+          referesh: false,
           population: {
+            ...state.population,
             state: "pending",
-            data: []
+            error: action.payload
           },
         };
       })
       .addCase(fetchPopulationData.fulfilled, (state: RootState, action) => {
         return {
           ...state,
+          referesh: false,
           population: {
+            ...state.population,
             data: action.payload,
             state: "fulfilled",
+          },
+        };
+      })
+      .addCase(fetchPopulationData.rejected, (state: RootState, action) => {
+        return {
+          ...state,
+          referesh: false,
+          population: {
+            ...state.population,
+            state: "rejected",
+            error: action.payload
           },
         };
       })
@@ -147,24 +201,38 @@ const FetchSlice = createSlice({
       .addCase(fetchMonthData.pending, (state: RootState, action) => {
         return {
           ...state,
-          months: {
-            state: "pending",
-            data: []
-          },
-        };
+          referesh: false,
+          months:{
+            ...state.months,
+            state: 'pending'
+          }
+        }
       })
       .addCase(fetchMonthData.fulfilled, (state: RootState, action) => {
+        return{
+          ...state,
+          referesh: false,
+          months:{
+            ...state.months,
+            data: action.payload,
+            state: 'fulfilled'
+          }
+        }
+      })     
+      .addCase(fetchMonthData.rejected, (state: RootState, action) => {
         return {
           ...state,
-          months: {
-            data: action.payload,
-            state: "fulfilled",
-          },
-        };
+          referesh: false,
+          months:{
+            ...state.months,
+            state: 'rejected',
+            error: action.payload
+          }
+        }
       });
   },
 });
 
-// export {}=FetchSlice.actions;
+export const {readDataAgain}=FetchSlice.actions;
 
 export default FetchSlice.reducer;

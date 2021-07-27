@@ -3,53 +3,23 @@ import React, { useEffect, useState } from "react";
 import MenuButton from "./views/MenuButton";
 import ContentContainer from "./views/ContentContainer";
 import DataFetchPending from "./views/DataFetchPending";
+import useStyle from "./AppStyle";
+import { Snackbar, Slide } from "@material-ui/core";
 
-import { useSelector, useDispatch } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
+//Importing the redux store type.
 import { RootState } from "./store";
+import { useSelector, useDispatch } from "react-redux";
 import { rowGridToggleToReverce } from "./redux/slices/ScreenSettingsSlice";
+import {readDataAgain} from './redux/slices/fetchSlice'
 
-const useStyle = makeStyles((theme) => ({
-  root: {
-    height: "100vh",
-    display: "flex",
-    flexFlow: "row-reverse",
-    justifyContent: "center",
-    alignItems: "center",
-    [theme.breakpoints.down("md")]: {
-      flexFlow: "column",
-    },
-    "&.open": {
-      paddingRight: theme.spacing(20),
-      [theme.breakpoints.down("md")]: {
-        paddingRight: theme.spacing(0),
-      },
-    },
-    "&.close": {
-      paddingRight: 0,
-    },
-  },
-  landinginfo: {
-    position: "absolute",
-  },
-  Splash: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    padding: theme.spacing(6),
-    color: "white",
-  },
-  loading: {
-    width: "100%",
-    position: "absolute",
-    top: 0,
-    zIndex: 1,
-  },
-}));
+function TransitionUp(props: any | undefined | null) {
+  return <Slide {...props} direction="up" />;
+}
 
 function App(): React.ReactElement {
   // console.clear();
   const [svgSetupTrigger, setSVGSetupTrigger] = useState<boolean>(false);
+  const [snackState, setSnackState] = useState<boolean>(false);
   const dispatch = useDispatch();
   const {
     buttonAction: { rootState, buttonTrigered },
@@ -68,7 +38,21 @@ function App(): React.ReactElement {
       population.state === "fulfilled" &&
       months.state === "fulfilled" &&
       setSVGSetupTrigger(true);
+
+    //In the condition of any error from any of the API calls
+    //their state will be set to 'rejected' (visit fetchSlice.tsx)->
+    //Show the snack bar to recall the APIs relevant to the map.
+    (annualrain.state === "rejected" ||
+      slums.state === "rejected" ||
+      population.state === "rejected" ||
+      months.state === "rejected") &&
+      setSnackState(true);
   }, [annualrain.state, slums.state, population.state, months.state]);
+
+  const snackBarRefreshAction = () => {
+    dispatch(readDataAgain())
+    setSnackState(false);
+  };
 
   return (
     <div
@@ -79,6 +63,13 @@ function App(): React.ReactElement {
           <DataFetchPending />
         </div>
       )}
+      <Snackbar
+        open={snackState}
+        TransitionComponent={TransitionUp}
+        message={`Data is not available. Click here to try again.`}
+        onClick={snackBarRefreshAction}
+        style={{cursor: 'pointer'}}
+      />
       <MenuButton />
       <ContentContainer />
     </div>
