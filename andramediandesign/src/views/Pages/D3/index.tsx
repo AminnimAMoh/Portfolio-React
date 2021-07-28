@@ -16,7 +16,7 @@ function D3({}: Props): React.ReactElement {
   const {
     //Distructing the 'dataStore' slice from the store for a easier and more clear use
     //in the code. 
-    dataStore: { annualrain, slums, population, months, referesh },
+    dataStore: { annualrain, slums, population, months, refresh },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
   const svgRef = useRef<SVGSVGElement | null>(null);
@@ -47,7 +47,7 @@ function D3({}: Props): React.ReactElement {
     
     //No Dependencies
     //Only runs once
-  }, [referesh]);
+  }, [refresh]);
 
   //This useEffect Hook listens to changes on the states of all four relevant APIs.
   //These states are set using asyncThunk functions. (visit fetchSlice.tsx)->
