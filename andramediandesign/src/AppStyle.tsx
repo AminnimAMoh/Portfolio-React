@@ -36,6 +36,13 @@ const useStyle = makeStyles((theme) => ({
       top: 0,
       zIndex: 1,
     },
+    snackbar:{
+      cursor: 'pointer',
+      // background: 'red',
+      '& >*':{
+        background: '#9c3c41',
+      }
+    }
   }));
 
   export default useStyle

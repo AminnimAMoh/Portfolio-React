@@ -1,6 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { useSelector } from "react-redux";
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { RootState } from "src/store";
 
 const useStyles = makeStyles({
   root: {
@@ -12,6 +14,9 @@ const useStyles = makeStyles({
   bar:{
       backgroundColor: '#12393d'
   },
+  barError:{
+    backgroundColor: '#9c3c41'
+  }
 });
 
 interface Props {
@@ -19,15 +24,18 @@ interface Props {
 
 function DataPending({  }: Props): React.ReactElement {
   const classes = useStyles();
-
+  const {dataStore: { errorState }}=useSelector((state: RootState)=> state)
   return (
     <div className={classes.root}>
       <LinearProgress 
       variant='indeterminate'
-      classes={{
+      classes={!errorState ? {
         query: classes.barRoot,
         bar: classes.bar, 
-        }}
+        } : {
+          query: classes.barRoot,
+          bar: classes.barError, 
+          }}
       />
     </div>
   );
