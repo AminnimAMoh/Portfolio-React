@@ -1,0 +1,90 @@
+.stop-left {
+    stop-color: #426164;
+}
+
+.stop-right {
+    stop-color: #061621;
+}
+#Script-Container {
+    /* box-sizing: border-box; */
+    position: relative;
+    /* left: -120px; */
+    top: 55px;
+    width: 100%;
+    height: 920px;
+    /* padding: 25px; */
+}
+
+text {
+    /* font-family: "imported-Azo-Medium"; */
+    color: #E4E5E7;
+}
+
+path {
+    fill: #E4E5E7;
+    stroke: none;
+    stroke-width: .5px;
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, .5);
+}
+
+.cities-circles {
+    fill: url(#Gradient);
+    stroke: url(#Gradient);
+    stroke-width: 1.5px;
+    fill-opacity: .7;
+    z-index: -1;
+    transition: .5s;
+    filter: url(#legend-drop-shadow);
+}
+
+.cities-circles.clicked {
+    fill: #9C3C41;
+    fill-opacity: 1;
+    r: 10;
+}
+
+.cities-circles.active {
+    fill: #5C3B42;
+    r: 10;
+}
+
+path.active {
+    fill: pink;
+}
+
+.ellipseCan {
+    width: 100px;
+    height: 100px;
+    stroke-width: .3;
+    opacity: .9;
+}
+
+.year-container text {
+    cursor: pointer;
+    fill: #E4E5E7;
+}
+
+.year-container text.active {
+    fill: #5C3B42;
+}
+
+.legend-circles {
+    fill: url(#Gradient);
+    opacity: .5;
+    stroke: url(#Gradient);
+    stroke-width: 1.5px;
+    filter: url(#legend-drop-shadow);
+}
+
+.legend tspan {
+    fill: #E4E5E7;
+}
+
+.node text {
+    display: none;
+    font: 10px sans-serif;
+}
+
+.node:hover text {
+    display: inline;
+}
