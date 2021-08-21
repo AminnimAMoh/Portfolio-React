@@ -5,10 +5,10 @@ import { RootState } from "src/store";
 import UX from "../Pages/UX";
 import UI from "../Pages/UI";
 import CV from "../Pages/CV";
-import D3 from '../Pages/D3'
+import D3 from "../Pages/D3";
+import Undeveloped from '../Pages/Undeveloped'
 
 function RenderObject(state: any): React.ReactElement {
-
   switch (state.state) {
     case "UX":
       return <UX />;
@@ -16,10 +16,10 @@ function RenderObject(state: any): React.ReactElement {
       return <UI />;
     case "CV":
       return <CV />;
-      case 'D3':
-        return <D3/>
+    case "D3":
+      return <D3 />;
     default:
-      return <h1>{state.state}</h1>;
+      return <Undeveloped/>;
   }
 }
 
@@ -31,9 +31,15 @@ function ContentContainer(): React.ReactElement {
     rootDetails.current &&
     scrollToTop.current &&
     rootDetails.current.scrollTop > 800
-      ? (scrollToTop.current.style.transform = window.innerWidth>1280 ? "translateY(-15px) scale(1)" : "translateY(-75px) scale(1)")
+      ? (scrollToTop.current.style.transform =
+          window.innerWidth > 1280
+            ? "translateY(-15px) scale(1)"
+            : "translateY(-75px) scale(1)")
       : scrollToTop.current &&
-        (scrollToTop.current.style.transform = window.innerWidth>1280 ? "translateY(-15px) scale(0)" : "translateY(-75px) scale(1)");
+        (scrollToTop.current.style.transform =
+          window.innerWidth > 1280
+            ? "translateY(-15px) scale(0)"
+            : "translateY(-75px) scale(1)");
   };
 
   const handleClick = () => {

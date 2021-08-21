@@ -25,11 +25,13 @@ interface fetchStat {
   slums: states;
   population: states;
   months: states;
+  errorState: boolean;
 }
 
 //Configuring the main state for this slice.
 const initialState: fetchStat = {
   refresh: false,
+  errorState: false,
   annualrain: {
     data: [],
     state: "empty",
@@ -61,7 +63,7 @@ export const fetchAnnualrainData = createAsyncThunk(
   //for error handeling.
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axiosInterceptor().get("annualrai");
+      const response = await axiosInterceptor().get("annualrain");
       return response.data.annualRain;
     } catch (err) {
       //Rejecting the action so we can change the state on error for each asyncThunk action.
@@ -164,6 +166,7 @@ const FetchSlice = createSlice({
             state: "rejected",
             error: action.payload,
           },
+          errorState: true
         };
       })
 
@@ -197,6 +200,7 @@ const FetchSlice = createSlice({
             state: "rejected",
             error: action.payload,
           },
+          errorState: true
         };
       })
 
@@ -231,6 +235,7 @@ const FetchSlice = createSlice({
             state: "rejected",
             error: action.payload,
           },
+          errorState: true
         };
       })
 
@@ -264,6 +269,7 @@ const FetchSlice = createSlice({
             state: "rejected",
             error: action.payload,
           },
+          errorState: true
         };
       });
   },
