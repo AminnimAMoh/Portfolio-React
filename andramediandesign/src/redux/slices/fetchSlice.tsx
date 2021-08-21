@@ -25,13 +25,11 @@ interface fetchStat {
   slums: states;
   population: states;
   months: states;
-  errorState: boolean;
 }
 
 //Configuring the main state for this slice.
 const initialState: fetchStat = {
   refresh: false,
-  errorState: false,
   annualrain: {
     data: [],
     state: "empty",
@@ -166,7 +164,6 @@ const FetchSlice = createSlice({
             state: "rejected",
             error: action.payload,
           },
-          errorState: true
         };
       })
 
@@ -200,7 +197,6 @@ const FetchSlice = createSlice({
             state: "rejected",
             error: action.payload,
           },
-          errorState: true
         };
       })
 
@@ -235,7 +231,6 @@ const FetchSlice = createSlice({
             state: "rejected",
             error: action.payload,
           },
-          errorState: true
         };
       })
 
@@ -269,7 +264,6 @@ const FetchSlice = createSlice({
             state: "rejected",
             error: action.payload,
           },
-          errorState: true
         };
       });
   },

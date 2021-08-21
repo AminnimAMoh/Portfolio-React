@@ -1,5 +1,5 @@
 //This is the 'majula'. Dark Souls fans are familiar with this place. 😅
-//Here we managing the main states.
+//Here we managing the main states. 
 
 import React, { useEffect, useState } from "react";
 
@@ -13,7 +13,7 @@ import { Snackbar, Slide } from "@material-ui/core";
 import { RootState } from "./store";
 import { useSelector, useDispatch } from "react-redux";
 import { rowGridToggleToReverce } from "./redux/slices/ScreenSettingsSlice";
-import { readDataAgain } from "./redux/slices/fetchSlice";
+import {readDataAgain} from './redux/slices/fetchSlice'
 
 //An easy way to apply transitions to Material-UI components.
 //Pre writen transition from Material-UI.
@@ -31,7 +31,7 @@ function App(): React.ReactElement {
     buttonAction: { rootState, buttonTrigered },
     dataStore: { annualrain, slums, population, months },
     //RootState is the type of Redux ToolKit for store.
-    //Addresses the type for reducers, middlewares, etc.
+    //Addresses the type for reducers, middlewares, etc. 
   } = useSelector((state: RootState) => state);
   const classes = useStyle();
 
@@ -50,8 +50,8 @@ function App(): React.ReactElement {
     //Chacking if all data is fetched without error from APIs.
     //If there is a problem with any of the APIs application must stop.
     //Prompt the user to trigger the fetch action for the API call with an error.
-    //This condition controls the visibility of the loading component at the top of the
-    //screen in Map section.
+    //This condition controls the visibility of the loading component at the top of the 
+    //screen in Map section. 
     //Untile the 'svgSetupTrigger' state is false the component will be visible.
     annualrain.state === "fulfilled" &&
       slums.state === "fulfilled" &&
@@ -69,14 +69,15 @@ function App(): React.ReactElement {
       setSnackState(true);
   }, [annualrain.state, slums.state, population.state, months.state]);
 
+
   //This function controles click action on the snack bar.
   const snackBarRefreshAction = () => {
     //First we set the 'refresh state of the 'fetchSlice' action to trigger the fetch
     //action on the asyncThunk function with state 'rejected'.
     //In this case only the rejected API will be called, not the rest. 🤯
     //More detail at 'fetchSlice.tsx'.
-    dispatch(readDataAgain());
-    //Close the snack bar.
+    dispatch(readDataAgain())
+    //Close the snack bar. 
     setSnackState(false);
   };
 
@@ -92,9 +93,9 @@ function App(): React.ReactElement {
       <Snackbar
         open={snackState}
         TransitionComponent={TransitionUp}
-        message={`Failed to fetch data. Click here to try again.`}
+        message={`Data is not available. Click here to try again.`}
         onClick={snackBarRefreshAction}
-        classes={{ root: classes.snackbar }}
+        style={{cursor: 'pointer'}}
       />
       <MenuButton />
       <ContentContainer />
