@@ -18,7 +18,7 @@ const DrawAll = (
 
   yearSelected=year;
 
-  let circleTransition = d3.transition().ease(d3.easeExp).duration(1000);
+  // let circleTransition = d3.transition().ease(d3.easeExp).duration(1000);
 
   firstMin = d3.min(dataSet);
   firstMax = d3.max(dataSet);

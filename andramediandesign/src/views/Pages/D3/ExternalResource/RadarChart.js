@@ -136,14 +136,13 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
   /////////////////////////////////////////////////////////
 
   //Filter for the outside glow
-  let filter = g.append("defs").append("filter").attr("id", "glow"),
-    feGaussianBlur = filter
-      .append("feGaussianBlur")
+  let filter = g.append("defs").append("filter").attr("id", "glow");
+  filter.append("feGaussianBlur")
       .attr("stdDeviation", "2.5")
-      .attr("result", "coloredBlur"),
-    feMerge = filter.append("feMerge"),
-    feMergeNode_1 = feMerge.append("feMergeNode").attr("in", "coloredBlur"),
-    feMergeNode_2 = feMerge.append("feMergeNode").attr("in", "SourceGraphic");
+      .attr("result", "coloredBlur");
+  let feMerge = filter.append("feMerge");
+  feMerge.append("feMergeNode").attr("in", "coloredBlur");
+  feMerge.append("feMergeNode").attr("in", "SourceGraphic");
 
   /////////////////////////////////////////////////////////
   /////////////// Draw the Circular grid //////////////////
@@ -232,7 +231,7 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
     .radialLine()
     .curve(d3.curveLinearClosed)
     .radius((d) => rScale(d.value))
-    .angle((d, i) => {console.log('hello'); return i * angleSlice});
+    .angle((d, i) => {return i * angleSlice});
 
   if (cfg.roundStrokes) {
     radarLine.curve(d3.curveCardinalClosed);
@@ -293,7 +292,6 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
     .attr("class", "radarCircle")
     .attr("r", cfg.dotRadius)
     .attr("cx", (d, i) => {
-      console.log(d, i);
       return rScale(d.value) * cos(angleSlice * i - HALF_PI);
     })
     .attr("cy", (d, i) => {
@@ -352,7 +350,7 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
     let legendZone = svg.append("g");
     let names = data.map((el) => el.name);
     if (cfg.legend.title) {
-      let title = legendZone
+      legendZone
         .append("text")
         .attr("class", "title")
         .attr(

@@ -4,8 +4,6 @@ import { Grid, Link, Typography, Divider } from "@material-ui/core";
 import { containerStateToggle } from "../../../redux/slices/buttonActionSlice";
 import { useDispatch } from "react-redux";
 
-interface Props {}
-
 const reesbyResponsibilities = [
   "Leading the Front-End team.",
   "Developed Axios Interceptor and API calls.",
@@ -27,7 +25,7 @@ const mentoringResponsibilities = [
   "Explaining material in simple and small projects.",
   "Designing small projects for homework practices. ",
 ];
-function CV({}: Props): React.ReactElement {
+function CV(): React.ReactElement {
   const classes = useStyle();
   const dispatch = useDispatch();
 

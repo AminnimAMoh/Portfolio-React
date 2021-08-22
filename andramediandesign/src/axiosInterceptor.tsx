@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
-export default () => {
+const axiosInterception=() => {
   const baseURL = process.env.REACT_APP_BASE_DESTINATION;
   const headers = { "Content-Type": "application/json" };
   
@@ -14,7 +14,6 @@ export default () => {
     return response;
   };
   const onResponseError = (error: AxiosError): AxiosError => {
-    console.log(error);
     return error;
   };
 
@@ -22,3 +21,5 @@ export default () => {
 
   return axiosInterceptor;
 };
+
+export default axiosInterception

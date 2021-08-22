@@ -33,13 +33,15 @@ const PopulationCircles = (
     return data.City;
   });
 
-  let popOne,
-    popTwo,
-    popThree = 0;
+  let populations = {
+    popOne: 0,
+    popTwo: 0,
+    popThree: 0,
+  };
   for (let i = 0; i < 3; i++) {
     let data;
     let groupContainer;
-    let lable;
+
     if (i === 0) {
       data = population.data.map((data) => {
         return +data.Population1991;
@@ -64,17 +66,17 @@ const PopulationCircles = (
     const cOne = groupContainer.selectAll("path").data(populationOne);
     cOne.exit().remove();
 
-    const arc = cOne
+    cOne
       .select("path")
       .data(popScale)
       .enter()
       .append("path")
       .attr("d", arcGenerator)
       .style("fill", function (d, i) {
-        if (nameOfCity == popCityName[i]) {
-          popOne = population.data[i].Population1991;
-          popTwo = population.data[i].Population2001;
-          popThree = population.data[i].Population2011;
+        if (nameOfCity === popCityName[i]) {
+          populations.popOne = population.data[i].Population1991;
+          populations.popTwo = population.data[i].Population2001;
+          populations.popThree = population.data[i].Population2011;
           return "#9C3C41";
         } else {
           return pieColorScale(data[i]);
@@ -142,9 +144,9 @@ const PopulationCircles = (
       .append("text")
       .attr("x", function (d) {
         if (
-          formatComma(popOne) === "NaN" ||
-          formatComma(popTwo) === "NaN" ||
-          formatComma(popThree) === "NaN"
+          formatComma(populations.popOne) === "NaN" ||
+          formatComma(populations.popTwo) === "NaN" ||
+          formatComma(populations.popThree) === "NaN"
         ) {
           return d.x - 20;
         } else {
@@ -157,23 +159,22 @@ const PopulationCircles = (
       .text(function (d, i) {
         switch (i) {
           case 0:
-            if (formatComma(popOne) == "NaN") {
+            if (formatComma(populations.popOne) === "NaN") {
               return "Data Missing";
             }
-            return formatComma(popOne);
-            break;
+            return formatComma(populations.popOne);
           case 1:
-            if (formatComma(popTwo) == "NaN") {
+            if (formatComma(populations.popTwo) === "NaN") {
               return "Data Missing";
             }
-            return formatComma(popTwo);
-            break;
+            return formatComma(populations.popTwo);
           case 2:
-            if (formatComma(popThree) == "NaN") {
+            if (formatComma(populations.popThree) === "NaN") {
               return "Data Missing";
             }
-            return formatComma(popThree);
-            break;
+            return formatComma(populations.popThree);
+          default:
+            return formatComma(0);
         }
       })
       .attr("width", 20)

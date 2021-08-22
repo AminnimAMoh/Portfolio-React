@@ -1,11 +1,11 @@
 //This is the 'majula'. Dark Souls fans are familiar with this place. 😅
 //Here we managing the main states.
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense, lazy } from "react";
 
-import MenuButton from "./views/MenuButton";
-import ContentContainer from "./views/ContentContainer";
-import DataFetchPending from "./views/DataFetchPending";
+// import MenuButton from "./views/MenuButton";
+// import ContentContainer from "./views/ContentContainer";
+// import DataFetchPending from "./views/DataFetchPending";
 import useStyle from "./AppStyle";
 import { Snackbar, Slide } from "@material-ui/core";
 
@@ -15,6 +15,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { rowGridToggleToReverce } from "./redux/slices/ScreenSettingsSlice";
 import { readDataAgain } from "./redux/slices/fetchSlice";
 
+const MenuButton = lazy(() => import("./views/MenuButton"));
+const ContentContainer = lazy(() => import("./views/ContentContainer"));
+const DataFetchPending = lazy(() => import("./views/DataFetchPending"));
+
 //An easy way to apply transitions to Material-UI components.
 //Pre writen transition from Material-UI.
 //I could write it my self, just to show off some gadgeta. 😉
@@ -23,7 +27,7 @@ function TransitionUp(props: any | undefined | null) {
 }
 
 function App(): React.ReactElement {
-  console.clear();
+  // console.clear();
   const [svgSetupTrigger, setSVGSetupTrigger] = useState<boolean>(false);
   const [snackState, setSnackState] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -84,20 +88,22 @@ function App(): React.ReactElement {
     <div
       className={rootState ? `${classes.root} open` : `${classes.root} close`}
     >
-      {!svgSetupTrigger && buttonTrigered === "D3" && (
-        <div className={classes.loading}>
-          <DataFetchPending />
-        </div>
-      )}
-      <Snackbar
-        open={snackState}
-        TransitionComponent={TransitionUp}
-        message={`Failed to fetch data. Click here to try again.`}
-        onClick={snackBarRefreshAction}
-        classes={{ root: classes.snackbar }}
-      />
-      <MenuButton />
-      <ContentContainer />
+      <Suspense fallback={'Loading...'}>
+        {!svgSetupTrigger && buttonTrigered === "D3" && (
+          <div className={classes.loading}>
+            <DataFetchPending />
+          </div>
+        )}
+        <Snackbar
+          open={snackState}
+          TransitionComponent={TransitionUp}
+          message={`Failed to fetch data. Click here to try again.`}
+          onClick={snackBarRefreshAction}
+          classes={{ root: classes.snackbar }}
+        />
+        <MenuButton />
+        <ContentContainer />
+      </Suspense>
     </div>
   );
 }

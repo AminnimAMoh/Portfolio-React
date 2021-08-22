@@ -1,7 +1,6 @@
 import { staticState } from "../data/staticVariables";
 import { angleScale } from "../utilities";
 import PopulationCircles from "../MapComponents/PopulationCircles";
-import Radar from "react-d3-radar";
 import RadarChartEngin from '../ExternalResource/RadarChart'
 
 const stationsClick = (
@@ -27,7 +26,6 @@ const stationsClick = (
     selected.transform.animVal[0].matrix.f,
   ];
   let nameOfCity = selected.id;
-  let popOne, popTwo, popThree;
 
   cityLables.selectAll("text").remove();
 
@@ -36,7 +34,7 @@ const stationsClick = (
 
   let circleTransition = d3.transition().ease(d3.easePoly).duration(1000);
 
-  let cgraphTransition = d3.transition().ease(d3.easePoly).duration(1000);
+  d3.transition().ease(d3.easePoly).duration(1000);
 
   let ellipses = ellipseContainer
     .selectAll("ellipse")
@@ -64,7 +62,7 @@ const stationsClick = (
     })
     .attr("fill", "#061621")
     .style("stroke", function (d) {
-      if (d.f == "none") {
+      if (d.f === "none") {
         return d.s;
       } else {
         return "url(#Gradient)";
@@ -73,7 +71,7 @@ const stationsClick = (
     .style("stroke-width", "1.5px")
     .style("filter", "url(#graph-drop-shadow)");
 
-  let myLable = cityLables
+  cityLables
     .selectAll("text")
     .data(staticState.ellipsesLength)
     .enter()
@@ -93,7 +91,7 @@ const stationsClick = (
     .style("fill", "#9c3c41")
     .style("font-size", "8pt");
 
-  let inner = d3.scaleLinear().domain([0, 63]).range([70, 0]);
+  d3.scaleLinear().domain([0, 63]).range([70, 0]);
 
   PopulationCircles(
     population,
@@ -118,17 +116,15 @@ const stationsClick = (
     .attr("transform", "translate(" + rainGroupTx + "," + rainGroupTy + ")")
     .style("opacity", 1);
 
-  let r = 58;
   let margin = {
       top: 50,
       right: 80,
       bottom: 50,
       left: 80,
-    },
-    width = Math.min(700, window.innerWidth / 4) - margin.left - margin.right,
-    height = Math.min(width, window.innerHeight - margin.top - margin.bottom);
+    };
+    // width = Math.min(700, window.innerWidth / 4) - margin.left - margin.right;
+    // height = Math.min(width, window.innerHeight - margin.top - margin.bottom);
 
-  let data = [];
   let thisCityRain = {
     color: "#cd1d27",
     name: nameOfCity,
@@ -140,6 +136,7 @@ const stationsClick = (
         value: +d[`MonthlyTotal${yearSelected}`],
         axis: staticState.rainMonthsName[i % 12].name,
       });
+      return null;
   });
   thisCityRain.axes.splice(0, 1);
   const radarChartOptions = {
@@ -151,8 +148,7 @@ const stationsClick = (
     color: d3.scaleOrdinal().range(["#9C3C41", "#12393D", "#9C3C41"]),
     format: '.1f'
   };
-  // console.log(thisCityRain);
-  let svg_radar1 = RadarChartEngin(".rainG", thisCityRain, radarChartOptions);
+  RadarChartEngin(".rainG", thisCityRain, radarChartOptions);
 };
 
 export default stationsClick;

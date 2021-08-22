@@ -2,11 +2,8 @@ import { Typography } from '@material-ui/core'
 import React from 'react'
 import useStyle from '../styles'
 
-interface Props {
-    
-}
 
-function Undeveloped({}: Props): React.ReactElement {
+function Undeveloped(): React.ReactElement {
     const classes=useStyle();
     return (
         <div>

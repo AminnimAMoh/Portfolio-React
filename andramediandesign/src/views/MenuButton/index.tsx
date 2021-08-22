@@ -39,6 +39,7 @@ const calPos = (
 function MenuButton(): React.ReactElement {
   const classes = useStyle();
   const dispatch: AppDispatch = useDispatch();
+
   // const [showInfo, setShowInfo] = useState<boolean>(false);
   // const [buttonPositions, setButtonsPosition] = useState<Positions[]>([
   //   { x: 0, y: 0 },
@@ -122,7 +123,7 @@ function MenuButton(): React.ReactElement {
       >
         <img
           ref={buttonMesures}
-          src="images\Button\Menu_Trigger\Power_Button-Stoke.png"
+          src='images/Button/Menu_Trigger/Power_Button-Stoke.png'
           alt="content-asset"
         />
       </div>

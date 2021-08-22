@@ -39,19 +39,19 @@ const removeEllipses = (
     .attrTween("d", arcTweenClose)
     .style("opacity", 0);
 
-  let monthRain = container
+  container
     .select(".rainG")
     .transition()
     .duration(500)
     .style("opacity", 0);
 
-  let labelsContainer = lables
+  lables
     .selectAll("text")
     .transition()
     .duration(500)
     .style("opacity", 0);
 
-  let cityCircleContainer = cityCircles
+  cityCircles
     .selectAll("circle")
     .classed("clicked", false);
 

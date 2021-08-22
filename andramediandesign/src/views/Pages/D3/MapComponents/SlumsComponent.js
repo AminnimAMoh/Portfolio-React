@@ -1,8 +1,5 @@
-import * as d3 from "d3";
 
 const slumsComponent = (slums, generatedGroups, yearLableInc) => {
-  let slumMin = 55.1;
-  let slumMax = 87.3;
   const yearsSlums = generatedGroups.yearsSlums;
   const lableSlums = generatedGroups.lableSlums;
 

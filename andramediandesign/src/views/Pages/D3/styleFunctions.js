@@ -1,7 +1,5 @@
-import * as d3 from "d3";
-
 export const generateBlur = (container) => {
-  var blurFilter = container
+  container
     .append("defs")
     .append("filter")
     .attr("id", "blurFilter")

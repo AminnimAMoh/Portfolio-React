@@ -13,8 +13,6 @@ import stationsClick from "./MapMouseControles/StationsClick";
 import url from "./data/GeoJson/bangladesh.geojson";
 import { staticState } from "./data/staticVariables";
 
-import { selectAll } from "d3-selection";
-
 import { generatGradient, shadowGenerator, generateBlur } from "./styleFunctions";
 import {
   onClickTextFunction,
@@ -43,14 +41,11 @@ export const draw = (
   let w = containerX;
   let h = containerY;
   let yearSelected = "2013";
-
-  let count=0;
-  const generatedGroups = generateAllGroups(d3, container);
+  
+  let generatedGroups = generateAllGroups(d3, container);
   while (!generatedGroups) {
     generatedGroups = generateAllGroups(d3, container);
-    count++;
   }
-  console.log(count);
   /*--------------------------------------------------------------*/
   /*--------------------------------------------------------------*/
   ///////////////////////////Circles Drop Shadow////////////////////
@@ -71,12 +66,6 @@ export const draw = (
     5,
     0.2
   );
-
-  const blueScale = d3.scaleLinear().domain([1100, 4300]).range([0, 255]);
-
-  const redScale = d3.scaleLinear().domain([1100, 4300]).range([255, 0]);
-
-  const radScale = d3.scaleLinear().domain([1100, 4300]).range([4, 24]);
 
   d3.json(url).then((countries) => {
     let names = [];
@@ -107,9 +96,9 @@ export const draw = (
 
     container.attr("width", w).attr("height", h);
 
-    let allGroups = container
-      .selectAll("g")
-      .attr("transform", "translate(" + w / 2 + "," + h / 2 + ")");
+    // container
+    //   .selectAll("g")
+    //   .attr("transform", "translate(" + w / 2 + "," + h / 2 + ")");
 
     generatedGroups.mapContainer.attr(
       "transform",
@@ -133,39 +122,6 @@ export const draw = (
       })
       .attr("rx", 0)
       .attr("ry", 0);
-
-    for (let i = 0; i < 3; i++) {
-      let groups;
-      let dataSet;
-      if (i == 0) {
-        dataSet = population.data.map((d) => {
-          return d.Population1991;
-        });
-        groups = generatedGroups.groupOne;
-      } else if (i == 1) {
-        dataSet = population.data.map((d) => {
-          return d.Population2001;
-        });
-        groups = generatedGroups.groupTwo;
-      } else if (i == 2) {
-        dataSet = population.data.map((d) => {
-          return d.Population2011;
-        });
-        groups = generatedGroups.groupThree;
-      }
-      groups.style("opacity", 1);
-
-      let arcG = d3.arc().innerRadius(0).outerRadius(0);
-
-      let popScale = d3.pie()(dataSet);
-
-      let gr = groups
-        .selectAll("path")
-        .data(popScale)
-        .enter()
-        .append("path")
-        .attr("d", arcG);
-    }
 
     generatedGroups.cityCircles.attr(
       "transform",
@@ -234,7 +190,7 @@ export const draw = (
       .style("font-size", "6pt")
       .style("fill", "white");
 
-    const circleStations = generatedGroups.cityCircles
+    generatedGroups.cityCircles
       .selectAll("circle")
       .data(annualrain.data)
       .enter()
@@ -268,14 +224,6 @@ export const draw = (
           this
         );
       });
-
-    let rectScale = d3.scaleLinear().domain([0, 20]).range([4, 24]);
-
-    let legendCircleScale = d3.scaleLinear().domain([0, 20]).range([4, 12]);
-
-    let colorScale = d3.scaleLinear().domain([0, 20]).range([255, 153]);
-
-    let check;
 
     slumsComponent(slums, generatedGroups, yearLableInc);
 
@@ -315,7 +263,7 @@ export const draw = (
           .delay(500)
           .duration(100)
           .style("opacity", function (d) {
-            if (d.year == year) {
+            if (d.year === year) {
               return 1;
             } else {
               return 0;
@@ -365,38 +313,38 @@ export const draw = (
 
     d3.selectAll("g").raise();
 
-    window.addEventListener("click", function (event) {
-      if (
-        (event.srcElement.className === "content-page open" &&
-          event.srcElement.id === "D3") ||
-        event.srcElement.id === "control-canvas" ||
-        event.srcElement.id === "map-canvas"
-      ) {
-        generatedGroups.yearsContainer
-          .selectAll("text")
-          .attr("font-size", 12)
-          .style("fill", "white")
-          .style("font-family", "imported-Azo");
+    // window.addEventListener("click", function (event) {
+    //   if (
+    //     (event.srcElement.className === "content-page open" &&
+    //       event.srcElement.id === "D3") ||
+    //     event.srcElement.id === "control-canvas" ||
+    //     event.srcElement.id === "map-canvas"
+    //   ) {
+    //     generatedGroups.yearsContainer
+    //       .selectAll("text")
+    //       .attr("font-size", 12)
+    //       .style("fill", "white")
+    //       .style("font-family", "imported-Azo");
 
-        removeEllipses();
-      }
-    });
+    //     removeEllipses();
+    //   }
+    // });
   }
 
-  window.addEventListener("click", function (event) {
-    let thisCanvasContainer = document.getElementsByClassName("content-page");
+  // window.addEventListener("click", function (event) {
+  //   let thisCanvasContainer = document.getElementsByClassName("content-page");
 
-    for (let i = 0; i < thisCanvasContainer.length; i++) {
-      if (
-        event.srcElement.className !== "content-page open" &&
-        event.srcElement.id === "D3" &&
-        thisCanvasContainer[i].id === "D3" &&
-        thisCanvasContainer[i].classList.contains("open")
-      ) {
-        let thisContainer = document.getElementById("Script-Container");
-        reDrawCan();
-      }
-    }
-  });
+  //   for (let i = 0; i < thisCanvasContainer.length; i++) {
+  //     if (
+  //       event.srcElement.className !== "content-page open" &&
+  //       event.srcElement.id === "D3" &&
+  //       thisCanvasContainer[i].id === "D3" &&
+  //       thisCanvasContainer[i].classList.contains("open")
+  //     ) {
+  //       let thisContainer = document.getElementById("Script-Container");
+  //       reDrawCan();
+  //     }
+  //   }
+  // });
   containerElement && reDrawCan();
 };

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {Positions} from '../../views/MenuButton/types'
+// import {Positions} from '../../views/MenuButton/types'
 
 interface initialType {
   rootState: boolean;
@@ -90,14 +90,14 @@ const buttonActionSlice = createSlice({
     onDelayStateChange(state) {
       state.delayState = true;
     },
-    addButtonsPosition(state, {payload}: PayloadAction<Positions[]>){
-      console.log(payload);
+    // addButtonsPosition(state, {payload}: PayloadAction<Positions[]>){
+    //   console.log(payload);
       
-    }
+    // }
   },
 });
 
-export const { containerStateToggle, onDelayStateChange, addButtonsPosition } =
+export const { containerStateToggle, onDelayStateChange } =
   buttonActionSlice.actions;
 
 export default buttonActionSlice.reducer;

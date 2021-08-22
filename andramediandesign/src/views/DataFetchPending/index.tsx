@@ -19,10 +19,8 @@ const useStyles = makeStyles({
   }
 });
 
-interface Props {
-}
 
-function DataPending({  }: Props): React.ReactElement {
+function DataPending(): React.ReactElement {
   const classes = useStyles();
   const {dataStore: { errorState }}=useSelector((state: RootState)=> state)
   return (

@@ -1,12 +1,12 @@
-import React, { useRef } from "react";
+import React, { useRef, Suspense, lazy } from "react";
 import useStyle from "./style";
 import { useSelector } from "react-redux";
 import { RootState } from "src/store";
-import UX from "../Pages/UX";
-import UI from "../Pages/UI";
-import CV from "../Pages/CV";
-import D3 from "../Pages/D3";
-import Undeveloped from '../Pages/Undeveloped'
+const UX = lazy(() => import("../Pages/UX"));
+const UI = lazy(() => import("../Pages/UI"));
+const CV = lazy(() => import("../Pages/CV"));
+const D3 = lazy(() => import("../Pages/D3"));
+const Undeveloped = lazy(() => import("../Pages/Undeveloped"));
 
 function RenderObject(state: any): React.ReactElement {
   switch (state.state) {
@@ -19,7 +19,7 @@ function RenderObject(state: any): React.ReactElement {
     case "D3":
       return <D3 />;
     default:
-      return <Undeveloped/>;
+      return <Undeveloped />;
   }
 }
 
@@ -83,19 +83,21 @@ function ContentContainer(): React.ReactElement {
           : {}
       }
     >
-      <div
-        ref={scrollToTop}
-        className={classes.scrollToTop}
-        onClick={handleClick}
-      >
-        <div />
-      </div>
-      <img
-        src="images/Containers/Content_Frame/Mobile.png"
-        alt="content"
-        className={classes.MobileFrame}
-      />
-      <RenderObject state={renderPage} />
+      <Suspense fallback={"Loadding...."}>
+        <div
+          ref={scrollToTop}
+          className={classes.scrollToTop}
+          onClick={handleClick}
+        >
+          <div />
+        </div>
+        <img
+          src="images/Containers/Content_Frame/Mobile.png"
+          alt="content"
+          className={classes.MobileFrame}
+        />
+        <RenderObject state={renderPage} />
+      </Suspense>
     </div>
   );
 }
