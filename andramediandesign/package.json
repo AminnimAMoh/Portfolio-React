@@ -1,17 +1,20 @@
 {
-  "name": "andramediandesign",
-  "version": "0.1.0",
-  "private": true,
+  "name": "andramedian-design",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "dist/main.js",
   "dependencies": {
-    "@material-ui/core": "^4.11.4",
-    "@material-ui/icons": "^4.11.2",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/runtime": "^7.15.3",
+    "@material-ui/core": "4.12.3",
+    "@material-ui/icons": "4.11.2",
     "@reduxjs/toolkit": "^1.6.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "@types/d3-selection": "^3.0.0",
     "@types/jest": "^26.0.23",
-    "@types/node": "^12.20.15",
+    "@types/node": "^16.7.2",
     "@types/react": "^17.0.11",
     "@types/react-dom": "^17.0.8",
     "axios": "^0.21.1",
@@ -19,22 +22,24 @@
     "d3-fetch": "^3.0.1",
     "d3-selection": "^3.0.0",
     "d3-shape": "^3.0.1",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.12",
     "radar-chart-d3": "^1.2.0",
     "react": "^17.0.2",
     "react-d3-radar": "^1.0.0-rc6",
     "react-dom": "^17.0.2",
+    "react-jss": "^10.7.1",
     "react-redux": "^7.2.4",
-    "react-scripts": "4.0.3",
     "react-use-measure": "^2.0.4",
-    "typescript": "^4.3.4",
+    "typescript": "^4.4.2",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "watch": "tsc -w",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "nd": "nodemon dist/main",
+    "start": "node dist/main.js",
+    "watch": "webpack --mode development --watch && nodemon dist/main",
+    "dev": "del dist public && webpack --mode development --progress",
+    "build": "del dist public && webpack --mode production --progress"
   },
   "eslintConfig": {
     "extends": [
@@ -42,17 +47,30 @@
       "react-app/jest"
     ]
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {}
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/plugin-transform-modules-commonjs": "^7.15.0",
+    "@babel/plugin-transform-runtime": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "@babel/preset-react": "^7.14.5",
+    "@babel/preset-typescript": "^7.15.0",
+    "@types/express": "^4.17.13",
+    "@types/react-jss": "^10.0.0",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-direct-import": "^0.9.2",
+    "babel-plugin-import": "^1.13.3",
+    "babel-plugin-transform-imports": "^2.0.0",
+    "babel-preset-react-app": "^10.0.0",
+    "css-loader": "^6.2.0",
+    "nodemon": "^2.0.12",
+    "postcss": "^8.3.6",
+    "reload": "^3.2.0",
+    "style-loader": "^3.2.1",
+    "to-string-loader": "^1.1.6",
+    "ts-loader": "^9.2.5",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0",
+    "webpack-node-externals": "^3.0.0"
+  }
 }

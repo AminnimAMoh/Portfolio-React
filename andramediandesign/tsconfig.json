@@ -1,19 +1,19 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "outDir": "build/dist",
     "module": "esnext",
-    "target": "es6",
+    "target": "es5",
     "lib": [
-      "es6",
+      "es5",
       "dom",
       "esnext.asynciterable"
     ],
     "sourceMap": true,
     "allowJs": true,
-    "jsx": "react-jsx",
+    "jsx": "react",
     "moduleResolution": "node",
-    "rootDir": "src",
+    "rootDir": "./txsrc",
+    "outDir": "./src", 
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -24,11 +24,10 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
+    "strict": false,
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true
+    "isolatedModules": false,
   },
   "exclude": [
     "node_modules",
@@ -40,6 +39,6 @@
     "src/setupTests.ts"
   ],
   "include": [
-    "src"
+    "txsrc"
   ]
 }
